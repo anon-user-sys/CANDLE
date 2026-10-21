@@ -2,8 +2,8 @@
   <title>Interactive Documentation</title>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#14857f"/>
-      <stop offset="1" stop-color="#0a4643"/>
+      <stop offset="0" stop-color="#0a4466"/>
+      <stop offset="1" stop-color="#003049"/>
     </linearGradient>
     <linearGradient id="sheen" x1="0" x2="1">
       <stop offset="0" stop-color="#fff" stop-opacity="0"/>
@@ -11,8 +11,8 @@
       <stop offset="1" stop-color="#fff" stop-opacity="0"/>
     </linearGradient>
     <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#e0915c" stop-opacity="0.55"/>
-      <stop offset="1" stop-color="#e0915c" stop-opacity="0"/>
+      <stop offset="0" stop-color="#c1121f" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#c1121f" stop-opacity="0"/>
     </radialGradient>
     <clipPath id="pill"><rect x="4" y="4" width="452" height="64" rx="32"/></clipPath>
   </defs>
@@ -22,19 +22,19 @@
 
   <g clip-path="url(#pill)">
     <!-- faint circuit traces -->
-    <g fill="none" stroke="#f7f5f0" stroke-opacity="0.09" stroke-width="1.2">
+    <g fill="none" stroke="#669bbc" stroke-opacity="0.35" stroke-width="1.2">
       <path d="M90 14 H150 L160 24 H230"/>
       <path d="M250 60 H310 L320 50 H400"/>
       <path d="M340 12 H372 L380 20 H420"/>
     </g>
-    <g fill="#f7f5f0" fill-opacity="0.16">
+    <g fill="#669bbc" fill-opacity="0.55">
       <circle cx="230" cy="24" r="2.2"/>
       <circle cx="250" cy="60" r="2.2"/>
       <circle cx="420" cy="20" r="2.2"/>
       <circle cx="90" cy="14" r="2.2"/>
     </g>
     <!-- data pulse travelling along a trace -->
-    <circle r="2.6" fill="#f2b98f">
+    <circle r="2.6" fill="#ffffff">
       <animateMotion dur="3.2s" repeatCount="indefinite" path="M90 14 H150 L160 24 H230"/>
       <animate attributeName="opacity" values="0;1;1;0" dur="3.2s" repeatCount="indefinite"/>
     </circle>
@@ -43,26 +43,36 @@
       <animate attributeName="x" values="-160;620" dur="3.6s" repeatCount="indefinite"/>
     </rect>
   </g>
-    <!-- thin inner rim -->
-  <rect x="5.5" y="5.5" width="449" height="61" rx="30.5" fill="none" stroke="#f7f5f0" stroke-opacity="0.22"/>
 
-  <!-- chip icon in a copper medallion -->
+  <!-- thin inner rim -->
+  <rect x="5.5" y="5.5" width="449" height="61" rx="30.5" fill="none" stroke="#669bbc" stroke-opacity="0.5"/>
+
+  <!-- candle flame in a red medallion -->
   <circle cx="40" cy="36" r="34" fill="url(#glow)" clip-path="url(#pill)"/>
-  <circle cx="40" cy="36" r="22" fill="#b4612f"/>
-  <circle cx="40" cy="36" r="22" fill="none" stroke="#f6e8de" stroke-opacity="0.45"/>
-  <g stroke="#f7f5f0" stroke-width="1.8" stroke-linecap="round" fill="none">
-    <rect x="32" y="28" width="16" height="16" rx="2.5"/>
-    <path d="M36 24v4M40 24v4M44 24v4M36 44v4M40 44v4M44 44v4M28 32h4M28 36h4M28 40h4M48 32h4M48 36h4M48 40h4"/>
+  <circle cx="40" cy="36" r="22" fill="#c1121f"/>
+  <circle cx="40" cy="36" r="22" fill="none" stroke="#780000" stroke-width="2"/>
+  <g transform="translate(40 46)">
+  <g>
+    <g transform="translate(-40 -46)">
+    <!-- outer flame -->
+    <path d="M40 21 C45 28 48 32 48 37.5 C48 42.5 44.4 46 40 46 C35.6 46 32 42.5 32 37.5 C32 33.5 35 31 36.5 27.5 C37.5 30.5 38.6 31.6 39.6 32 C39.8 28.5 39.5 24.5 40 21 Z" fill="#ffffff"/>
+    <!-- inner core -->
+    <path d="M40 33 C42.4 36 43.6 38 43.6 40.4 C43.6 42.6 42 44 40 44 C38 44 36.4 42.6 36.4 40.4 C36.4 38.2 38.4 36.4 40 33 Z" fill="#669bbc"/>
+    </g>
+    <animateTransform attributeName="transform" type="scale"
+      values="1 1;1 1.05;0.98 0.97;1 1" dur="2.2s" repeatCount="indefinite"/>
   </g>
-  <rect x="37" y="33" width="6" height="6" rx="1" fill="#f7f5f0"/>
+  </g>
+  <!-- wick -->
+  <path d="M40 46 v3" stroke="#780000" stroke-width="1.6" stroke-linecap="round"/>
 
   <!-- text -->
-  <text x="76" y="30" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" font-weight="600" letter-spacing="2.4" fill="#f2b98f">EXPLORE THE PAPER</text>
-  <text x="75" y="52" font-family="Georgia,'Times New Roman',serif" font-size="22" font-weight="700" fill="#f7f5f0">Interactive Documentation</text>
+  <text x="76" y="30" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" font-weight="600" letter-spacing="2.4" fill="#669bbc">EXPLORE THE PAPER</text>
+  <text x="75" y="52" font-family="Georgia,'Times New Roman',serif" font-size="22" font-weight="700" fill="#ffffff">Interactive Documentation</text>
 
   <!-- arrow button -->
-  <circle cx="420" cy="36" r="17" fill="#f7f5f0"/>
-  <g stroke="#0f6e6a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+  <circle cx="420" cy="36" r="17" fill="#ffffff"/>
+  <g stroke="#c1121f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
     <path d="M412 36h14M421 30l6 6-6 6">
       <animateTransform attributeName="transform" type="translate" values="0 0;3 0;0 0" dur="1.6s" repeatCount="indefinite"/>
     </path>
