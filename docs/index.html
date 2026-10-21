@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MX1P NDP Taxes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --surface2: #f0ede6;
+  --border: #e3ded3;
+  --border2: #cfc8b9;
+  --text: #1d2321;
+  --body: #3e4744;
+  --muted: #7a817d;
+  --accent: #0f6e6a;        /* deep teal */
+  --accent-soft: #e2efed;
+  --accent2: #b4612f;       /* copper */
+  --accent2-soft: #f6e8de;
+  --serif: 'Source Serif 4', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+:root { color-scheme: light; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16.5px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+code { font-family: var(--mono); font-size: .88em; background: var(--surface2); padding: 1px 5px; border-radius: 3px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+/* Header */
+.header { padding: 3.5rem 0 2rem; border-top: 4px solid var(--accent); }
+.venue {
+  display: inline-block; font-size: 12.5px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent2); margin-bottom: 1rem;
+}
+.title {
+  font-family: var(--serif); font-weight: 600; font-size: clamp(1.8rem, 4vw, 2.7rem);
+  line-height: 1.15; letter-spacing: -.01em; margin-bottom: .75rem; max-width: 22ch;
+}
+.subtitle { font-size: 15px; color: var(--muted); margin-bottom: 1.5rem; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge {
+  font-size: 13.5px; font-weight: 500; padding: 5px 12px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--border); color: var(--body); text-decoration: none;
+}
+a.badge { background: var(--accent); border-color: var(--accent); color: #fff; }
+a.badge:hover { filter: brightness(1.1); }
+
+/* Top tab bar */
+.tabs {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+}
+.tabs .wrap { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.tabs .wrap::-webkit-scrollbar { display: none; }
+.nav-link {
+  flex-shrink: 0; background: none; border: none; cursor: pointer;
+  font-family: var(--sans); font-size: 14.5px; font-weight: 500; color: var(--muted);
+  padding: 14px 14px 12px; border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* Sections */
+.main { padding: 2.5rem 0 5rem; }
+.section { display: none; animation: fadein .25s ease; }
+.section.active { display: block; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+
+.sec-title { font-family: var(--serif); font-weight: 600; font-size: 30px; line-height: 1.2; margin-bottom: .4rem; }
+.sec-desc { font-size: 17px; color: var(--muted); margin-bottom: 2rem; max-width: 70ch; }
+
+/* Cards */
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+}
+.card-title {
+  font-family: var(--serif); font-size: 20px; font-weight: 600; margin-bottom: .6rem;
+  display: flex; align-items: baseline; gap: .5rem;
+}
+.card-title::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--accent2); flex-shrink: 0; transform: translateY(-2px); }
+.card-body { color: var(--body); line-height: 1.75; }
+
+/* Placeholder: marks content still to be written */
+.todo {
+  border: 1px dashed var(--border2); border-radius: 6px; padding: .6rem .9rem;
+  font-family: var(--mono); font-size: 13.5px; color: var(--muted); background: var(--surface2);
+}
+.todo::before { content: "TODO · "; color: var(--accent2); font-weight: 500; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
+  .header { padding-top: 2.25rem; }
+  .card { padding: 1rem 1.1rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="wrap">
+    <div class="venue">Venue · Year</div>
+    <h1 class="title">Paper title</h1>
+    <div class="subtitle">Anonymous Author(s) · 2026</div>
+    <div class="badges">
+      <a href="#" class="badge" target="_blank" rel="noopener">GitHub ↗</a>
+      <span class="badge">XCENA MX1P · CXL 2.0</span>
+      <span class="badge">C++17 · PXL</span>
+      <span class="badge">TPC-H · YCSB</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="wrap">
+    <button class="nav-link active" data-sec="overview">Overview</button>
+    <button class="nav-link" data-sec="platform">Platform</button>
+    <button class="nav-link" data-sec="tier1">Tier 1 · Taxes</button>
+    <button class="nav-link" data-sec="tier2">Tier 2 · Scan</button>
+    <button class="nav-link" data-sec="tier3">Tier 3 · Hash join</button>
+    <button class="nav-link" data-sec="index">Index workloads</button>
+    <button class="nav-link" data-sec="repro">Reproduce</button>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="wrap">
+
+  <div id="overview" class="section active">
+    <div class="sec-title">Overview</div>
+    <div class="sec-desc">One-paragraph summary of the project.</div>
+    <div class="card"><div class="card-title">Core contributions</div><div class="todo">numbered contributions</div></div>
+    <div class="card"><div class="card-title">Motivation</div><div class="todo">why NDP, why a restricted-host baseline</div></div>
+    <div class="card"><div class="card-title">Execution plans compared</div><div class="todo">Tiered · Host@CXL · Hybrid · NDP@CXL</div></div>
+    <div class="card"><div class="card-title">Headline results</div><div class="todo">3–4 result tiles</div></div>
+  </div>
+
+  <div id="platform" class="section">
+    <div class="sec-title">Platform</div>
+    <div class="sec-desc">Host and device under test.</div>
+    <div class="card"><div class="card-title">Host</div><div class="todo">CPU, caches, DRAM</div></div>
+    <div class="card"><div class="card-title">XCENA MX1P</div><div class="todo">link, compute, memory</div></div>
+  </div>
+
+  <div id="tier1" class="section">
+    <div class="sec-title">Tier 1 · Fixed taxes</div>
+    <div class="sec-desc">Costs every offload pays, whatever the workload.</div>
+    <div class="card"><div class="card-title">① Orchestration</div><div class="todo">launch and dispatch cost</div></div>
+    <div class="card"><div class="card-title">② Translation</div><div class="todo">device TLB reach and miss cost</div></div>
+    <div class="card"><div class="card-title">③ Data movement</div><div class="todo">DMA vs direct access</div></div>
+    <div class="card"><div class="card-title">④ Coherence</div><div class="todo">flush and invalidate rules</div></div>
+  </div>
+
+  <div id="tier2" class="section">
+    <div class="sec-title">Tier 2 · Scan/filter</div>
+    <div class="sec-desc">Bandwidth break-even between NDP and the restricted host.</div>
+    <div class="card"><div class="card-title">Setup</div><div class="todo">workload and placement</div></div>
+    <div class="card"><div class="card-title">Results</div><div class="todo">break-even</div></div>
+  </div>
+
+  <div id="tier3" class="section">
+    <div class="sec-title">Tier 3 · Hash join</div>
+    <div class="sec-desc">The break-even replayed in a full operator.</div>
+    <div class="card"><div class="card-title">Setup</div><div class="todo">plans and build strategy</div></div>
+    <div class="card"><div class="card-title">Results</div><div class="todo">end-to-end comparison</div></div>
+  </div>
+
+  <div id="index" class="section">
+    <div class="sec-title">Index workloads</div>
+    <div class="sec-desc">Random-access and read/write workloads.</div>
+    <div class="card"><div class="card-title">B<sup>+</sup>-tree lookups</div><div class="todo">results</div></div>
+    <div class="card"><div class="card-title">B-link tree (YCSB)</div><div class="todo">results</div></div>
+  </div>
+
+  <div id="repro" class="section">
+    <div class="sec-title">Reproduce</div>
+    <div class="sec-desc">How to build and run the benchmarks.</div>
+    <div class="card"><div class="card-title">Repository layout</div><div class="todo">directory tree</div></div>
+    <div class="card"><div class="card-title">Running</div><div class="todo">commands per tier</div></div>
+  </div>
+
+  </div>
+</main>
+
+<script>
+// Tab navigation; the URL hash selects a section so the README can link to one
+const links = document.querySelectorAll('.nav-link');
+function show(id) {
+  if (!document.getElementById(id)) id = 'overview';
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id));
+  links.forEach(l => l.classList.toggle('active', l.dataset.sec === id));
+}
+links.forEach(l => l.addEventListener('click', () => {
+  history.replaceState(null, '', '#' + l.dataset.sec);
+  show(l.dataset.sec);
+  l.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+}));
+show(location.hash.slice(1));
+</script>
+</body>
+</html>
