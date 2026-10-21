@@ -43,8 +43,7 @@
       <animate attributeName="x" values="-160;620" dur="3.6s" repeatCount="indefinite"/>
     </rect>
   </g>
-
-  <!-- thin inner rim -->
+    <!-- thin inner rim -->
   <rect x="5.5" y="5.5" width="449" height="61" rx="30.5" fill="none" stroke="#f7f5f0" stroke-opacity="0.22"/>
 
   <!-- chip icon in a copper medallion -->
