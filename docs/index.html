@@ -3,23 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MX1P NDP Taxes</title>
+<title>CANDLE · SIGMOD 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f7f5f0;
+  /* palette: Molten Lava #780000 · Flag Red #C1121F
+              Deep Space Blue #003049 · Steel Blue #669BBC */
+  --lava: #780000;
+  --red: #c1121f;
+  --navy: #003049;
+  --steel: #669bbc;
+
+  --bg: #fcfcfd;
   --surface: #ffffff;
-  --surface2: #f0ede6;
-  --border: #e3ded3;
-  --border2: #cfc8b9;
-  --text: #1d2321;
-  --body: #3e4744;
-  --muted: #7a817d;
-  --accent: #0f6e6a;        /* deep teal */
-  --accent-soft: #e2efed;
-  --accent2: #b4612f;       /* copper */
-  --accent2-soft: #f6e8de;
+  --surface2: #f1f5f8;      /* pale steel tint */
+  --border: #e3e8ec;
+  --border2: #c9d4dc;
+  --text: var(--navy);
+  --body: #24475c;
+  --muted: #4c6a7e;         /* darkened steel: readable on cream */
+  --accent: var(--navy);
+  --accent-soft: #dce8f0;
+  --accent2: var(--red);
+  --accent2-soft: #f8dcd2;
   --serif: 'Source Serif 4', Georgia, serif;
   --sans: 'Inter', system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -40,23 +47,30 @@ code { font-family: var(--mono); font-size: .88em; background: var(--surface2); 
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
 
 /* Header */
-.header { padding: 3.5rem 0 2rem; border-top: 4px solid var(--accent); }
+.header {
+  padding: 3.5rem 0 2rem; border-top: 5px solid;
+  border-image: linear-gradient(90deg, var(--lava) 0 25%, var(--red) 25% 50%, var(--steel) 50% 75%, var(--navy) 75% 100%) 1;
+}
 .venue {
-  display: inline-block; font-size: 12.5px; font-weight: 600; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--accent2); margin-bottom: 1rem;
+  display: inline-block; font-size: 15px; font-weight: 600; letter-spacing: .04em;
+  color: var(--accent2); margin-bottom: .9rem;
 }
 .title {
   font-family: var(--serif); font-weight: 600; font-size: clamp(1.8rem, 4vw, 2.7rem);
-  line-height: 1.15; letter-spacing: -.01em; margin-bottom: .75rem; max-width: 22ch;
+  line-height: 1.2; letter-spacing: -.01em; margin-bottom: .3rem;
+}
+.title-sub {
+  font-family: var(--serif); font-weight: 400; font-size: clamp(1.45rem, 3.1vw, 2.05rem);
+  line-height: 1.25; color: var(--text); margin-bottom: 1.1rem; max-width: 40ch;
 }
 .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 1.5rem; }
 .badges { display: flex; flex-wrap: wrap; gap: 8px; }
 .badge {
   font-size: 13.5px; font-weight: 500; padding: 5px 12px; border-radius: 999px;
-  background: var(--surface); border: 1px solid var(--border); color: var(--body); text-decoration: none;
+  background: #eef3f7; border: 1px solid #d7e3ec; color: var(--body); text-decoration: none;
 }
-a.badge { background: var(--accent); border-color: var(--accent); color: #fff; }
-a.badge:hover { filter: brightness(1.1); }
+a.badge { background: var(--navy); border-color: var(--navy); color: #fff; }
+a.badge:hover { background: var(--lava); border-color: var(--lava); }
 
 /* Top tab bar */
 .tabs {
@@ -74,7 +88,7 @@ a.badge:hover { filter: brightness(1.1); }
   transition: color .15s, border-color .15s;
 }
 .nav-link:hover { color: var(--text); }
-.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+.nav-link.active { color: var(--navy); border-bottom-color: var(--red); }
 
 /* Sections */
 .main { padding: 2.5rem 0 5rem; }
@@ -83,7 +97,7 @@ a.badge:hover { filter: brightness(1.1); }
 @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
 
 .sec-title { font-family: var(--serif); font-weight: 600; font-size: 30px; line-height: 1.2; margin-bottom: .4rem; }
-.sec-desc { font-size: 17px; color: var(--muted); margin-bottom: 2rem; max-width: 70ch; }
+.sec-desc { font-size: 17px; color: var(--muted); margin-bottom: 2rem; }
 
 /* Cards */
 .card {
@@ -104,6 +118,61 @@ a.badge:hover { filter: brightness(1.1); }
 }
 .todo::before { content: "TODO · "; color: var(--accent2); font-weight: 500; }
 
+.sec-desc strong, .card-body strong, .contribs strong { color: var(--text); font-weight: 600; }
+.card-body p + p { margin-top: .75rem; }
+.lead {
+  font-family: var(--serif); font-size: 19px; line-height: 1.5; color: var(--text);
+  border-left: 3px solid var(--red); padding-left: 1rem; margin-bottom: 1rem;
+}
+.note { font-size: 14px; color: var(--muted); margin-top: .6rem; }
+
+/* Headline tiles */
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
+.tile { border: 1px solid var(--border); border-top: 3px solid var(--navy); border-radius: 6px; padding: .8rem .9rem; }
+.tile:nth-child(2) { border-top-color: var(--steel); }
+.tile:nth-child(3) { border-top-color: var(--red); }
+.tile:nth-child(4) { border-top-color: var(--lava); }
+.tile-val { font-family: var(--serif); font-size: 26px; font-weight: 600; line-height: 1.2; color: var(--navy); }
+.tile-val span { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 3px; }
+.tile-val .arrow { font-family: var(--serif); font-size: 20px; margin: 0 2px; }
+.tile-desc { font-size: 14px; color: var(--body); margin-top: .35rem; line-height: 1.5; }
+
+/* Numbered contributions */
+.contribs { list-style: none; counter-reset: c; display: grid; gap: .7rem; color: var(--body); }
+.contribs li { counter-increment: c; position: relative; padding-left: 2.25rem; }
+.contribs li::before {
+  content: counter(c); position: absolute; left: 0; top: 2px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--navy); color: #fff; font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Tiers */
+.tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+.tier { background: var(--surface2); border-radius: 6px; padding: .8rem .9rem; }
+.tier-label { font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--red); margin-bottom: .3rem; }
+.tier-body { font-size: 14.5px; color: var(--body); line-height: 1.55; }
+
+/* Tables */
+.tbl-wrap { overflow-x: auto; margin-top: .9rem; }
+table.data { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+table.data th {
+  text-align: left; font-weight: 600; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--muted); padding: 8px 12px; border-bottom: 2px solid var(--navy); white-space: nowrap;
+}
+table.data td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--body); white-space: nowrap; }
+table.data td:first-child { font-weight: 600; color: var(--text); }
+table.data tr.hi td { background: var(--surface2); }
+table.data tr.hi td:first-child { box-shadow: inset 3px 0 0 var(--red); }
+
+@media (max-width: 900px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .tiers { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 640px) {
   .wrap { padding: 0 16px; }
   .header { padding-top: 2.25rem; }
@@ -115,11 +184,12 @@ a.badge:hover { filter: brightness(1.1); }
 
 <header class="header">
   <div class="wrap">
-    <div class="venue">Venue · Year</div>
-    <h1 class="title">Paper title</h1>
+    <div class="venue">CANDLE · SIGMOD 2027</div>
+    <h1 class="title">When Is CXL Near-Data Execution Worth It?</h1>
+    <div class="title-sub">A Real-Silicon Study of Computational Memory Expanders for Database Systems</div>
     <div class="subtitle">Anonymous Author(s) · 2026</div>
     <div class="badges">
-      <a href="#" class="badge" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://github.com/anon-user-sys/CANDLE" class="badge" target="_blank" rel="noopener">GitHub ↗</a>
       <span class="badge">XCENA MX1P · CXL 2.0</span>
       <span class="badge">C++17 · PXL</span>
       <span class="badge">TPC-H · YCSB</span>
@@ -143,12 +213,87 @@ a.badge:hover { filter: brightness(1.1); }
   <div class="wrap">
 
   <div id="overview" class="section active">
-    <div class="sec-title">Overview</div>
-    <div class="sec-desc">One-paragraph summary of the project.</div>
-    <div class="card"><div class="card-title">Core contributions</div><div class="todo">numbered contributions</div></div>
-    <div class="card"><div class="card-title">Motivation</div><div class="todo">why NDP, why a restricted-host baseline</div></div>
-    <div class="card"><div class="card-title">Execution plans compared</div><div class="todo">Tiered · Host@CXL · Hybrid · NDP@CXL</div></div>
-    <div class="card"><div class="card-title">Headline results</div><div class="todo">3–4 result tiles</div></div>
+    <div class="sec-title">What is CANDLE?</div>
+    <div class="sec-desc">
+      <strong>CANDLE</strong> (<strong>C</strong>XL-<strong>A</strong>ccelerated <strong>N</strong>ear-<strong>D</strong>ata <strong>L</strong>ogic <strong>E</strong>valuation) is an experimental study of database execution on a real computational CXL memory expander, the XCENA MX1P. A device like this is both a memory tier and an execution site. CANDLE asks when running a database fragment on the device beats running it on the host over the <em>same</em> CXL-resident data, once preparation, launch and result handoff are counted.
+    </div>
+
+    <div class="card">
+      <div class="card-title">The question</div>
+      <div class="card-body">
+        <p class="lead">When does executing a database fragment on a computational CXL expander reduce its elapsed time, including preparation and handoff?</p>
+        <p>Data residency alone does not decide the plan. A device plan must also launch work, translate addresses through the device's own structures, and deliver a usable result to the next stage. On this CXL 2.0 link there is no hardware back-invalidation, so the software work that makes device updates visible is part of every measurement.</p>
+        <p>The unit of comparison is a <strong>pipeline fragment</strong>: operators placed together and finished at a defined result boundary, such as <em>scan and reduce</em>, <em>materialize and return</em>, or <em>partition and probe</em>. Plans are compared under a common <strong>execution contract</strong> that fixes the input, the result and where it must end up, and what must be visible at completion.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Headline findings</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="tile-val">1.2<span>ms</span></div>
+          <div class="tile-desc">A fresh one-shot dispatch, although the on-device interval is only 13.3 µs.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-val">0.6<span>µs / miss</span></div>
+          <div class="tile-desc">Translation miss beyond an inferred reach of eight 1 GB granules.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-val">3.8× <span class="arrow">→</span> 2.2×</div>
+          <div class="tile-desc">Scan speedup over Host@CXL at 50% selectivity: count-only, then with keys materialized and returned.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-val">36<span>%</span></div>
+          <div class="tile-desc">Share of processing time a B-link tree spends on coherency when reads and updates run on different sites.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Contributions</div>
+      <ol class="contribs">
+        <li>A <strong>real-silicon characterization</strong> of orchestration, translation, explicit-transfer and coherency costs, including how they depend on runtime state and the handoff protocol.</li>
+        <li><strong>Operator and composite-workload experiments</strong> showing how result return, probe preparation and mutable-state handoffs change placement rankings.</li>
+        <li>An <strong>evaluation contract and placement guidance</strong> that charge preparation and visibility work and state the conditions under which an observed speedup applies.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Three evaluation tiers</div>
+      <div class="tiers">
+        <div class="tier">
+          <div class="tier-label">Tier 1 · Boundary isolation</div>
+          <div class="tier-body">The four placement taxes: orchestration <em>α</em>, translation <em>τ</em>, data movement <em>β</em>, coherency <em>γ</em>.</div>
+        </div>
+        <div class="tier">
+          <div class="tier-label">Tier 2 · Database operators</div>
+          <div class="tier-body">Selective scan and filter; B<sup>+</sup>-tree point lookups.</div>
+        </div>
+        <div class="tier">
+          <div class="tier-label">Tier 3 · Composite workloads</div>
+          <div class="tier-body">Partitioned hash join (phase-boundary handoff); B-link tree under YCSB-A (per-batch SDBI).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Placement modes</div>
+      <div class="card-body">Execution site and initial residency of the input are separate choices. <strong>Host@CXL</strong> is the primary baseline: host cores work directly on the same CXL allocation the device plan uses. Host-DRAM and Tiered are residency references.</div>
+      <div class="tbl-wrap">
+        <table class="data">
+          <thead><tr><th>Plan</th><th>Input</th><th>Compute</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>Host-DRAM</td><td>M<sub>H</sub></td><td>H</td><td>local-memory upper bound</td></tr>
+            <tr class="hi"><td>Host@CXL</td><td>M<sub>C</sub></td><td>H</td><td>primary conventional baseline</td></tr>
+            <tr><td>Tiered</td><td>M<sub>H</sub> ∪ M<sub>C</sub></td><td>H</td><td>capacity-constrained working set</td></tr>
+            <tr><td>NDP-sync</td><td>M<sub>C</sub></td><td>D</td><td>one-shot / batched offload</td></tr>
+            <tr><td>NDP@CXL</td><td>M<sub>C</sub></td><td>D</td><td>persistent / batched offload (resident worker)</td></tr>
+            <tr><td>Hybrid</td><td>M<sub>H</sub> ∪ M<sub>C</sub></td><td>H + D</td><td>predefined pipeline split</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">M<sub>H</sub> / M<sub>C</sub>: host DRAM / CXL device DRAM holds the input. H / D: host CPU / device cores execute.</div>
+    </div>
   </div>
 
   <div id="platform" class="section">
