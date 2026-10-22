@@ -23,6 +23,7 @@ One 16-granule configuration; passes if every pass's checksum matches the host r
 
 ## Figures
 ```bash
+python3 figures/make_data.py   # results -> figures/data   (run from this directory)
 ./figures/render.sh            # figures/data -> fig_*.eps
 ```
 | Paper | Script |
@@ -33,7 +34,7 @@ One 16-granule configuration; passes if every pass's checksum matches the host r
 
 ## Outputs
 - `results/<timestamp>/device_*.csv`, `host4k_*.csv`: one row per configuration with `ns_per_access` and `sum_ok`.
-- `figures/data/`: the plotted points (no `make_data.py`; fit with `scripts/analyze_tlb.py`).
+- `results/device_*.csv`, `host4k_*.csv`: the raw sweeps behind Fig. 5 and the host control; fit with `scripts/analyze_tlb.py`.
 
 ## Notes
 - `notes/DESIGN.md`: the method, controls and host validation.

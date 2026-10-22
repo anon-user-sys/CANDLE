@@ -1,0 +1,9 @@
+# return A/B sf=1500 iters=3 threads=16 chunk=65536 load=1.67
+label,mode,upload,rows,par,threshold,sel_pct,materialize,iter,copy_ms,scan_ms,read_gb,gb_per_s,matches,ok,ret_ms,e2e_ms
+M4_ret_chunked_s32_flush_range_o4_t256,device,memcpy,9000021272,256,25,50.0,1,0,11822.797,12854.674,45.000,3.50,4500013140,1,29.574,12884.248
+M4_ret_chunked_s32_flush_range_o4_t256,device,memcpy,9000021272,256,25,50.0,1,1,12242.221,12843.143,45.000,3.50,4500013140,1,30.282,12873.425
+M4_ret_chunked_s32_flush_range_o4_t256,device,memcpy,9000021272,256,25,50.0,1,2,13103.340,12857.997,45.000,3.50,4500013140,1,29.839,12887.836
+M4_ret_chunked_s32_flush_range_o4_t256,device,memcpy,9000021272,256,50,100.0,1,0,11768.152,16564.516,81.000,4.89,9000021272,1,58.978,16623.494
+M4_ret_chunked_s32_flush_range_o4_t256,device,memcpy,9000021272,256,50,100.0,1,1,13107.568,16545.909,81.000,4.90,9000021272,1,60.195,16606.103
+M4_ret_chunked_s32_flush_range_o4_t256,device,memcpy,9000021272,256,50,100.0,1,2,11731.771,16556.095,81.000,4.89,9000021272,1,60.267,16616.362
+# done 11:03:01

@@ -17,3 +17,16 @@ __pycache__/
 *.log
 # rendered figures (regenerate with ./candle.sh figures all)
 *.eps
+# smoke-test outputs
+**/results/smoke_*/
+# generated figure data (rebuilt by figures/make_data.py)
+*/*/figures/data/
+**/figures/preview/
+# Tier 2 executables
+tier2/scan/main
+tier2/scan/bw
+tier2/scan/d2h
+tier2/scan/tools/tpch_cols
+tier2/btree/main
+# column caches written by the scan driver
+**/cache/

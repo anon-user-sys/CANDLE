@@ -372,7 +372,8 @@ ul.vl-add .pill { margin-bottom: 0; white-space: nowrap; }
 .taxnav.plain button { padding: .3rem .9rem; }
 .impl { scroll-margin-top: 64px; }
 .impl-list { display: grid; gap: .75rem; }
-.impl-head { display: flex; align-items: center; gap: .5rem; font-weight: 600; color: var(--navy); margin-bottom: .4rem; }
+.impl-head { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .5rem; font-weight: 600; color: var(--navy); margin-bottom: .4rem; }
+.impl-head .seg { flex-shrink: 0; }
 .impl-head .g { width: 24px; height: 24px; font-size: 15px; }
 
 /* Tier 2 */
@@ -1678,7 +1679,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
     <div class="card impl" id="impl-resident">
       <div class="card-title">Resident worker</div>
       <div class="impl-item">
-        <div class="impl-head">Launched once, fed through a control line in CXL memory<span class="impl-dir">tier3/blink_tree/ · hash-join resident probe · tier1/resident_worker/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+        <div class="impl-head">Launched once, fed through a control line in CXL memory<span class="impl-dir">tier1/resident_worker/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
         <div class="facts design-only">
           <div><b>1 launch</b><span>for the whole run instead of one per batch</span></div>
           <div><b>22–25 ns</b><span>device dequeue per task</span></div>
@@ -1737,7 +1738,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
     <span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> t = <span class="c-num">0</span>; t &lt; o.par; ++t)      <span class="c-cm">// readers copy keys below this snapshot only</span>
         __atomic_store_n(&amp;avail[t * stride], d_prog[t * stride], __ATOMIC_RELEASE);
 }</pre></div>
-          <div class="impl-files"><code>main.cpp</code><code>scan_common.hpp</code><code>mu_kernel/scan_filter_kernel.cpp</code><code>run_scan.sh</code><code>return_ab.sh</code></div>
+          <div class="impl-files"><code>main.cpp</code><code>scan_common.hpp</code><code>mu_kernel/scan_filter_kernel.cpp</code><code>scripts/run_scan.sh</code><code>scripts/return_ab.sh</code></div>
         </div>
         <div class="impl-item">
           <div class="impl-head">B<sup>+</sup>-tree point lookups<span class="impl-dir">tier2/btree/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
@@ -1757,7 +1758,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
     <span class="c-kw">for</span> (<span class="c-kw">int</span> j = <span class="c-num">0</span>; j &lt; <span class="c-num">4</span>; ++j) <span class="c-kw">if</span> (lk[j] == k) v = lk[<span class="c-num">4</span> + j];
     <span class="c-kw">if</span> (v) { ++r.n; r.sum_idx += i; r.sum_val += v; }           <span class="c-cm">// count and sum, no result vector</span>
 }</pre></div>
-          <div class="impl-files"><code>main.cpp</code><code>btree_common.hpp</code><code>mu_kernel/btree_kernel.cpp</code><code>run_btree.sh</code><code>ablation.sh</code></div>
+          <div class="impl-files"><code>main.cpp</code><code>btree_common.hpp</code><code>mu_kernel/btree_kernel.cpp</code><code>scripts/run_btree.sh</code><code>scripts/ablation.sh</code></div>
         </div>
       </div>
     </div>
@@ -1845,7 +1846,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
         <div class="su"><div class="su-label">Software</div>
           <div class="chips"><span>PXL SDK 2.0.0</span><span>LLVM 21.1.2 device toolchain</span><span>firmware 1.0.4</span><span>mx_dma driver</span><span>Ubuntu 24.04 · Linux 6.8</span></div></div>
         <div class="su"><div class="su-label">Data</div>
-          <div class="su-sub">TPC-H <code>dbgen</code>: SF 1–100 tables for the hash join; SF 1500 scan columns from <code>tools/gen_cols.sh</code>. The B<sup>+</sup>-tree and B-link tree generate their own keys.</div></div>
+          <div class="su-sub">TPC-H <code>dbgen</code> output in <code>$DATA_ROOT/sf_&lt;SF&gt;/</code>: SF 1–100 tables for the hash join, SF 1500 scan columns from <code>tier2/scan/tools/gen_cols.sh</code>. The B<sup>+</sup>-tree and B-link tree generate their own keys.</div></div>
       </div>
     </div>
 
@@ -1918,10 +1919,8 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
             <tr><td>Fig. 6 · Table 3</td><td>tier1/data_movement/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
             <tr><td>Fig. 7 · Table 4</td><td>tier1/coherence/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
             <tr class="grp"><td colspan="4">Tier 2 · DB operations</td></tr>
-            <tr><td>Fig. 8</td><td>tier2/scan/</td><td><code>./run_scan.sh 1500</code></td><td>both</td></tr>
-            <tr><td>Table 5</td><td>tier2/scan/</td><td><code>sudo ./return_ab.sh 1500</code></td><td>devdax, root</td></tr>
-            <tr><td>Fig. 9</td><td>tier2/btree/</td><td><code>./run_btree.sh 1500</code> · <code>./ndp_opt_sweep.sh</code></td><td>both</td></tr>
-            <tr><td>Fig. 10</td><td>tier2/btree/</td><td><code>./node_sweep.sh</code> · <code>./node_sweep_host.sh</code> · <code>./size_sweep.sh host|device</code></td><td>both</td></tr>
+            <tr><td>Fig. 8 · Table 5</td><td>tier2/scan/</td><td><code>sudo ./run.sh</code></td><td>both</td></tr>
+            <tr><td>Fig. 9 · Fig. 10</td><td>tier2/btree/</td><td><code>./run.sh</code></td><td>both</td></tr>
             <tr class="grp"><td colspan="4">Tier 3 · Composite workloads</td></tr>
             <tr><td>Fig. 11</td><td>tier3/hash_join/</td><td><code>sudo bash scripts/run_devdax_modes.sh 100 50</code></td><td>devdax, root</td></tr>
             <tr><td>Fig. 12</td><td>tier3/hash_join/</td><td><code>scripts/run_quick4.sh</code> · <code>scripts/run_quick5.sh</code></td><td>devdax, root</td></tr>
@@ -1929,7 +1928,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
           </tbody>
         </table>
       </div>
-      <div class="note">"Both" runs the device plans in the device session and the Tiered plans in the system-ram session; each script runs the modes the current session supports.</div>
+      <div class="note">"Both": run it once in each session. In the device session it runs the NDP and host-DRAM plans, in the system-ram session the Host@CXL and Tiered placements.</div>
     </div>
   </div>
 

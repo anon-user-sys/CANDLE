@@ -8,6 +8,7 @@
 """
 import glob, os, statistics as st
 D = 'results/data_fresh'; T = 'results/data_t15fix'; O = 'figures/data'
+os.makedirs(O, exist_ok=True)
 
 def t6(fresh):
     lat, di = {}, {}

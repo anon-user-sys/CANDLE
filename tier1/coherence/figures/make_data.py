@@ -13,6 +13,7 @@ from pathlib import Path
 
 RUN = Path(__file__).resolve().parent.parent / "results" / "suite_20261010_135135"
 OUT = Path(__file__).resolve().parent / "data"
+OUT.mkdir(exist_ok=True)
 
 
 def rows(test):

@@ -19,6 +19,7 @@ FOLLOW = ROOT / "followup_20261009_183624"
 # 2026-10-10; the other arms of this run agree with PINNED within ~1% (median new/old 0.99-1.01).
 NTNF = ROOT / "pinned_nocstate0_20261010_142434"
 OUT = Path(__file__).resolve().parent / "data"
+OUT.mkdir(exist_ok=True)
 
 
 def agg(vals):

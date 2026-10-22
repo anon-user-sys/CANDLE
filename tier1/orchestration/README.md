@@ -35,7 +35,7 @@ python3 figures/make_data.py   # results -> figures/data   (run from this direct
 
 ## Outputs
 - `results/data_fresh/`, `results/data_t15fix/`: the raw runs behind Fig. 3a, 3c, 3d and Table 2.
-- `results/aging/`: written by `scripts/aging_run.sh` (Fig. 3b; the original raw runs were not kept, the plotted data is in `figures/data/`).
+- `results/aging/`: written by `scripts/aging_run.sh`. Fig. 3b renders once this exists (the paper's original raw run was not kept).
 
 ## Notes
 - `main_profiler` (XPTI profiler, device stages) is the paper driver; `main` is the same tests without the profiler.

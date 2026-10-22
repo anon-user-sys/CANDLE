@@ -1,0 +1,2 @@
+# return A/B sf=1500 iters=3 threads=16 chunk=65536 load=3.63
+label,mode,upload,rows,par,threshold,sel_pct,materialize,iter,copy_ms,scan_ms,read_gb,gb_per_s,matches,ok,ret_ms,e2e_ms
