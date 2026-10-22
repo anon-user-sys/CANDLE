@@ -1,0 +1,17 @@
+# build output and binaries
+build/
+*.mubin
+*.o
+*.so
+*.xcoredump
+# executables produced by build.sh (no extension)
+tier1/orchestration/main
+tier1/orchestration/main_host
+tier1/orchestration/main_profiler
+tier1/translation/main
+tier1/data_movement/main
+tier1/coherence/coh
+tier1/resident_worker/main_spike
+# local runs and caches
+__pycache__/
+*.log

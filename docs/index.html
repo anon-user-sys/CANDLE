@@ -1595,28 +1595,28 @@ ul.plain li::marker { color: var(--red); }
       <div class="card-title">Tier 1 · Taxes</div>
       <div class="impl-list">
         <div class="impl-item">
-          <div class="impl-head"><i class="g g-a">α</i>Orchestration · null-control kernel<span class="impl-dir">orchestration_tax/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="impl-head"><i class="g g-a">α</i>Orchestration · null-control kernel<span class="impl-dir">tier1/orchestration/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
           <div class="it-grid"><div class="it"><div class="it-label">Kernel</div><div class="it-body"><code>null_kernel</code>: an empty body between profiler probes. Variants take 3 scalars, 1–6 pointers or an NDArray.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body"><code>execute()</code> → <code>synchronize()</code> returns. 20 warm-up and 200 timed dispatches per point.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">Each test in a fresh process; fresh and aged handles interleaved per test, three runs each.</div></div><div class="it"><div class="it-label">Device view</div><div class="it-body">XPTI profiler spans launch → start → end → terminate split each dispatch (Table 2).</div></div></div>
-          <div class="chips impl-chips"><span>T1 tasks 1–131,072<em>Fig. 3a</em></span><span>T2 handle aging, rebuilt every 220<em>Fig. 3b</em></span><span>T6 Subs 1–24<em>Fig. 3c</em></span><span>T15 iterations per dispatch<em>Fig. 3d</em></span><span>T3 execute vs. sync<em>§4.1.2</em></span><span>T4 reuse vs. rebuild<em>§4.1.3</em></span><span>T7 batch size<em>§4.1.2</em></span><span>T10 streams<em>§4.1.4</em></span><span>T13 host threads<em>§4.1.4</em></span><span>T5 · T9 · T12 locality, args, descriptor<em>no effect</em></span><span>resident worker · persistent_spike/<em>§4.1.4</em></span></div>
-          <div class="impl-code"><div class="code-cap">orchestration_tax/main_profiler.cpp · lines 191–199</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">int</span> i = <span class="c-num">0</span>; i &lt; reps; i++) {
+          <div class="chips impl-chips"><span>T1 tasks 1–131,072<em>Fig. 3a</em></span><span>T2 handle aging, rebuilt every 220<em>Fig. 3b</em></span><span>T6 Subs 1–24<em>Fig. 3c</em></span><span>T15 iterations per dispatch<em>Fig. 3d</em></span><span>T3 execute vs. sync<em>§4.1.2</em></span><span>T4 reuse vs. rebuild<em>§4.1.3</em></span><span>T7 batch size<em>§4.1.2</em></span><span>T10 streams<em>§4.1.4</em></span><span>T13 host threads<em>§4.1.4</em></span><span>T5 · T9 · T12 locality, args, descriptor<em>no effect</em></span><span>resident worker · tier1/resident_worker/<em>§4.1.4</em></span></div>
+          <div class="impl-code"><div class="code-cap">tier1/orchestration/main_profiler.cpp · lines 191–199</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">int</span> i = <span class="c-num">0</span>; i &lt; reps; i++) {
     <span class="c-kw">if</span> (g_fresh &amp;&amp; <span class="c-key">renew</span>) <span class="c-key">renew</span>(map);      <span class="c-cm">// FRESH=1: new handle, outside the timed region</span>
     <span class="c-kw">uint64_t</span> t0 = <span class="c-key">timing::start</span>();         <span class="c-cm">// lfence; rdtsc</span>
     sink = chk(map-&gt;<span class="c-key">execute</span>(dummy));
     chk(map-&gt;<span class="c-key">synchronize</span>());
     <span class="c-kw">uint64_t</span> t1 = <span class="c-key">stop_fn</span>();               <span class="c-cm">// rdtscp; lfence</span>
     r.wall_us.push_back(timing::to_us(t1 - t0, ghz));
-}</pre><div class="code-cap">orchestration_tax/mu_kernel/mu_null.cpp · lines 11–16</div><pre class="code-pane"><span class="c-kw">void</span> null_kernel(<span class="c-kw">int</span> dummy) {              <span class="c-cm">// no arithmetic, no memory access</span>
+}</pre><div class="code-cap">tier1/orchestration/mu_kernel/mu_null.cpp · lines 11–16</div><pre class="code-pane"><span class="c-kw">void</span> null_kernel(<span class="c-kw">int</span> dummy) {              <span class="c-cm">// no arithmetic, no memory access</span>
     <span class="c-key">mu::profilerStart</span>(<span class="c-st">&quot;null_kernel&quot;</span>);
     (<span class="c-kw">void</span>)dummy;
     <span class="c-key">mu::profilerEnd</span>(<span class="c-st">&quot;null_kernel&quot;</span>);
 }</pre></div>
-          <div class="impl-files"><code>main.cpp</code><code>main_profiler.cpp</code><code>mu_kernel/mu_null.cpp</code><code>notes/fresh_sweep.sh</code></div>
+          <div class="impl-files"><code>main.cpp</code><code>main_profiler.cpp</code><code>mu_kernel/mu_null.cpp</code><code>scripts/fresh_sweep.sh</code></div>
         </div>
         <div class="impl-item">
-          <div class="impl-head"><i class="g g-t">τ</i>Translation · pointer-chase kernel<span class="impl-dir">translation_tax/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="impl-head"><i class="g g-t">τ</i>Translation · pointer-chase kernel<span class="impl-dir">tier1/translation/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
           <div class="it-grid"><div class="it"><div class="it-label">Kernel</div><div class="it-body"><code>tt_access</code>: random dependent reads over K target lines in R regions S bytes apart. One MU task, no index arrays.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Device cycle counter around a timed pass that follows an identical warm-up pass; cycles → ns from a calibration spin.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">K held fixed so cache demand stays constant; lines clumped so the granules touched track R.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Every pass checksummed against a host replay. The same generator on the host recovers its STLB: 3,072 entries, 21.5 ns.</div></div></div>
           <div class="chips impl-chips"><span>A granules G 1–128, random<em>Fig. 5a</em></span><span>C round-robin<em>Fig. 5a</em></span><span>B spacing S 16 MB–2 GB<em>Fig. 5b</em></span><span>D target lines K<em>Fig. 5c</em></span><span>host 4 KB pages<em>control</em></span></div>
-          <div class="impl-code"><div class="code-cap">translation_tax/mu_kernel/tt_kernel.cpp · lines 45–85, random order (casts trimmed)</div><pre class="code-pane"><span class="c-kw">std::uint64_t</span> s = cfg-&gt;seed, warm = <span class="c-num">0</span>;     <span class="c-cm">// warm-up: the identical access sequence</span>
+          <div class="impl-code"><div class="code-cap">tier1/translation/mu_kernel/tt_kernel.cpp · lines 45–85, random order (casts trimmed)</div><pre class="code-pane"><span class="c-kw">std::uint64_t</span> s = cfg-&gt;seed, warm = <span class="c-num">0</span>;     <span class="c-cm">// warm-up: the identical access sequence</span>
 <span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> a = <span class="c-num">0</span>; a &lt; n; ++a)
     warm += load(buf + tt::offset_of(p, tt::pick_random(p, s)));
 
@@ -1636,10 +1636,10 @@ cfg-&gt;sum = sum;                            <span class="c-cm">// checked agai
           <div class="impl-files"><code>main.cpp</code><code>tt_common.hpp</code><code>mu_kernel/tt_kernel.cpp</code><code>run_tlb.sh</code></div>
         </div>
         <div class="impl-item">
-          <div class="impl-head"><i class="g g-b">β</i>Data movement · transfer sweep<span class="impl-dir">data_movement_tax/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="impl-head"><i class="g g-b">β</i>Data movement · transfer sweep<span class="impl-dir">tier1/data_movement/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
           <div class="it-grid"><div class="it"><div class="it-label">Paths</div><div class="it-body">DMA <code>copyToDevice</code> / <code>copyFromDevice</code>; direct <code>memcpy</code>, 8-byte loop or AVX2 NT stores, with and without flush.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Each call, 64 B–256 MiB plus fine points at 128 KiB, 512 KiB and 2 MiB; median of three runs.</div></div><div class="it"><div class="it-label">Host state</div><div class="it-body">mx_dma kthreads pinned to CPUs 8 and 9, process on node 0, default C-states.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Every transfer checked bit-exact.</div></div></div>
-          <div class="chips impl-chips"><span>D1 transfer sweep<em>Fig. 6a, 6b · Table 3</em></span><span>D10 access pattern, 256 MiB–1 GiB<em>Fig. 6c</em></span><span>D12 read/write mix<em>Fig. 6d</em></span><span>DMA floor diagnosis<em>§4.3.2</em></span><span>NT without flush · coherence_tax k7, k13<em>Fig. 6a</em></span></div>
-          <div class="impl-code"><div class="code-cap">data_movement_tax/main.cpp · lines 353–387, host to device</div><pre class="code-pane">run(<span class="c-st">&quot;copyToDevice&quot;</span>, <span class="c-st">&quot;H2D&quot;</span>, n, samples, <span class="c-kw">true</span>, [&amp;] {          <span class="c-cm">// DMA</span>
+          <div class="chips impl-chips"><span>D1 transfer sweep<em>Fig. 6a, 6b · Table 3</em></span><span>D10 access pattern, 256 MiB–1 GiB<em>Fig. 6c</em></span><span>D12 read/write mix<em>Fig. 6d</em></span><span>DMA floor diagnosis<em>§4.3.2</em></span><span>NT without flush · tier1/coherence k7, k13<em>Fig. 6a</em></span></div>
+          <div class="impl-code"><div class="code-cap">tier1/data_movement/main.cpp · lines 371–405, host to device</div><pre class="code-pane">run(<span class="c-st">&quot;copyToDevice&quot;</span>, <span class="c-st">&quot;H2D&quot;</span>, n, samples, <span class="c-kw">true</span>, [&amp;] {          <span class="c-cm">// DMA</span>
     sink = chkr(ctx-&gt;<span class="c-key">copyToDevice</span>(devCxl, host, n));
 });
 run(<span class="c-st">&quot;direct_memcpy&quot;</span>, <span class="c-st">&quot;H2D&quot;</span>, n, samples, <span class="c-kw">false</span>, [&amp;] {        <span class="c-cm">// copy + required flush</span>
@@ -1648,18 +1648,18 @@ run(<span class="c-st">&quot;direct_memcpy&quot;</span>, <span class="c-st">&quo
 });
 run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c-st">&quot;H2D&quot;</span>, n, samples, <span class="c-kw">false</span>, [&amp;] {
     <span class="c-key">nt_store_copy</span>(devCxl, host, n);                         <span class="c-cm">// NT stores + sfence, no flush</span>
-});</pre><div class="code-cap">data_movement_tax/main.cpp · lines 96–101, inside nt_store_copy</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">size_t</span> i = <span class="c-num">0</span>; i &lt; body; i += <span class="c-num">32</span>) {
+});</pre><div class="code-cap">tier1/data_movement/main.cpp · lines 108–120, inside nt_store_copy (head and tail handling trimmed)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">size_t</span> i = <span class="c-num">0</span>; i &lt; body; i += <span class="c-num">32</span>) {
     <span class="c-kw">__m256i</span> v = _mm256_loadu_si256((<span class="c-kw">const</span> <span class="c-kw">__m256i</span>*)(s + i));
     <span class="c-key">_mm256_stream_si256</span>((<span class="c-kw">__m256i</span>*)(d + i), v);               <span class="c-cm">// bypasses the host cache</span>
 }
-<span class="c-key">_mm_sfence</span>();                                               <span class="c-cm">// orders the NT stores</span></pre></div>
+<span class="c-kw">if</span> (cached) <span class="c-key">_mm_mfence</span>(); <span class="c-kw">else</span> <span class="c-key">_mm_sfence</span>();         <span class="c-cm">// aligned sizes: NT stores + sfence only</span></pre></div>
           <div class="impl-files"><code>main.cpp</code><code>run_pinned_sweep.sh</code><code>diag_dma_floor.sh</code><code>figures/make_fig_data.py</code></div>
         </div>
         <div class="impl-item">
-          <div class="impl-head"><i class="g g-c">γ</i>Coherency · visibility suite<span class="impl-dir">coherence_tax/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="impl-head"><i class="g g-c">γ</i>Coherency · visibility suite<span class="impl-dir">tier1/coherence/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
           <div class="it-grid"><div class="it"><div class="it-label">Kernels</div><div class="it-body"><code>k_fill</code>, <code>k_check</code>, <code>k_publish</code>; no DMA anywhere.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Host flush and read loops with <code>rdtsc</code>; host cache prepared dirty, clean or absent.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">Same pinned host configuration as β.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Every word classed correct, stale, poison or corrupt. An action counts as needed only if omitting it shows stale words.</div></div></div>
           <div class="chips impl-chips"><span>k1 flush vs. range size<em>Fig. 7a</em></span><span>k2 dirty fraction<em>Fig. 7b</em></span><span>k5 per-object invalidation<em>Fig. 7c</em></span><span>k10 in-kernel publish<em>Fig. 7d</em></span><span>k6 · k7 · k8 visibility<em>Table 4</em></span><span>k4 return bandwidth<em>§4.4.5</em></span><span>k13 NT steady state<em>§4.3.3</em></span></div>
-          <div class="impl-code"><div class="code-cap">coherence_tax/mu_kernel/coh_kernel.cpp · lines 161–176, k10 in-kernel publish (timing trimmed)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">uint64_t</span> c = <span class="c-num">0</span>; c &lt; C; ++c) {
+          <div class="impl-code"><div class="code-cap">tier1/coherence/mu_kernel/coh_kernel.cpp · lines 161–176, k10 in-kernel publish (timing trimmed)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">uint64_t</span> c = <span class="c-num">0</span>; c &lt; C; ++c) {
     <span class="c-kw">const</span> <span class="c-kw">uint64_t</span> base = pub_data(P, C, L, t, c);
     <span class="c-kw">for</span> (<span class="c-kw">uint64_t</span> i = <span class="c-num">0</span>; i &lt; L * <span class="c-num">8</span>; ++i) buf[base + i] = pat(base + i, salt);
     <span class="c-kw">if</span> (mode != PUB_NOFLUSH) <span class="c-key">mu::flushCache</span>(&amp;buf[base], L * <span class="c-num">64</span>);  <span class="c-cm">// posted: may not finish first</span>
@@ -1677,7 +1677,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
     <div class="card impl" id="impl-resident">
       <div class="card-title">Resident worker</div>
       <div class="impl-item">
-        <div class="impl-head">Launched once, fed through a control line in CXL memory<span class="impl-dir">blinktree/ · hash-join resident probe · persistent_spike/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+        <div class="impl-head">Launched once, fed through a control line in CXL memory<span class="impl-dir">tier3/blink_tree/ · hash-join resident probe · tier1/resident_worker/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
         <div class="facts design-only">
           <div><b>1 launch</b><span>for the whole run instead of one per batch</span></div>
           <div><b>22–25 ns</b><span>device dequeue per task</span></div>
@@ -1685,7 +1685,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
           <div><b>~12 ms</b><span>saved per B-link batch over two launches</span></div>
         </div>
         <div class="design-only"><div class="swim"><div class="sw-head"><span class="h">Host</span><span class="m">CXL memory</span><span class="d">MU tasks · one per thread</span></div><div class="sw-row"><div class="sw-step h">1 · Post a job</div><div class="sw-mid to-mem"><div class="sw-obj">requests → job fields → <code>seq</code></div><div class="sw-act">NT stores, <code>sfence</code> between</div><div class="sw-why">bypass the host cache; <code>seq</code> lands last</div></div><div></div></div><div class="sw-row"><div></div><div class="sw-mid from-mem-dev"><div class="sw-obj">control line, then request lines</div><div class="sw-act"><code>flushCache</code> → read</div><div class="sw-why">drop stale copies; buffers are reused across jobs</div></div><div class="sw-step d">2 · Pick it up</div></div><div class="sw-row"><div></div><div class="sw-mid to-mem-dev"><div class="sw-obj">results, then done counter</div><div class="sw-act"><code>flushCacheAll</code> → <code>atomicAdd</code></div><div class="sw-why">a range flush is posted; the atomic lives in memory</div></div><div class="sw-step d">3 · Finish</div></div><div class="sw-row"><div class="sw-step h">4 · Collect</div><div class="sw-mid from-mem-host"><div class="sw-obj">done counter, then results</div><div class="sw-act"><code>clflushopt</code> + <code>mfence</code> → read</div><div class="sw-why">no back-invalidation: drop the host copy first</div></div><div></div></div></div><div class="sw-cap">Launched once with <code>setBatchSize(1)</code> and <code>execute(ctrl, tasks)</code>; a host NT store of <code>stop = 1</code> ends it.</div></div>
-        <div class="impl-code"><div class="code-cap">blinktree/mu_kernel/cxl_kernel.cpp · lines 368–391, device side</div><pre class="code-pane"><span class="c-kw">void</span> cxl_resident_worker(<span class="c-kw">std::uint64_t</span>* ctrl, <span class="c-kw">int</span> numTasks) {
+        <div class="impl-code"><div class="code-cap">tier3/blink_tree/mu_kernel/cxl_kernel.cpp · lines 368–391, device side</div><pre class="code-pane"><span class="c-kw">void</span> cxl_resident_worker(<span class="c-kw">std::uint64_t</span>* ctrl, <span class="c-kw">int</span> numTasks) {
     <span class="c-kw">volatile</span> <span class="c-kw">std::uint64_t</span>* c = ctrl;
     <span class="c-kw">std::uint64_t</span> last = <span class="c-num">0</span>;
     <span class="c-kw">for</span> (;;) {
@@ -1700,7 +1700,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
         <span class="c-key">mu::atomicAdd</span>(reinterpret_cast&lt;<span class="c-kw">std::int32_t</span>*&gt;(ctrl + <span class="c-num">8</span>), <span class="c-num">1</span>);
     }
     <span class="c-key">mu::flushCacheAll</span>();
-}</pre><div class="code-cap">blinktree/blink_tree_cxl_batch.h · lines 124–137, host side</div><pre class="code-pane"><span class="c-kw">void</span> run(<span class="c-kw">std::uint64_t</span> kind, CXLNode* root, <span class="c-kw">void</span>* reqs, <span class="c-kw">std::size_t</span> n) {
+}</pre><div class="code-cap">tier3/blink_tree/blink_tree_cxl_batch.h · lines 124–137, host side</div><pre class="code-pane"><span class="c-kw">void</span> run(<span class="c-kw">std::uint64_t</span> kind, CXLNode* root, <span class="c-kw">void</span>* reqs, <span class="c-kw">std::size_t</span> n) {
     <span class="c-key">nt</span>(c + <span class="c-num">1</span>, kind); <span class="c-key">nt</span>(c + <span class="c-num">2</span>, (<span class="c-kw">std::uint64_t</span>)reqs); <span class="c-key">nt</span>(c + <span class="c-num">3</span>, n); <span class="c-key">nt</span>(c + <span class="c-num">5</span>, (<span class="c-kw">std::uint64_t</span>)root);
     <span class="c-key">_mm_sfence</span>();                                 <span class="c-cm">// job fields first ...</span>
     <span class="c-key">nt</span>(c + <span class="c-num">0</span>, ++seq);                             <span class="c-cm">// ... then the sequence number</span>
@@ -1708,7 +1708,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
     <span class="c-kw">const</span> <span class="c-kw">std::int64_t</span> target = tasks * seq;      <span class="c-cm">// every task adds 1 per job</span>
     while (<span class="c-key">done</span>() &lt; target) _mm_pause();          <span class="c-cm">// done(): _mm_clflushopt + _mm_mfence + read</span>
 }</pre></div>
-        <div class="impl-unused">Used by NDP@CXL in the B-link tree (shown) and in the hash join, whose <code>cxl_resident_probe_kernel</code> uses the same protocol with a row range and a result block in the control line. Tier 1 costs measured with <code>persistent_spike/</code>.</div>
+        <div class="impl-unused">Used by NDP@CXL in the B-link tree (shown) and in the hash join, whose <code>cxl_resident_probe_kernel</code> uses the same protocol with a row range and a result block in the control line. Tier 1 costs measured with <code>tier1/resident_worker/</code>.</div>
       </div>
     </div>
 
@@ -1716,10 +1716,10 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
       <div class="card-title">Tier 2 · DB operations</div>
       <div class="impl-list">
         <div class="impl-item">
-          <div class="impl-head">Selective scan<span class="impl-dir">tpch_scan_filter/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="impl-head">Selective scan<span class="impl-dir">tier2/scan/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
           <div class="it-grid"><div class="it"><div class="it-label">Kernel</div><div class="it-body"><code>scan_filter</code>: one contiguous slice per MU task; <code>l_orderkey</code> is read only for matching rows. Host threads run the same loop.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body"><code>execute()</code> → <code>synchronize()</code>, upload outside the timer. With return: first launch → last key in host DRAM.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">Host on 8–128 pinned cores with exact 2 MB <code>mbind</code> placement; device 256–3,048 tasks; three runs per point.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Match count and sums equal the reference; returned output is poisoned on the device first, so a stale key fails.</div></div></div>
           <div class="chips impl-chips"><span>placement × cores, count<em>Fig. 8a, 8b</em></span><span>placement × cores, materialize<em>Fig. 8c, 8d</em></span><span>NDP task sweep 256–3,048<em>Fig. 8</em></span><span>return: serial vs. 32 launches<em>Table 5</em></span><span>device read rate (bw tool)<em>§5.1</em></span></div>
-          <div class="impl-code"><div class="code-cap">tpch_scan_filter/scan_common.hpp · lines 55–68, the scan (host and device)</div><pre class="code-pane">inline SliceResult scan_slice_out(<span class="c-kw">const</span> <span class="c-kw">std::uint8_t</span>* qty, <span class="c-kw">const</span> Key* keys, Out* dst,
+          <div class="impl-code"><div class="code-cap">tier2/scan/scan_common.hpp · lines 55–68, the scan (host and device)</div><pre class="code-pane">inline SliceResult scan_slice_out(<span class="c-kw">const</span> <span class="c-kw">std::uint8_t</span>* qty, <span class="c-kw">const</span> Key* keys, Out* dst,
                                   <span class="c-kw">std::uint64_t</span> lo, <span class="c-kw">std::uint64_t</span> hi, <span class="c-kw">std::uint32_t</span> threshold, Key base) {
     SliceResult r{<span class="c-num">0</span>, <span class="c-num">0</span>, <span class="c-num">0</span>};
     <span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> i = lo; i &lt; hi; ++i) {
@@ -1729,7 +1729,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
         ++r.n; r.sum_idx += i; r.sum_key += key;
     }
     <span class="c-kw">return</span> r;
-}</pre><div class="code-cap">tpch_scan_filter/main.cpp · lines 817–826, pipelined return (32 launches)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> st = <span class="c-num">0</span>; st &lt; o.ret_steps &amp;&amp; kok; ++st) {
+}</pre><div class="code-cap">tier2/scan/main.cpp · lines 817–826, pipelined return (32 launches)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> st = <span class="c-num">0</span>; st &lt; o.ret_steps &amp;&amp; kok; ++st) {
     kok = map_step-&gt;<span class="c-key">execute</span>(/* ... */, (st &lt;&lt; <span class="c-num">32</span>) | o.ret_steps) == pxl::PxlResult::Success &amp;&amp;
           map_step-&gt;<span class="c-key">synchronize</span>() == pxl::PxlResult::Success;   <span class="c-cm">// kernel ends with flushCacheAll</span>
     <span class="c-key">pxl::flushHostCache</span>(d_prog, stat_bytes);       <span class="c-cm">// invalidate, then read the task cursors</span>
@@ -1739,10 +1739,10 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
           <div class="impl-files"><code>main.cpp</code><code>scan_common.hpp</code><code>mu_kernel/scan_filter_kernel.cpp</code><code>run_scan.sh</code><code>return_ab.sh</code></div>
         </div>
         <div class="impl-item">
-          <div class="impl-head">B<sup>+</sup>-tree point lookups<span class="impl-dir">btree_lookup/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
-          <div class="it-grid"><div class="it"><div class="it-label">Kernel</div><div class="it-body"><code>btree_lookup</code>: each task walks its probe range; 64 B nodes with implicit children, one line per level.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Lookups only, <code>execute()</code> → <code>synchronize()</code>. Partitioning (counting sort, 64 threads) timed and reported separately.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">Host 8–128 pinned threads, index in DRAM, interleaved or levels first; device 256–3,048 tasks; uniform and Zipfian probes.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Found count and sums checked against values derived from dbgen's key formula; no reference file needed.</div></div></div>
+          <div class="impl-head">B<sup>+</sup>-tree point lookups<span class="impl-dir">tier2/btree/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="it-grid"><div class="it"><div class="it-label">Kernel</div><div class="it-body"><code>tier2/btree</code>: each task walks its probe range; 64 B nodes with implicit children, one line per level.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Lookups only, <code>execute()</code> → <code>synchronize()</code>. Partitioning (counting sort, 64 threads) timed and reported separately.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">Host 8–128 pinned threads, index in DRAM, interleaved or levels first; device 256–3,048 tasks; uniform and Zipfian probes.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Found count and sums checked against values derived from dbgen's key formula; no reference file needed.</div></div></div>
           <div class="chips impl-chips"><span>placements × cores<em>Fig. 9</em></span><span>NDP, partitioned probes<em>Fig. 9</em></span><span>node size 64 B–4 KB<em>Fig. 10a</em></span><span>tree size SF 10–3,000<em>Fig. 10b</em></span><span>partition ranges, layout ablation<em>§5.2.6</em></span><span>group prefetch<em>§5.2.6</em></span></div>
-          <div class="impl-code"><div class="code-cap">btree_lookup/btree_common.hpp · lines 86–100, one lookup (compact layout)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> i = lo; i &lt; hi; ++i) {
+          <div class="impl-code"><div class="code-cap">tier2/btree/btree_common.hpp · lines 86–100, one lookup (compact layout)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> i = lo; i &lt; hi; ++i) {
     <span class="c-kw">const</span> Key k = q[i];
     <span class="c-kw">std::uint64_t</span> cur = c.root;
     <span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> h = c.height - <span class="c-num">1</span>; h &gt; <span class="c-num">0</span>; --h) {          <span class="c-cm">// one 64 B line per level</span>
@@ -1765,17 +1765,17 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
       <div class="card-title">Tier 3 · Composite workloads</div>
       <div class="impl-list">
         <div class="impl-item">
-          <div class="impl-head">Partitioned hash join<span class="impl-dir">hash-join-xcena/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="impl-head">Partitioned hash join<span class="impl-dir">tier3/hash_join/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
           <div class="it-grid"><div class="it"><div class="it-label">Kernels</div><div class="it-body"><code>cxl_partition_kernel</code> + <code>cxl_owner_build_kernel</code> (device build); <code>cxl_resident_probe_kernel</code> (probe, 32 keys prefetched).</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Build (scatter + insert), handoffs, probe and launches, per phase; table initialized with NT stores before the timer; median of five iterations.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">Mode 2 Host@CXL, 3 Hybrid, 4 NDP@CXL; owner-computes build, no atomics; P = 8,192 host, 1,024 device; canary before and after.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Tuple count and an order-independent checksum against a reference join, every iteration.</div></div></div>
           <div class="chips impl-chips"><span>phases, SF 100, 50%<em>Fig. 11a</em></span><span>scaling SF 1–100<em>Fig. 11b</em></span><span>parallelism 12.5–100%<em>Fig. 12a</em></span><span>selectivity 0 / 50 / 100%<em>Fig. 12b</em></span><span>partition count<em>§6.1.3</em></span></div>
-          <div class="impl-code"><div class="code-cap">hash-join-xcena/benchmark.cpp · lines 476–487, Hybrid build handoff</div><pre class="code-pane">_pure_build_end_time = <span class="c-kw">std::chrono::high_resolution_clock::now</span>();
+          <div class="impl-code"><div class="code-cap">tier3/hash_join/benchmark.cpp · lines 476–487, Hybrid build handoff</div><pre class="code-pane">_pure_build_end_time = <span class="c-kw">std::chrono::high_resolution_clock::now</span>();
 #<span class="c-kw">if</span> defined(MODE_CXL_HYBRID)
     <span class="c-cm">// write back the host-built table before the device probes (coherency, timed as a handoff)</span>
     <span class="c-key">parallel_flush</span>({{_cxl_table_arena.get(), _table_stride * count_partitions}});
     <span class="c-key">pxl_helper::safeFlushHostCache</span>(_cxl_ht_ptrs_mem.get(), count_partitions * sizeof(<span class="c-kw">std::uintptr_t</span>));
     <span class="c-key">pxl_helper::safeFlushHostCache</span>(_cxl_config.get(), sizeof(CxlHashJoinConfig));
 #endif
-_build_end_time = <span class="c-kw">std::chrono::high_resolution_clock::now</span>();</pre><div class="code-cap">hash-join-xcena/benchmark.cpp · lines 768–787, result handoff (trimmed)</div><pre class="code-pane"><span class="c-key">pxl_helper::safeFlushHostCache</span>(_cxl_match_counts.get(), /* counts */);
+_build_end_time = <span class="c-kw">std::chrono::high_resolution_clock::now</span>();</pre><div class="code-cap">tier3/hash_join/benchmark.cpp · lines 768–787, result handoff (trimmed)</div><pre class="code-pane"><span class="c-key">pxl_helper::safeFlushHostCache</span>(_cxl_match_counts.get(), /* counts */);
 <span class="c-kw">for</span> (<span class="c-kw">std::uint32_t</span> t = <span class="c-num">0</span>; t &lt; device_tasks; ++t) {     <span class="c-cm">// only the newly written result range</span>
     <span class="c-kw">const</span> <span class="c-kw">std::uint64_t</span> n = _cxl_match_counts.get()[t * result_stride];
     <span class="c-kw">if</span> (n &gt; handed_off[t]) { ranges.emplace_back(/* task t&#x27;s new tuples */); handed_off[t] = n; }
@@ -1785,10 +1785,10 @@ _build_end_time = <span class="c-kw">std::chrono::high_resolution_clock::now</sp
           <div class="impl-files"><code>main.cpp</code><code>benchmark.cpp</code><code>mu_kernel/cxl_build_kernel.cpp</code><code>mu_kernel/cxl_probe_kernel.cpp</code><code>scripts/run_devdax_modes.sh</code></div>
         </div>
         <div class="impl-item">
-          <div class="impl-head">B-link tree under updates<span class="impl-dir">blinktree/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="impl-head">B-link tree under updates<span class="impl-dir">tier3/blink_tree/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
           <div class="it-grid"><div class="it"><div class="it-label">Kernels</div><div class="it-body"><code>cxl_resident_worker</code> (NDP@CXL) or per-batch lookup and write kernels (NDP-sync); latch-free, one writer task per leaf; splits fall back to the host.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Per 1 M batch: staging, kernels, readback with invalidation, host splits, report. Host dedup, replay and write grouping excluded for every plan.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">10 M keys prefilled, then flushed to CXL; 8 M YCSB-A requests, Zipfian θ 0.99; host 1–128 threads, device 16–3,048 tasks; three runs.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">A unique value per update; the final tree is checked against a golden reference; Hybrid soak runs count lost updates.</div></div></div>
           <div class="chips impl-chips"><span>phases and scaling<em>Fig. 13a, 13b</em></span><span>invalidation order, soak<em>§6.2.1</em></span><span>YCSB-D splits<em>§6.2.1</em></span><span>atomic-version variant<em>§6.2.4</em></span><span>request combining on / off<em>§6.2.5</em></span></div>
-          <div class="impl-code"><div class="code-cap">blinktree/blink_tree_scheduler_task.h · lines 360–394, Hybrid: retire host copies after the reads (trimmed)</div><pre class="code-pane"><span class="c-cm">// Drop every leaf the host just read before the device writes. Without this, host copies of</span>
+          <div class="impl-code"><div class="code-cap">tier3/blink_tree/blink_tree_scheduler_task.h · lines 360–394, Hybrid: retire host copies after the reads (trimmed)</div><pre class="code-pane"><span class="c-cm">// Drop every leaf the host just read before the device writes. Without this, host copies of</span>
 <span class="c-cm">// tree lines were later written back over the device&#x27;s updates (10 of 24 soak runs lost data).</span>
 parallel_for_workers(st.size(), thread_id, [&amp;](<span class="c-kw">std::size_t</span> b, <span class="c-kw">std::size_t</span> e) {
     <span class="c-kw">for</span> (<span class="c-kw">std::size_t</span> j = b; j &lt; e; ++j) <span class="c-kw">if</span> (st[j].leaf)          <span class="c-cm">// mark each visited leaf once</span>
@@ -1841,7 +1841,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
           <div class="map-desc">The Tiered placement runs.</div>
         </div>
       </div>
-      <div class="rule"><b>Before every run</b> Flip the mode first, then restart <code>pxl_resourced</code> · never <code>modprobe -r mx_dma</code>, which decommits the CXL regions until a reboot · run as root wherever the host loads or stores device memory · keep one PXL process on the device · check the device with the canary <code>data_movement_tax/main d1 --verify-only</code> before and after.</div>
+      <div class="rule"><b>Before every run</b> Flip the mode first, then restart <code>pxl_resourced</code> · never <code>modprobe -r mx_dma</code>, which decommits the CXL regions until a reboot · run as root wherever the host loads or stores device memory · keep one PXL process on the device · check the device with the canary <code>tier1/data_movement/main d1 --verify-only</code> before and after.</div>
     </div>
 
     <div class="card">
@@ -1883,20 +1883,20 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
           <thead><tr><th>Paper</th><th>Directory</th><th>Command</th><th>Session</th></tr></thead>
           <tbody>
             <tr class="grp"><td colspan="4">Tier 1 · Taxes</td></tr>
-            <tr><td>Fig. 3a, 3c, 3d · Table 2</td><td>orchestration_tax/</td><td><code>notes/fresh_sweep.sh &lt;out&gt;</code></td><td>devdax</td></tr>
-            <tr><td>Fig. 3b</td><td>orchestration_tax/</td><td><code>T2_N=6000 T2_TC=64 [T2_REBUILD=220] ./main_profiler t2</code></td><td>devdax</td></tr>
-            <tr><td>Fig. 5</td><td>translation_tax/</td><td><code>./run_tlb.sh device</code> · <code>./run_tlb.sh host4k</code></td><td>devdax</td></tr>
-            <tr><td>Fig. 6 · Table 3</td><td>data_movement_tax/</td><td><code>sudo ./run_pinned_sweep.sh</code></td><td>devdax, root</td></tr>
-            <tr><td>Fig. 7 · Table 4</td><td>coherence_tax/</td><td><code>sudo ./run_suite.sh</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 3a, 3c, 3d · Table 2</td><td>tier1/orchestration/</td><td><code>scripts/fresh_sweep.sh &lt;out&gt;</code></td><td>devdax</td></tr>
+            <tr><td>Fig. 3b</td><td>tier1/orchestration/</td><td><code>scripts/aging_run.sh</code></td><td>devdax</td></tr>
+            <tr><td>Fig. 5</td><td>tier1/translation/</td><td><code>./run_tlb.sh device</code> · <code>./run_tlb.sh host4k</code></td><td>devdax</td></tr>
+            <tr><td>Fig. 6 · Table 3</td><td>tier1/data_movement/</td><td><code>sudo ./run_pinned_sweep.sh</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 7 · Table 4</td><td>tier1/coherence/</td><td><code>sudo ./run_suite.sh</code></td><td>devdax, root</td></tr>
             <tr class="grp"><td colspan="4">Tier 2 · DB operations</td></tr>
-            <tr><td>Fig. 8</td><td>tpch_scan_filter/</td><td><code>./run_scan.sh 1500</code></td><td>both</td></tr>
-            <tr><td>Table 5</td><td>tpch_scan_filter/</td><td><code>sudo ./return_ab.sh 1500</code></td><td>devdax, root</td></tr>
-            <tr><td>Fig. 9</td><td>btree_lookup/</td><td><code>./run_btree.sh 1500</code> · <code>./ndp_opt_sweep.sh</code></td><td>both</td></tr>
-            <tr><td>Fig. 10</td><td>btree_lookup/</td><td><code>./node_sweep.sh</code> · <code>./node_sweep_host.sh</code> · <code>./size_sweep.sh host|device</code></td><td>both</td></tr>
+            <tr><td>Fig. 8</td><td>tier2/scan/</td><td><code>./run_scan.sh 1500</code></td><td>both</td></tr>
+            <tr><td>Table 5</td><td>tier2/scan/</td><td><code>sudo ./return_ab.sh 1500</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 9</td><td>tier2/btree/</td><td><code>./run_btree.sh 1500</code> · <code>./ndp_opt_sweep.sh</code></td><td>both</td></tr>
+            <tr><td>Fig. 10</td><td>tier2/btree/</td><td><code>./node_sweep.sh</code> · <code>./node_sweep_host.sh</code> · <code>./size_sweep.sh host|device</code></td><td>both</td></tr>
             <tr class="grp"><td colspan="4">Tier 3 · Composite workloads</td></tr>
-            <tr><td>Fig. 11</td><td>hash-join-xcena/</td><td><code>sudo bash scripts/run_devdax_modes.sh 100 50</code></td><td>devdax, root</td></tr>
-            <tr><td>Fig. 12</td><td>hash-join-xcena/</td><td><code>scripts/run_quick4.sh</code> · <code>scripts/run_quick5.sh</code></td><td>devdax, root</td></tr>
-            <tr><td>Fig. 13</td><td>blinktree/</td><td><code>scripts/bench_fig_row.sh</code> · <code>scripts/soak_hybrid.sh</code></td><td>devdax</td></tr>
+            <tr><td>Fig. 11</td><td>tier3/hash_join/</td><td><code>sudo bash scripts/run_devdax_modes.sh 100 50</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 12</td><td>tier3/hash_join/</td><td><code>scripts/run_quick4.sh</code> · <code>scripts/run_quick5.sh</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 13</td><td>tier3/blink_tree/</td><td><code>scripts/bench_fig_row.sh</code> · <code>scripts/soak_hybrid.sh</code></td><td>devdax</td></tr>
           </tbody>
         </table>
       </div>
