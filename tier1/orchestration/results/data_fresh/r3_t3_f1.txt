@@ -1,0 +1,226 @@
+# fresh_handle: ON (rebuild before every timed dispatch: T1 T3 T6 T7 T8 T14)
+# getstats: ON
+# Orchestration Tax Benchmark Suite — Profiler Edition
+# kernel: mu_kernel/mu_kernel.mubin  func: null_kernel
+# cpu_affinity: unpinned (runtime free to schedule)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# TotalSubCount: 24
+# NumClusterPerSub: 4
+# NumMuPerCluster: 8
+# NumThreadPerMu: 4
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+# xpti: OFF (set XPTI=1 for device stages; inflates wall clock)
+
+# TEST: T3_phase_split
+# warmup=20 reps=200 (profiled)
+taskCount,execute_us_mean,execute_us_std,sync_us_mean,sync_us_std,total_us_mean,total_us_std
+1,93.8280,54.5702,1093.7020,69.0746,1187.5299,36.9558
+# getStats_csv tc=1
+GS,1,HostInit,48.0,48.0,48.0
+GS,1,DeviceInit,5.0,5.0,5.0
+GS,1,Request,61.0,61.0,61.0
+GS,1,Waiting,566.0,566.0,566.0
+GS,1,DeviceFinalize,1.0,1.0,1.0
+GS,1,HostFinalize,8.0,8.0,8.0
+GS,1,computation,627.0,627.0,627.0
+GS,1,computeUtilization_pct,91.00,91.00,91.00
+16,91.6314,51.0226,1094.7417,57.4403,1186.3731,32.2157
+# getStats_csv tc=16
+GS,16,HostInit,48.0,48.0,48.0
+GS,16,DeviceInit,5.0,5.0,5.0
+GS,16,Request,44.0,44.0,44.0
+GS,16,Waiting,564.0,564.0,564.0
+GS,16,DeviceFinalize,1.0,1.0,1.0
+GS,16,HostFinalize,8.0,8.0,8.0
+GS,16,computation,608.0,608.0,608.0
+GS,16,computeUtilization_pct,90.75,90.75,90.75
+64,53.4073,16.2236,1274.5088,145.7122,1327.9161,146.8524
+# getStats_csv tc=64
+GS,64,HostInit,47.0,47.0,47.0
+GS,64,DeviceInit,6.0,6.0,6.0
+GS,64,Request,139.0,139.0,139.0
+GS,64,Waiting,566.0,566.0,566.0
+GS,64,DeviceFinalize,1.0,1.0,1.0
+GS,64,HostFinalize,9.0,9.0,9.0
+GS,64,computation,705.0,705.0,705.0
+GS,64,computeUtilization_pct,91.80,91.80,91.80
+128,49.8482,1.9413,1913.5059,72.9314,1963.3541,72.9359
+# getStats_csv tc=128
+GS,128,HostInit,56.0,56.0,56.0
+GS,128,DeviceInit,5.0,5.0,5.0
+GS,128,Request,280.0,280.0,280.0
+GS,128,Waiting,1128.0,1128.0,1128.0
+GS,128,DeviceFinalize,1.0,1.0,1.0
+GS,128,HostFinalize,9.0,9.0,9.0
+GS,128,computation,1408.0,1408.0,1408.0
+GS,128,computeUtilization_pct,95.20,95.20,95.20
+256,49.7926,3.2484,2594.5846,63.1954,2644.3772,63.0972
+# getStats_csv tc=256
+GS,256,HostInit,55.0,55.0,55.0
+GS,256,DeviceInit,5.0,5.0,5.0
+GS,256,Request,380.0,380.0,380.0
+GS,256,Waiting,1692.0,1692.0,1692.0
+GS,256,DeviceFinalize,1.0,1.0,1.0
+GS,256,HostFinalize,9.0,9.0,9.0
+GS,256,computation,2072.0,2072.0,2072.0
+GS,256,computeUtilization_pct,96.73,96.73,96.73
+512,47.2614,2.2051,3333.3480,211.7371,3380.6094,212.3800
+# getStats_csv tc=512
+GS,512,HostInit,44.0,44.0,44.0
+GS,512,DeviceInit,4.0,4.0,4.0
+GS,512,Request,1082.0,1082.0,1082.0
+GS,512,Waiting,1680.0,1680.0,1680.0
+GS,512,DeviceFinalize,1.0,1.0,1.0
+GS,512,HostFinalize,6.0,6.0,6.0
+GS,512,computation,2762.0,2762.0,2762.0
+GS,512,computeUtilization_pct,98.05,98.05,98.05
+1024,45.7866,1.8101,3340.4228,91.5984,3386.2094,91.4572
+# getStats_csv tc=1024
+GS,1024,HostInit,45.0,45.0,45.0
+GS,1024,DeviceInit,3.0,3.0,3.0
+GS,1024,Request,1675.0,1675.0,1675.0
+GS,1024,Waiting,1115.0,1115.0,1115.0
+GS,1024,DeviceFinalize,1.0,1.0,1.0
+GS,1024,HostFinalize,4.0,4.0,4.0
+GS,1024,computation,2790.0,2790.0,2790.0
+GS,1024,computeUtilization_pct,98.14,98.14,98.14
+2048,46.3014,2.2343,3358.1522,190.8024,3404.4536,191.5187
+# getStats_csv tc=2048
+GS,2048,HostInit,45.0,45.0,45.0
+GS,2048,DeviceInit,5.0,5.0,5.0
+GS,2048,Request,1694.0,1694.0,1694.0
+GS,2048,Waiting,1115.0,1115.0,1115.0
+GS,2048,DeviceFinalize,0.0,0.0,0.0
+GS,2048,HostFinalize,4.0,4.0,4.0
+GS,2048,computation,2809.0,2809.0,2809.0
+GS,2048,computeUtilization_pct,98.11,98.11,98.11
+4096,44.2544,4.9974,3602.0238,462.7489,3646.2782,463.1892
+# getStats_csv tc=4096
+GS,4096,HostInit,45.0,45.0,45.0
+GS,4096,DeviceInit,8.0,8.0,8.0
+GS,4096,Request,2512.0,2512.0,2512.0
+GS,4096,Waiting,1131.0,1131.0,1131.0
+GS,4096,DeviceFinalize,2.0,2.0,2.0
+GS,4096,HostFinalize,12.0,12.0,12.0
+GS,4096,computation,3643.0,3643.0,3643.0
+GS,4096,computeUtilization_pct,98.19,98.19,98.19
+8192,44.6774,3.4560,3901.5625,466.4550,3946.2399,466.2026
+# getStats_csv tc=8192
+GS,8192,HostInit,41.0,41.0,41.0
+GS,8192,DeviceInit,3.0,3.0,3.0
+GS,8192,Request,1827.0,1827.0,1827.0
+GS,8192,Waiting,1112.0,1112.0,1112.0
+GS,8192,DeviceFinalize,0.0,0.0,0.0
+GS,8192,HostFinalize,3.0,3.0,3.0
+GS,8192,computation,2939.0,2939.0,2939.0
+GS,8192,computeUtilization_pct,98.43,98.43,98.43
+16384,45.0440,1.8723,4566.0668,143.4261,4611.1108,143.4867
+# getStats_csv tc=16384
+GS,16384,HostInit,42.0,42.0,42.0
+GS,16384,DeviceInit,2.0,2.0,2.0
+GS,16384,Request,2399.0,2399.0,2399.0
+GS,16384,Waiting,1669.0,1669.0,1669.0
+GS,16384,DeviceFinalize,0.0,0.0,0.0
+GS,16384,HostFinalize,3.0,3.0,3.0
+GS,16384,computation,4068.0,4068.0,4068.0
+GS,16384,computeUtilization_pct,98.86,98.86,98.86
+32768,44.5995,1.5957,5913.7392,324.4973,5958.3388,324.6243
+# getStats_csv tc=32768
+GS,32768,HostInit,42.0,42.0,42.0
+GS,32768,DeviceInit,2.0,2.0,2.0
+GS,32768,Request,2960.0,2960.0,2960.0
+GS,32768,Waiting,2191.0,2191.0,2191.0
+GS,32768,DeviceFinalize,0.0,0.0,0.0
+GS,32768,HostFinalize,3.0,3.0,3.0
+GS,32768,computation,5151.0,5151.0,5151.0
+GS,32768,computeUtilization_pct,99.10,99.10,99.10
+65536,46.0800,6.8238,8989.8608,590.2101,9035.9408,591.6621
+# getStats_csv tc=65536
+GS,65536,HostInit,44.0,44.0,44.0
+GS,65536,DeviceInit,2.0,2.0,2.0
+GS,65536,Request,4912.0,4912.0,4912.0
+GS,65536,Waiting,3855.0,3855.0,3855.0
+GS,65536,DeviceFinalize,0.0,0.0,0.0
+GS,65536,HostFinalize,3.0,3.0,3.0
+GS,65536,computation,8767.0,8767.0,8767.0
+GS,65536,computeUtilization_pct,99.44,99.44,99.44
+131072,69.5213,20.2113,15131.9336,648.0730,15201.4549,645.9323
+# getStats_csv tc=131072
+GS,131072,HostInit,45.0,45.0,45.0
+GS,131072,DeviceInit,2.0,2.0,2.0
+GS,131072,Request,7132.0,7132.0,7132.0
+GS,131072,Waiting,6637.0,6637.0,6637.0
+GS,131072,DeviceFinalize,0.0,0.0,0.0
+GS,131072,HostFinalize,3.0,3.0,3.0
+GS,131072,computation,13769.0,13769.0,13769.0
+GS,131072,computeUtilization_pct,99.64,99.64,99.64
+# PROFILE: T3_phase_split — device validates host phase split
+# host(execute) covers Launch path; host(sync) covers post-Launch wait.
+# device(launch_to_start) ≈ DeviceInit; (start_to_end) ≈ kernel time;
+# (end_to_terminate) ≈ DeviceFinalize.
+taskCount,stage,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+1,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+1,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+1,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+16,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+16,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+64,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+64,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+64,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+64,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+128,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+128,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+128,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+128,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+256,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+256,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+256,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+256,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+512,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+512,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+512,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+512,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1024,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+1024,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+1024,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1024,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+2048,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+2048,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+2048,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+2048,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+4096,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+4096,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+4096,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+4096,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+8192,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+8192,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+8192,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+8192,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16384,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+16384,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+16384,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16384,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+32768,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+32768,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+32768,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+32768,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+65536,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+65536,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+65536,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+65536,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+131072,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+131072,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+131072,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+131072,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+# PROFILE: T3_phase_split — host API breakdown
+# Compare e.g. Map::execute (host) vs device(launch_to_start) for same tc.
+taskCount,api_function,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+# DISPATCH_CHECK T3: calls=6160 ok=6160 failed=0
+
+# Done.

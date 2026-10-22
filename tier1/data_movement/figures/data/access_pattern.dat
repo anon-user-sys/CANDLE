@@ -1,0 +1,7 @@
+# idx label cxl dram ratio   (256 MiB buffer, median of 3 runs)
+0 "seq\nRD" 17.697 5.789 3.06
+1 "4K\nRD" 54.630 16.426 3.33
+2 "rand\nRD" 28.916 9.942 2.91
+3 "seq\nWR" 18.165 6.725 2.70
+4 "4K\nWR" 63.512 21.342 2.98
+5 "rand\nWR" 54.695 22.953 2.38

@@ -1,0 +1,1 @@
+RET mode=counter P=64 N=100000 accepted=100000 early_bad=0 poison=0 final_bad=0 timeout=0 host_ns_per_result=1030.0

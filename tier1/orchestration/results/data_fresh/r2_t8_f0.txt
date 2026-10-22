@@ -1,0 +1,30 @@
+# fresh_handle: OFF
+# getstats: ON
+# Orchestration Tax Benchmark Suite — Profiler Edition
+# kernel: mu_kernel/mu_kernel.mubin  func: null_kernel
+# cpu_affinity: unpinned (runtime free to schedule)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# TotalSubCount: 24
+# NumClusterPerSub: 4
+# NumMuPerCluster: 8
+# NumThreadPerMu: 4
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+# xpti: OFF (set XPTI=1 for device stages; inflates wall clock)
+
+# TEST: T8_cluster_bitmap
+# taskCount=64 warmup=20 reps=200 (profiled)
+# NumClusterPerSub=4  max_valid_mask=0x0000000f
+mask_hex,popcount,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+0x00000001,1,1785.9411,346.8170,1294.4017,1675.0452,2346.3309,2435.3267,2436.6578,200
+0x00000003,2,2191.3074,444.4834,1349.1659,2247.4539,2765.4383,2816.8691,2827.6126,200
+0x0000000f,4,2477.8685,434.8994,1442.3151,2502.7133,3028.4323,3097.1811,3099.3856,200
+0x00000000,all,2539.3089,654.6620,1350.6759,2769.6362,3291.3351,3336.2491,3341.7159,200
+# PROFILE: T8_cluster_bitmap — activation ground truth UNAVAILABLE (L1 probe stream empty, 0 rows); latency curve above is the result
+# PROFILE: T8_cluster_bitmap — host API breakdown
+mask_hex,popcount,api_function,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+# DISPATCH_CHECK T8: calls=1760 ok=1760 failed=0
+
+# Done.

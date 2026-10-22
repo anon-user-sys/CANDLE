@@ -15,3 +15,5 @@ tier1/resident_worker/main_spike
 # local runs and caches
 __pycache__/
 *.log
+# rendered figures (regenerate with ./candle.sh figures all)
+*.eps

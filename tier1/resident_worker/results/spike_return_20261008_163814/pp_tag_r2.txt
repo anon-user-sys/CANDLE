@@ -1,0 +1,1 @@
+PP mode=tag M=10000 accepted=10000 early_bad=0 poison=0 final_bad=0 timeout=0 rt_p50_ns=2966 rt_p90_ns=3066 rt_p99_ns=3430 rt_mean_ns=3201 enq_mean_ns=1396

@@ -1,0 +1,111 @@
+# fresh_handle: ON (rebuild before every timed dispatch: T1 T3 T6 T7 T8 T14)
+# getstats: ON
+# Orchestration Tax Benchmark Suite — Profiler Edition
+# kernel: mu_kernel/mu_kernel.mubin  func: null_kernel
+# cpu_affinity: unpinned (runtime free to schedule)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# TotalSubCount: 24
+# NumClusterPerSub: 4
+# NumMuPerCluster: 8
+# NumThreadPerMu: 4
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+# xpti: OFF (set XPTI=1 for device stages; inflates wall clock)
+
+# TEST: T6_sub_count
+# taskCount=64 warmup=20 reps=200 (profiled)
+# availableSubCount=24
+numSub,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+1,1400.8448,83.3954,1207.1284,1404.4480,1519.6431,1616.5690,1633.3793,200
+# getStats_csv numSub=1
+GS,1,HostInit,62.0,62.0,62.0
+GS,1,DeviceInit,2.0,2.0,2.0
+GS,1,Request,177.0,177.0,177.0
+GS,1,Waiting,570.0,570.0,570.0
+GS,1,DeviceFinalize,1.0,1.0,1.0
+GS,1,HostFinalize,1.0,1.0,1.0
+GS,1,computation,747.0,747.0,747.0
+GS,1,computeUtilization_pct,91.88,91.88,91.88
+2,1407.9719,56.1201,1323.4801,1397.2068,1525.6354,1560.9715,1619.5002,200
+# getStats_csv numSub=2
+GS,2,HostInit,83.0,83.0,83.0
+GS,2,DeviceInit,2.0,2.0,2.0
+GS,2,Request,234.0,234.0,234.0
+GS,2,Waiting,569.0,569.0,569.0
+GS,2,DeviceFinalize,1.0,1.0,1.0
+GS,2,HostFinalize,2.0,2.0,2.0
+GS,2,computation,803.0,803.0,803.0
+GS,2,computeUtilization_pct,90.12,90.12,90.12
+4,1275.9673,71.4356,1179.3691,1260.4747,1360.1307,1803.5030,1848.7615,200
+# getStats_csv numSub=4
+GS,4,HostInit,67.0,67.0,67.0
+GS,4,DeviceInit,2.0,2.0,2.0
+GS,4,Request,109.0,109.0,109.0
+GS,4,Waiting,569.0,569.0,569.0
+GS,4,DeviceFinalize,1.0,1.0,1.0
+GS,4,HostFinalize,3.0,3.0,3.0
+GS,4,computation,678.0,678.0,678.0
+GS,4,computeUtilization_pct,90.28,90.28,90.28
+8,1281.9387,79.2035,1209.8229,1261.5447,1389.1134,1786.6727,1852.5971,200
+# getStats_csv numSub=8
+GS,8,HostInit,64.0,64.0,64.0
+GS,8,DeviceInit,5.0,5.0,5.0
+GS,8,Request,121.0,121.0,121.0
+GS,8,Waiting,569.0,569.0,569.0
+GS,8,DeviceFinalize,1.0,1.0,1.0
+GS,8,HostFinalize,5.0,5.0,5.0
+GS,8,computation,690.0,690.0,690.0
+GS,8,computeUtilization_pct,90.20,90.20,90.20
+16,1326.6441,151.0301,1189.2070,1277.7439,1799.0229,1855.3960,1855.4038,200
+# getStats_csv numSub=16
+GS,16,HostInit,66.0,66.0,66.0
+GS,16,DeviceInit,8.0,8.0,8.0
+GS,16,Request,155.0,155.0,155.0
+GS,16,Waiting,567.0,567.0,567.0
+GS,16,DeviceFinalize,2.0,2.0,2.0
+GS,16,HostFinalize,8.0,8.0,8.0
+GS,16,computation,722.0,722.0,722.0
+GS,16,computeUtilization_pct,89.58,89.58,89.58
+24,1409.0883,223.9318,1242.2978,1292.6486,1852.4926,1882.7131,1885.4487,200
+# getStats_csv numSub=24
+GS,24,HostInit,60.0,60.0,60.0
+GS,24,DeviceInit,6.0,6.0,6.0
+GS,24,Request,149.0,149.0,149.0
+GS,24,Waiting,568.0,568.0,568.0
+GS,24,DeviceFinalize,1.0,1.0,1.0
+GS,24,HostFinalize,9.0,9.0,9.0
+GS,24,computation,717.0,717.0,717.0
+GS,24,computeUtilization_pct,90.42,90.42,90.42
+# PROFILE: T6_sub_count — DeviceInit should grow with numSub if NoC fan-out is the cost
+numSub,stage,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+1,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+1,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+1,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+2,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+2,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+2,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+2,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+4,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+4,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+4,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+4,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+8,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+8,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+8,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+8,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+16,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+16,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+24,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+24,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+24,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+24,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+# PROFILE: T6_sub_count — host API breakdown
+numSub,api_function,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+# DISPATCH_CHECK T6: calls=2640 ok=2640 failed=0
+
+# Done.

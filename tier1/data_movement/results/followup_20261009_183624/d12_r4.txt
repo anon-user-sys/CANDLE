@@ -1,0 +1,26 @@
+# Data Movement Tax Benchmark Suite
+# direct_paths: on   iomem_rows: off
+# d1_sizes: 4x grid
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# CxlMemoryCapacity: 250181844992
+# IoMemoryCapacity: 2382364672
+# available_mem_gb: 233.0
+# available_io_gb:  2.2
+# cpu_affinity: unpinned (runtime free to schedule)
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+
+# TEST: D12_rw_ratio
+# Direct-pointer load:store ratio sweep on CxlMem (random offset).
+# Buffer = 268435456 bytes, pre-touched.  Same random permutation as D10.
+# Access type at step i: write iff (i & 3) < writes_per_4 (rhythmic).
+read_pct,write_pct,n_ops,walks,ns_per_op,line_gb_per_sec
+100,0,4194304,1,27.1108,2.1986
+75,25,4194304,1,25.4492,2.3421
+50,50,4194304,1,36.3236,1.6409
+25,75,4194304,1,46.2478,1.2888
+0,100,4194304,1,53.8670,1.1065
+
+# Done.

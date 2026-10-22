@@ -1,0 +1,9 @@
+# T15 multi-iteration dispatch, 64 tasks, tax per iteration (us)
+# fresh: median/min/max of 3 runs (fresh handle per timed dispatch); aged: 1 control run, one shared handle
+# k fresh_med fresh_min fresh_max aged
+1 1264.665 1259.250 1281.650 2543.366
+4 314.683 312.291 317.635 678.114
+16 78.217 78.113 79.871 281.503
+64 19.683 19.589 19.891 171.830
+256 4.916 4.880 4.961 64.246
+1024 1.242 1.240 1.262 16.199

@@ -1,0 +1,67 @@
+# Data Movement Tax Benchmark Suite
+# direct_paths: on   iomem_rows: off
+# d1_sizes: 4x grid + 128K/512K/2M (--fine)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# CxlMemoryCapacity: 250181844992
+# IoMemoryCapacity: 2382364672
+# available_mem_gb: 233.0
+# available_io_gb:  2.2
+# cpu_affinity: unpinned (runtime free to schedule)
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+
+# TEST: D4_direct_vs_copy
+# Per size, ratio = path_p50 / copyToDevice_p50 (same direction).
+# ratio < 1 → path beats SDK; ratio > 1 → SDK beats path.
+# Payload varies per rep (flushHostCache skips unchanged ranges, so
+# a constant buffer undermeasures every direct-write path).
+size_bytes,direction,api,p50_us,min_us,mean_us,gb_per_sec,ratio_vs_copy
+4096,H2D,copyToDevice,36.5660,35.0671,36.5660,0.1043,1.0000
+4096,H2D,direct_memcpy,3.2912,3.2367,3.2912,1.1591,0.0900
+4096,H2D,direct_word,3.2323,2.6578,3.2323,1.1802,0.0884
+4096,H2D,direct_ntstore,1.4834,1.4734,1.4834,2.5717,0.0406
+# D4: ioMemAlloc(4096) failed; skipping syncToDevice row
+4096,D2H,copyFromDevice,36.2393,34.2649,36.2393,0.1053,1.0000
+4096,D2H,direct_memcpy,2.9434,2.8967,2.9434,1.2960,0.0812
+4096,D2H,direct_word,3.5478,3.4923,3.5478,1.0752,0.0979
+# D4: ioMemAlloc(4096) failed; skipping syncFromDevice row
+65536,H2D,copyToDevice,73.9709,71.2454,73.9709,0.8251,1.0000
+65536,H2D,direct_memcpy,60.6341,27.6515,60.6341,1.0066,0.8197
+65536,H2D,direct_word,44.5772,43.9183,44.5772,1.3692,0.6026
+65536,H2D,direct_ntstore,10.5835,10.5746,10.5835,5.7670,0.1431
+# D4: ioMemAlloc(65536) failed; skipping syncToDevice row
+65536,D2H,copyFromDevice,74.1076,70.2409,74.1076,0.8236,1.0000
+65536,D2H,direct_memcpy,43.5939,27.0037,43.5939,1.4001,0.5883
+65536,D2H,direct_word,51.5462,24.7692,51.5462,1.1841,0.6956
+# D4: ioMemAlloc(65536) failed; skipping syncFromDevice row
+1048576,H2D,copyToDevice,135.0217,132.6484,135.0217,7.2326,1.0000
+1048576,H2D,direct_memcpy,396.4439,389.4661,396.4439,2.4633,2.9361
+1048576,H2D,direct_word,384.3016,381.9404,384.3016,2.5411,2.8462
+1048576,H2D,direct_ntstore,156.4831,156.4642,156.4831,6.2407,1.1589
+# D4: ioMemAlloc(1048576) failed; skipping syncToDevice row
+1048576,D2H,copyFromDevice,143.4796,140.8329,143.4796,6.8063,1.0000
+1048576,D2H,direct_memcpy,363.9313,353.0823,363.9313,2.6834,2.5365
+1048576,D2H,direct_word,392.9161,391.8728,392.9161,2.4854,2.7385
+# D4: ioMemAlloc(1048576) failed; skipping syncFromDevice row
+16777216,H2D,copyToDevice,1652.5588,1588.7469,1652.5588,9.4550,1.0000
+16777216,H2D,direct_memcpy,5793.0248,5745.6898,5793.0248,2.6972,3.5055
+16777216,H2D,direct_word,5471.6940,5441.9881,5471.6940,2.8556,3.3110
+16777216,H2D,direct_ntstore,2509.9653,2505.4141,2509.9653,6.2252,1.5188
+# D4: ioMemAlloc(16777216) failed; skipping syncToDevice row
+16777216,D2H,copyFromDevice,1560.6087,1502.9691,1560.6087,10.0121,1.0000
+16777216,D2H,direct_memcpy,5248.0879,5237.6222,5248.0879,2.9773,3.3628
+16777216,D2H,direct_word,5761.3977,5737.5496,5761.3977,2.7120,3.6918
+# D4: ioMemAlloc(16777216) failed; skipping syncFromDevice row
+67108864,H2D,copyToDevice,6381.0578,6295.3234,6381.0578,9.7946,1.0000
+67108864,H2D,direct_memcpy,10859.8059,10763.5591,10859.8059,5.7552,1.7019
+67108864,H2D,direct_word,21969.0206,21926.5500,21969.0206,2.8449,3.4428
+67108864,H2D,direct_ntstore,10628.3374,10601.1148,10628.3374,5.8805,1.6656
+# D4: ioMemAlloc(67108864) failed; skipping syncToDevice row
+67108864,D2H,copyFromDevice,5676.2555,5620.0148,5676.2555,11.0108,1.0000
+67108864,D2H,direct_memcpy,17760.0515,17557.5578,17760.0515,3.5191,3.1288
+67108864,D2H,direct_word,23066.2356,23034.4063,23066.2356,2.7096,4.0636
+# D4: ioMemAlloc(67108864) failed; skipping syncFromDevice row
+
+# Done.

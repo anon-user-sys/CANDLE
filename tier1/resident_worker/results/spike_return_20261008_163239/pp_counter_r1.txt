@@ -1,0 +1,1 @@
+PP mode=counter M=10000 accepted=10000 early_bad=0 poison=0 final_bad=0 timeout=0 rt_p50_ns=3627 rt_p90_ns=4198 rt_p99_ns=4260 rt_mean_ns=3757 enq_mean_ns=908

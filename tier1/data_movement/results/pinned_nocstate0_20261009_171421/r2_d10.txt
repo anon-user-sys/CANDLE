@@ -1,0 +1,56 @@
+# Data Movement Tax Benchmark Suite
+# direct_paths: on   iomem_rows: off
+# d1_sizes: 4x grid + 128K/512K/2M (--fine)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# CxlMemoryCapacity: 250181844992
+# IoMemoryCapacity: 2382364672
+# available_mem_gb: 233.0
+# available_io_gb:  2.2
+# cpu_affinity: unpinned (runtime free to schedule)
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+
+# TEST: D10_access_pattern
+# Direct host-pointer access at varying strides.
+# Baseline is host malloc + MADV_HUGEPAGE, NOT IoMem: the CXL mapping
+# reports KernelPageSize 2048 kB while IoMem maps host RAM in 4 KiB
+# pages, so the old IoMem comparison confounded memory type with page
+# size and understated the gap on random access.
+# Buffer sizes are chosen to EXCEED last-level cache: this CPU
+# (Xeon 6756E) has 96 MiB of L3 per socket, so an 8 or 64 MiB walk
+# never leaves cache and measures L3, not memory -- an earlier version
+# of this test did exactly that and found CXL indistinguishable from
+# DRAM (within 4%), which was a cache artifact.  Translation cost is
+# measured separately (device TLB: 8 entries x 1 GB, ~590 ns/miss), not
+# here: a TLB-resident buffer would have to be small enough to sit
+# inside L3, so the two effects cannot be separated by buffer size.
+api,buffer_bytes,l3_multiple,direction,stride_label,ops_per_walk,walks,ns_per_op,line_gb_per_sec
+memAlloc,268435456,2.7x,read,64,4194304,1,17.7300,3.3618
+memAlloc,268435456,2.7x,write,64,4194304,1,18.1859,3.2775
+memAlloc,268435456,2.7x,read,4096,65536,6,54.6300,1.0911
+memAlloc,268435456,2.7x,write,4096,65536,5,63.5395,0.9381
+memAlloc,268435456,2.7x,read,random,4194304,1,28.9754,2.0571
+memAlloc,268435456,2.7x,write,random,4194304,1,54.9079,1.0855
+memAlloc,1073741824,10.7x,read,64,16777216,1,17.8661,3.3362
+memAlloc,1073741824,10.7x,write,64,16777216,1,18.3493,3.2483
+memAlloc,1073741824,10.7x,read,4096,262144,2,55.0677,1.0824
+memAlloc,1073741824,10.7x,write,4096,262144,2,63.8764,0.9331
+memAlloc,1073741824,10.7x,read,random,16777216,1,35.5586,1.6762
+memAlloc,1073741824,10.7x,write,random,16777216,1,62.2940,0.9568
+host_hugepage,268435456,2.7x,read,64,4194304,1,5.9686,9.9864
+host_hugepage,268435456,2.7x,write,64,4194304,1,6.7583,8.8195
+host_hugepage,268435456,2.7x,read,4096,65536,19,16.4748,3.6179
+host_hugepage,268435456,2.7x,write,4096,65536,15,21.5888,2.7609
+host_hugepage,268435456,2.7x,read,random,4194304,1,9.9510,5.9898
+host_hugepage,268435456,2.7x,write,random,4194304,1,23.1387,2.5760
+host_hugepage,1073741824,10.7x,read,64,16777216,1,5.9602,10.0004
+host_hugepage,1073741824,10.7x,write,64,16777216,1,6.7609,8.8161
+host_hugepage,1073741824,10.7x,read,4096,262144,5,16.5498,3.6015
+host_hugepage,1073741824,10.7x,write,4096,262144,4,21.5651,2.7639
+host_hugepage,1073741824,10.7x,read,random,16777216,1,11.5562,5.1578
+host_hugepage,1073741824,10.7x,write,random,16777216,1,22.8953,2.6034
+# WALK_CHECK D10: 48534 writes verified, 0 mismatched
+
+# Done.

@@ -1,0 +1,72 @@
+# Data Movement Tax Benchmark Suite
+# direct_paths: on   iomem_rows: off
+# d1_sizes: 4x grid + 128K/512K/2M (--fine)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# CxlMemoryCapacity: 250181844992
+# IoMemoryCapacity: 2382364672
+# available_mem_gb: 233.0
+# available_io_gb:  1.8
+# cpu_affinity: unpinned (runtime free to schedule)
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+
+# TEST: D4_direct_vs_copy
+# Per size, ratio = path_p50 / copyToDevice_p50 (same direction).
+# ratio < 1 → path beats SDK; ratio > 1 → SDK beats path.
+# Payload varies per rep (flushHostCache skips unchanged ranges, so
+# a constant buffer undermeasures every direct-write path).
+size_bytes,direction,api,p50_us,min_us,mean_us,gb_per_sec,ratio_vs_copy
+4096,H2D,copyToDevice,36.5893,35.2027,36.5893,0.1043,1.0000
+4096,H2D,direct_memcpy,3.2834,3.2378,3.2834,1.1618,0.0897
+4096,H2D,direct_word,3.2434,2.1378,3.2434,1.1762,0.0886
+4096,H2D,direct_ntstore,1.4867,1.4500,1.4867,2.5659,0.0406
+4096,H2D,direct_ntstore_noflush,0.7267,0.6989,0.7267,5.2495,0.0199
+# D4: ioMemAlloc(4096) failed; skipping syncToDevice row
+4096,D2H,copyFromDevice,36.3816,34.1849,36.3816,0.1049,1.0000
+4096,D2H,direct_memcpy,2.9345,1.9034,2.9345,1.3000,0.0807
+4096,D2H,direct_word,3.5334,3.4812,3.5334,1.0796,0.0971
+# D4: ioMemAlloc(4096) failed; skipping syncFromDevice row
+65536,H2D,copyToDevice,74.1809,71.6831,74.1809,0.8228,1.0000
+65536,H2D,direct_memcpy,60.8274,24.7870,60.8274,1.0034,0.8200
+65536,H2D,direct_word,44.4050,30.7859,44.4050,1.3745,0.5986
+65536,H2D,direct_ntstore,10.5857,10.5768,10.5857,5.7658,0.1427
+65536,H2D,direct_ntstore_noflush,5.9701,5.9567,5.9701,10.2235,0.0805
+# D4: ioMemAlloc(65536) failed; skipping syncToDevice row
+65536,D2H,copyFromDevice,75.1220,70.8798,75.1220,0.8125,1.0000
+65536,D2H,direct_memcpy,43.4705,28.8181,43.4705,1.4041,0.5787
+65536,D2H,direct_word,51.4740,24.5881,51.4740,1.1857,0.6852
+# D4: ioMemAlloc(65536) failed; skipping syncFromDevice row
+1048576,H2D,copyToDevice,134.8483,131.7705,134.8483,7.2419,1.0000
+1048576,H2D,direct_memcpy,394.5626,389.1414,394.5626,2.4751,2.9260
+1048576,H2D,direct_word,383.2325,380.9647,383.2325,2.5482,2.8420
+1048576,H2D,direct_ntstore,156.4941,156.4775,156.4941,6.2402,1.1605
+1048576,H2D,direct_ntstore_noflush,90.4422,90.4133,90.4422,10.7976,0.6707
+# D4: ioMemAlloc(1048576) failed; skipping syncToDevice row
+1048576,D2H,copyFromDevice,141.3595,135.5994,141.3595,6.9084,1.0000
+1048576,D2H,direct_memcpy,362.5322,360.2855,362.5322,2.6937,2.5646
+1048576,D2H,direct_word,391.3059,390.0215,391.3059,2.4956,2.7682
+# D4: ioMemAlloc(1048576) failed; skipping syncFromDevice row
+16777216,H2D,copyToDevice,1661.9004,1597.7696,1661.9004,9.4019,1.0000
+16777216,H2D,direct_memcpy,5780.5442,5740.8026,5780.5442,2.7030,3.4783
+16777216,H2D,direct_word,5463.1815,5434.8578,5463.1815,2.8601,3.2873
+16777216,H2D,direct_ntstore,2511.5208,2505.8463,2511.5208,6.2213,1.5112
+16777216,H2D,direct_ntstore_noflush,1456.9468,1452.7167,1456.9468,10.7245,0.8767
+# D4: ioMemAlloc(16777216) failed; skipping syncToDevice row
+16777216,D2H,copyFromDevice,1570.0804,1511.9219,1570.0804,9.9517,1.0000
+16777216,D2H,direct_memcpy,5248.1788,5239.7476,5248.1788,2.9772,3.3426
+16777216,D2H,direct_word,5758.6118,5733.6003,5758.6118,2.7133,3.6677
+# D4: ioMemAlloc(16777216) failed; skipping syncFromDevice row
+67108864,H2D,copyToDevice,6364.5536,6300.0451,6364.5536,9.8200,1.0000
+67108864,H2D,direct_memcpy,10872.6812,10809.8104,10872.6812,5.7484,1.7083
+67108864,H2D,direct_word,21974.4262,21941.1981,21974.4262,2.8442,3.4526
+67108864,H2D,direct_ntstore,10643.4839,10598.1178,10643.4839,5.8721,1.6723
+67108864,H2D,direct_ntstore_noflush,6408.5097,6380.3427,6408.5097,9.7527,1.0069
+# D4: ioMemAlloc(67108864) failed; skipping syncToDevice row
+67108864,D2H,copyFromDevice,5641.7303,5593.7720,5641.7303,11.0782,1.0000
+67108864,D2H,direct_memcpy,17808.1340,17550.9853,17808.1340,3.5096,3.1565
+67108864,D2H,direct_word,23073.5575,23036.1037,23073.5575,2.7087,4.0898
+# D4: ioMemAlloc(67108864) failed; skipping syncFromDevice row
+
+# Done.

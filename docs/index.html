@@ -488,6 +488,7 @@ pre.code-pane { background: var(--navy); color: #e6eef3; border-radius: 6px; bor
 .sw-cap { font-size: var(--fs-fig); color: var(--muted); margin-top: -.2rem; }
 
 /* Reproduce */
+pre.tree { font-family: var(--mono); font-size: 12.5px; line-height: 1.55; color: var(--navy); background: #fff; border-radius: 6px; padding: .6rem .8rem; margin: 0; overflow-x: auto; }
 ol.cmd-steps { list-style: none; counter-reset: cs; display: grid; gap: 5px; }
 ol.cmd-steps li { counter-increment: cs; position: relative; padding-left: 1.8rem; font-size: var(--fs-fig); color: var(--body); }
 ol.cmd-steps li::before { content: counter(cs); position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%;
@@ -1633,7 +1634,7 @@ s = cfg-&gt;seed;                             <span class="c-cm">// timed pass: 
 cfg-&gt;cycles = cycles;
 cfg-&gt;sum = sum;                            <span class="c-cm">// checked against a host replay</span>
 <span class="c-key">mu::flushCacheAll</span>();                       <span class="c-cm">// publish the results</span></pre></div>
-          <div class="impl-files"><code>main.cpp</code><code>tt_common.hpp</code><code>mu_kernel/tt_kernel.cpp</code><code>run_tlb.sh</code></div>
+          <div class="impl-files"><code>main.cpp</code><code>tt_common.hpp</code><code>mu_kernel/tt_kernel.cpp</code><code>scripts/run_tlb.sh</code></div>
         </div>
         <div class="impl-item">
           <div class="impl-head"><i class="g g-b">β</i>Data movement · transfer sweep<span class="impl-dir">tier1/data_movement/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
@@ -1653,7 +1654,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
     <span class="c-key">_mm256_stream_si256</span>((<span class="c-kw">__m256i</span>*)(d + i), v);               <span class="c-cm">// bypasses the host cache</span>
 }
 <span class="c-kw">if</span> (cached) <span class="c-key">_mm_mfence</span>(); <span class="c-kw">else</span> <span class="c-key">_mm_sfence</span>();         <span class="c-cm">// aligned sizes: NT stores + sfence only</span></pre></div>
-          <div class="impl-files"><code>main.cpp</code><code>run_pinned_sweep.sh</code><code>diag_dma_floor.sh</code><code>figures/make_fig_data.py</code></div>
+          <div class="impl-files"><code>main.cpp</code><code>scripts/run_pinned_sweep.sh</code><code>scripts/diag_dma_floor.sh</code><code>figures/make_data.py</code></div>
         </div>
         <div class="impl-item">
           <div class="impl-head"><i class="g g-c">γ</i>Coherency · visibility suite<span class="impl-dir">tier1/coherence/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
@@ -1669,7 +1670,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
     *ctr = c + <span class="c-num">1</span>;                                                <span class="c-cm">// publish this chunk</span>
     <span class="c-key">mu::flushCache</span>((<span class="c-kw">const</span> <span class="c-kw">void</span>*)ctr, <span class="c-num">64</span>);
 }</pre></div>
-          <div class="impl-files"><code>main.cpp</code><code>coh_common.hpp</code><code>mu_kernel/coh_kernel.cpp</code><code>run_suite.sh</code></div>
+          <div class="impl-files"><code>main.cpp</code><code>coh_common.hpp</code><code>mu_kernel/coh_kernel.cpp</code><code>scripts/run_suite.sh</code></div>
         </div>
       </div>
     </div>
@@ -1807,7 +1808,35 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
 
   <div id="repro" class="section">
     <div class="sec-title">Reproduce</div>
-    <div class="sec-desc">What you need, how to put the machine into the right session, and which command regenerates each figure and table. Every benchmark directory builds with <code>./build.sh</code> and writes a timestamped CSV to its <code>results/</code>; its figure scripts read those CSVs.</div>
+    <div class="sec-desc">Every benchmark has the same layout and the same entry points, driven from one script. Below: what you need, the two machine sessions, and which run regenerates each figure and table.</div>
+
+    <div class="card">
+      <div class="card-title">One layout, one driver</div>
+      <div class="mapfig">
+        <div class="mapcol kmem">
+          <div class="map-label">Every component</div>
+          <pre class="tree">tier&lt;N&gt;/&lt;component&gt;/
+├─ README.md     what it measures, paper figures
+├─ build.sh      host driver + MU kernel
+├─ run.sh        the paper's runs → results/
+├─ smoke.sh      small validated run → PASS / FAIL
+├─ scripts/      the underlying sweeps
+├─ results/      raw runs behind the figures
+└─ figures/      make_data.py · render.sh · fig_*.gp</pre>
+        </div>
+        <div class="mapcol dax">
+          <div class="map-label">candle.sh</div>
+          <ol class="cmd-steps">
+            <li><code>./candle.sh list</code> <span>the components</span></li>
+            <li><code>./candle.sh build all</code> <span>as your user</span></li>
+            <li><code>sudo ./candle.sh smoke all</code> <span>PASS / FAIL per component</span></li>
+            <li><code>./candle.sh run &lt;component&gt;</code> <span>the paper's runs</span></li>
+            <li><code>./candle.sh figures all</code> <span>results → data → .eps</span></li>
+          </ol>
+          <div class="map-desc">A component is named by its path (<code>tier1/coherence</code>) or its last part (<code>coherence</code>).</div>
+        </div>
+      </div>
+    </div>
 
     <div class="card">
       <div class="card-title">Requirements</div>
@@ -1867,7 +1896,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
       <button class="emu-toggle" aria-expanded="false" aria-controls="emuGuide">Show step-by-step setup</button>
       <div class="emu-guide" id="emuGuide" hidden>
       <div class="chips emu-needs"><span>Docker</span><span>/dev/kvm, or <code>--no-kvm</code></span><span>~25 GB disk per container</span><span>48 GiB RAM for the guest</span><span>no CXL hardware or drivers</span></div>
-      <ol class="emu-steps"><li><div class="es-title">Check KVM on the host</div><div class="es-cmd"><code>ls -l /dev/kvm</code> <code>kvm-ok</code></div><div class="es-note"><code>kvm-ok</code> comes with Ubuntu's <code>cpu-checker</code>. Without KVM everything still works, only slower.</div></li><li><div class="es-title">Start the SDK container</div><div class="es-cmd"><code>docker run -it --name xcena_sdk --device=/dev/kvm --cap-add=SYS_ADMIN -e USER="$USER" xcenadev/sdk:&lt;tag&gt; /bin/bash</code></div><div class="es-note">Use the tag of your SDK release (the paper used PXL SDK 2.0.0). Without KVM, leave out <code>--device=/dev/kvm</code>.</div></li><li><div class="es-title">Boot the emulated machine</div><div class="es-cmd"><code>cd /work/emulator &amp;&amp; ./run.sh</code></div><div class="es-note">Add <code>--no-kvm</code> without KVM. The first boot can stay silent for minutes while the ~25 GB guest disk is copied; the guest logs in as <code>xcena</code>.</div></li><li><div class="es-title">Wait for device setup</div><div class="es-cmd"><code>until systemctl is-active --quiet xcena_init.service &amp;&amp; test -f /opt/xcena/init_done; do sleep 2; done</code></div><div class="es-note">In the guest. If it fails: <code>systemctl status xcena_init.service</code>.</div></li><li><div class="es-title">Check the virtual device</div><div class="es-cmd"><code>xcena_cli num-device</code></div><div class="es-note">Expect <code>Number of devices : 1</code>.</div></li><li><div class="es-title">Build and validate CANDLE</div><div class="es-cmd"><code>git clone https://github.com/anon-user-sys/CANDLE</code> → <code>./build.sh</code> → a small run of any benchmark</div><div class="es-note">Inside the guest, with small inputs. A run passes when its validation does; ignore the timings.</div></li></ol>
+      <ol class="emu-steps"><li><div class="es-title">Check KVM on the host</div><div class="es-cmd"><code>ls -l /dev/kvm</code> <code>kvm-ok</code></div><div class="es-note"><code>kvm-ok</code> comes with Ubuntu's <code>cpu-checker</code>. Without KVM everything still works, only slower.</div></li><li><div class="es-title">Start the SDK container</div><div class="es-cmd"><code>docker run -it --name xcena_sdk --device=/dev/kvm --cap-add=SYS_ADMIN -e USER="$USER" xcenadev/sdk:&lt;tag&gt; /bin/bash</code></div><div class="es-note">Use the tag of your SDK release (the paper used PXL SDK 2.0.0). Without KVM, leave out <code>--device=/dev/kvm</code>.</div></li><li><div class="es-title">Boot the emulated machine</div><div class="es-cmd"><code>cd /work/emulator &amp;&amp; ./run.sh</code></div><div class="es-note">Add <code>--no-kvm</code> without KVM. The first boot can stay silent for minutes while the ~25 GB guest disk is copied; the guest logs in as <code>xcena</code>.</div></li><li><div class="es-title">Wait for device setup</div><div class="es-cmd"><code>until systemctl is-active --quiet xcena_init.service &amp;&amp; test -f /opt/xcena/init_done; do sleep 2; done</code></div><div class="es-note">In the guest. If it fails: <code>systemctl status xcena_init.service</code>.</div></li><li><div class="es-title">Check the virtual device</div><div class="es-cmd"><code>xcena_cli num-device</code></div><div class="es-note">Expect <code>Number of devices : 1</code>.</div></li><li><div class="es-title">Build and validate CANDLE</div><div class="es-cmd"><code>git clone https://github.com/anon-user-sys/CANDLE</code> → <code>./candle.sh build all</code> → <code>./candle.sh smoke all</code></div><div class="es-note">Inside the guest, with small inputs. A run passes when its validation does; ignore the timings.</div></li></ol>
       <div class="emu-tips">
         <div><b>Keep it running</b> Closing the <code>docker run</code> terminal stops the emulator; detach with Ctrl-P, Ctrl-Q.</div>
         <div><b>Reconnect</b> <code>docker start -ai xcena_sdk</code> or <code>docker exec -it xcena_sdk /bin/bash</code>.</div>
@@ -1883,11 +1912,11 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
           <thead><tr><th>Paper</th><th>Directory</th><th>Command</th><th>Session</th></tr></thead>
           <tbody>
             <tr class="grp"><td colspan="4">Tier 1 · Taxes</td></tr>
-            <tr><td>Fig. 3a, 3c, 3d · Table 2</td><td>tier1/orchestration/</td><td><code>scripts/fresh_sweep.sh &lt;out&gt;</code></td><td>devdax</td></tr>
-            <tr><td>Fig. 3b</td><td>tier1/orchestration/</td><td><code>scripts/aging_run.sh</code></td><td>devdax</td></tr>
-            <tr><td>Fig. 5</td><td>tier1/translation/</td><td><code>./run_tlb.sh device</code> · <code>./run_tlb.sh host4k</code></td><td>devdax</td></tr>
-            <tr><td>Fig. 6 · Table 3</td><td>tier1/data_movement/</td><td><code>sudo ./run_pinned_sweep.sh</code></td><td>devdax, root</td></tr>
-            <tr><td>Fig. 7 · Table 4</td><td>tier1/coherence/</td><td><code>sudo ./run_suite.sh</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 3 · Table 2</td><td>tier1/orchestration/</td><td><code>./run.sh</code></td><td>devdax</td></tr>
+            <tr><td>§4.1.4</td><td>tier1/resident_worker/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 5</td><td>tier1/translation/</td><td><code>./run.sh</code></td><td>devdax</td></tr>
+            <tr><td>Fig. 6 · Table 3</td><td>tier1/data_movement/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 7 · Table 4</td><td>tier1/coherence/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
             <tr class="grp"><td colspan="4">Tier 2 · DB operations</td></tr>
             <tr><td>Fig. 8</td><td>tier2/scan/</td><td><code>./run_scan.sh 1500</code></td><td>both</td></tr>
             <tr><td>Table 5</td><td>tier2/scan/</td><td><code>sudo ./return_ab.sh 1500</code></td><td>devdax, root</td></tr>

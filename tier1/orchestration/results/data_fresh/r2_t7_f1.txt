@@ -1,0 +1,95 @@
+# fresh_handle: ON (rebuild before every timed dispatch: T1 T3 T6 T7 T8 T14)
+# getstats: ON
+# Orchestration Tax Benchmark Suite — Profiler Edition
+# kernel: mu_kernel/mu_kernel.mubin  func: null_kernel
+# cpu_affinity: unpinned (runtime free to schedule)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# TotalSubCount: 24
+# NumClusterPerSub: 4
+# NumMuPerCluster: 8
+# NumThreadPerMu: 4
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+# xpti: OFF (set XPTI=1 for device stages; inflates wall clock)
+
+# TEST: T7_batch_size
+# taskCount=64 warmup=20 reps=200 (profiled)
+batchSize,active_threads,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+1,64,3628.6185,413.0094,3202.5349,3462.7843,4577.5296,4809.6586,4829.5111,200
+# getStats_csv batchSize=1
+GS,1,HostInit,63.0,63.0,63.0
+GS,1,DeviceInit,6.0,6.0,6.0
+GS,1,Request,1783.0,1783.0,1783.0
+GS,1,Waiting,1122.0,1122.0,1122.0
+GS,1,DeviceFinalize,1.0,1.0,1.0
+GS,1,HostFinalize,8.0,8.0,8.0
+GS,1,computation,2905.0,2905.0,2905.0
+GS,1,computeUtilization_pct,97.39,97.39,97.39
+2,32,3399.7785,269.6431,2848.1219,3266.8325,3859.3246,3951.5659,3968.0040,200
+# getStats_csv batchSize=2
+GS,2,HostInit,117.0,117.0,117.0
+GS,2,DeviceInit,6.0,6.0,6.0
+GS,2,Request,1014.0,1014.0,1014.0
+GS,2,Waiting,2242.0,2242.0,2242.0
+GS,2,DeviceFinalize,1.0,1.0,1.0
+GS,2,HostFinalize,11.0,11.0,11.0
+GS,2,computation,3256.0,3256.0,3256.0
+GS,2,computeUtilization_pct,96.02,96.02,96.02
+4,16,2681.2230,91.5082,2302.6550,2686.4940,2810.5114,2903.4383,2909.2873,200
+# getStats_csv batchSize=4
+GS,4,HostInit,68.0,68.0,68.0
+GS,4,DeviceInit,7.0,7.0,7.0
+GS,4,Request,460.0,460.0,460.0
+GS,4,Waiting,1703.0,1703.0,1703.0
+GS,4,DeviceFinalize,2.0,2.0,2.0
+GS,4,HostFinalize,14.0,14.0,14.0
+GS,4,computation,2163.0,2163.0,2163.0
+GS,4,computeUtilization_pct,95.96,95.96,95.96
+8,8,1975.5366,52.9342,1866.0086,1976.3191,2059.2492,2127.7824,2215.9982,200
+# getStats_csv batchSize=8
+GS,8,HostInit,66.0,66.0,66.0
+GS,8,DeviceInit,8.0,8.0,8.0
+GS,8,Request,318.0,318.0,318.0
+GS,8,Waiting,1137.0,1137.0,1137.0
+GS,8,DeviceFinalize,2.0,2.0,2.0
+GS,8,HostFinalize,11.0,11.0,11.0
+GS,8,computation,1455.0,1455.0,1455.0
+GS,8,computeUtilization_pct,94.36,94.36,94.36
+16,4,1298.1144,67.6365,1206.8111,1283.6489,1372.4158,1680.3458,1841.5027,200
+# getStats_csv batchSize=16
+GS,16,HostInit,65.0,65.0,65.0
+GS,16,DeviceInit,8.0,8.0,8.0
+GS,16,Request,113.0,113.0,113.0
+GS,16,Waiting,523.0,523.0,523.0
+GS,16,DeviceFinalize,2.0,2.0,2.0
+GS,16,HostFinalize,9.0,9.0,9.0
+GS,16,computation,636.0,636.0,636.0
+GS,16,computeUtilization_pct,88.33,88.33,88.33
+32,2,1214.3678,41.6130,1138.8368,1208.4733,1267.4387,1432.6955,1573.9187,200
+# getStats_csv batchSize=32
+GS,32,HostInit,67.0,67.0,67.0
+GS,32,DeviceInit,7.0,7.0,7.0
+GS,32,Request,74.0,74.0,74.0
+GS,32,Waiting,566.0,566.0,566.0
+GS,32,DeviceFinalize,1.0,1.0,1.0
+GS,32,HostFinalize,8.0,8.0,8.0
+GS,32,computation,640.0,640.0,640.0
+GS,32,computeUtilization_pct,88.52,88.52,88.52
+64,1,1188.9734,24.7337,1134.1300,1185.9719,1236.4126,1278.9644,1350.2054,200
+# getStats_csv batchSize=64
+GS,64,HostInit,64.0,64.0,64.0
+GS,64,DeviceInit,7.0,7.0,7.0
+GS,64,Request,93.0,93.0,93.0
+GS,64,Waiting,568.0,568.0,568.0
+GS,64,DeviceFinalize,2.0,2.0,2.0
+GS,64,HostFinalize,8.0,8.0,8.0
+GS,64,computation,661.0,661.0,661.0
+GS,64,computeUtilization_pct,89.08,89.08,89.08
+# PROFILE: T7_batch_size — activation set UNAVAILABLE (MU probe stream empty, 0 rows); latency curve above is the result
+# PROFILE: T7_batch_size — host API breakdown
+batchSize,api_function,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+# DISPATCH_CHECK T7: calls=3080 ok=3080 failed=0
+
+# Done.

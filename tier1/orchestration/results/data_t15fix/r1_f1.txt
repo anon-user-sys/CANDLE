@@ -1,0 +1,34 @@
+# fresh_handle: ON (rebuild before every timed dispatch: T1 T3 T6 T7 T8 T14 T15)
+# getstats: ON
+# Orchestration Tax Benchmark Suite — Profiler Edition
+# kernel: mu_kernel/mu_kernel.mubin  func: null_kernel
+# cpu_affinity: unpinned (runtime free to schedule)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# TotalSubCount: 24
+# NumClusterPerSub: 4
+# NumMuPerCluster: 8
+# NumThreadPerMu: 4
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+# xpti: OFF (set XPTI=1 for device stages; inflates wall clock)
+
+# TEST: T15_multi_iteration_dispatch
+# taskCount=64 reps=50 fresh_handle=ON repeated_direct_max=64
+iters,mode,p50_total_us,min_total_us,max_total_us,per_iter_us,reps
+1,persistent,1259.2500,1222.8573,1800.9410,1259.2500,50
+1,repeated,1265.0490,1228.7496,1735.8712,1265.0490,50
+4,persistent,1249.1643,1161.8609,1689.2150,312.2911,50
+4,repeated,5027.4744,4948.1878,5488.7232,1256.8686,50
+16,persistent,1249.8066,1190.4546,1518.4626,78.1129,50
+16,repeated,20231.0817,19808.7935,21224.5446,1264.4426,50
+64,persistent,1253.6788,1213.3872,1361.2726,19.5887,50
+64,repeated,81380.9398,80510.7653,85114.4148,1271.5772,50
+256,persistent,1249.3566,1215.9594,1558.4376,4.8803,50
+256,repeated_derived,323852.5444,323852.5444,323852.5444,1265.0490,0
+1024,persistent,1269.5380,1203.1848,1859.2663,1.2398,50
+1024,repeated_derived,1295410.1777,1295410.1777,1295410.1777,1265.0490,0
+# DISPATCH_CHECK T15: calls=9140 ok=9140 failed=0
+
+# Done.

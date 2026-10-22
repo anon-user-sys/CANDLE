@@ -1,0 +1,22 @@
+# coherence_tax  tsc_ghz=1.8000  quick=0  cpu=3
+# TEST k10
+#k10 header test,mode,read,rep,lanes,chunks,lines_per_chunk,chunks_consumed,early_bad_lines,early_poison_lines,final_bad_lines,kernel_ms
+k10,flush_fence,chase,0,3048,8,512,24384,60645,60645,0,41.2
+k10,flush,chase,0,3048,8,512,24384,56050,56050,0,20.5
+k10,flushall_fence,chase,0,3048,8,512,24384,0,0,0,21.2
+k10,flushall,chase,0,3048,8,512,24384,0,0,0,21.0
+k10,noflush,chase,0,3048,8,512,24384,75011,75011,0,20.5
+k10,flush_fence,after_sync,0,3048,8,512,24384,0,0,0,18.8
+k10,flush_fence,chase,1,3048,8,512,24384,53058,53058,0,20.1
+k10,flush,chase,1,3048,8,512,24384,54425,54425,0,20.5
+k10,flushall_fence,chase,1,3048,8,512,24384,0,0,0,20.8
+k10,flushall,chase,1,3048,8,512,24384,0,0,0,21.2
+k10,noflush,chase,1,3048,8,512,24384,79980,79980,0,20.5
+k10,flush_fence,after_sync,1,3048,8,512,24384,0,0,0,19.0
+k10,flush_fence,chase,2,3048,8,512,24384,63735,63735,0,20.6
+k10,flush,chase,2,3048,8,512,24384,57044,57044,0,20.5
+k10,flushall_fence,chase,2,3048,8,512,24384,0,0,0,21.4
+k10,flushall,chase,2,3048,8,512,24384,0,0,0,22.2
+k10,noflush,chase,2,3048,8,512,24384,76249,76249,0,19.8
+k10,flush_fence,after_sync,2,3048,8,512,24384,0,0,0,18.9
+# done rc=0

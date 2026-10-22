@@ -1,0 +1,2 @@
+BURST mode=counter P=64 C=2 L=64 R=16 lines=7936 early_bad=223 poison=223 retries=0 stalls=0 final_bad=14 missing_lanes=2 kern_ms=3.3 e2e_ms=4.6 sync_ok=1
+  first bad: lane 0 chunk 0 line 16

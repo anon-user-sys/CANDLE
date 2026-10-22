@@ -1,0 +1,7 @@
+# coherence_tax  tsc_ghz=1.8000  quick=0  cpu=37
+# TEST k11
+#k11 header test,rep,rounds,answered,rt_p50_ns,rt_p99_ns,rt_min_ns,publish_p50_ns,dev_bad,host_bad,timeouts
+k11,0,20000,20000,2314.5,2330.0,1640.0,845.6,0,0,0
+k11,1,20000,20000,2222.2,2327.8,1922.2,822.2,0,0,0
+k11,2,20000,20000,2276.7,2292.2,2234.5,833.3,0,0,0
+# done rc=0

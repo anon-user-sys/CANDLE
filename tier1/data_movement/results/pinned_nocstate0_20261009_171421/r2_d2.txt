@@ -1,0 +1,24 @@
+# Data Movement Tax Benchmark Suite
+# direct_paths: on   iomem_rows: off
+# d1_sizes: 4x grid + 128K/512K/2M (--fine)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# CxlMemoryCapacity: 250181844992
+# IoMemoryCapacity: 2382364672
+# available_mem_gb: 233.0
+# available_io_gb:  2.2
+# cpu_affinity: unpinned (runtime free to schedule)
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+
+# TEST: D2_latency_per_call
+# Single 64-byte transfer per call; high rep count for tight tails.
+# Payload varies per rep; result codes tallied; warm until stable.
+api,direction,reps,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us
+copyToDevice,H2D,2000,30.5183,8.1351,28.2315,29.6404,33.7927,43.0617,253.9466
+copyFromDevice,D2H,2000,28.4676,4.4576,26.1059,27.8026,31.6149,41.7039,124.5249
+roundtrip_cxl,H2D+D2H,2000,51.7015,6.8424,47.5306,50.5306,57.9241,69.5487,279.0803
+# COPY_CHECK D2: calls=10402 ok=10402 failed=0
+
+# Done.

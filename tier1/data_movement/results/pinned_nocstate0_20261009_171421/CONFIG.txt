@@ -1,0 +1,2 @@
+kthreads=8,9 node0 nocstate=0
+# kthreads at end: submit=  8 complete=  9

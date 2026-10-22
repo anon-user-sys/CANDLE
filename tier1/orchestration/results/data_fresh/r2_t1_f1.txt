@@ -1,0 +1,212 @@
+# fresh_handle: ON (rebuild before every timed dispatch: T1 T3 T6 T7 T8 T14)
+# getstats: ON
+# Orchestration Tax Benchmark Suite — Profiler Edition
+# kernel: mu_kernel/mu_kernel.mubin  func: null_kernel
+# cpu_affinity: unpinned (runtime free to schedule)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# TotalSubCount: 24
+# NumClusterPerSub: 4
+# NumMuPerCluster: 8
+# NumThreadPerMu: 4
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+# xpti: OFF (set XPTI=1 for device stages; inflates wall clock)
+
+# TEST: T1_dispatch_sweep
+# warmup=20 reps=200 (profiled)
+taskCount,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+1,1209.6273,25.4746,1115.9854,1207.5290,1252.3819,1331.6853,1336.0898,200
+16,1206.7430,21.2973,1130.7412,1206.6223,1247.4741,1278.1878,1338.5765,200
+64,1355.0449,160.1722,1216.2625,1305.1838,1833.1072,1900.0482,1929.3631,200
+128,1971.0062,58.9423,1680.1905,1970.3981,2070.4163,2128.1671,2175.9923,200
+256,2880.0985,223.1809,2576.5649,2784.2013,3328.3949,3414.4206,3441.0210,200
+512,3406.9263,270.9985,2902.2330,3320.7437,3922.5437,4083.9739,4404.7542,200
+1024,4231.3279,151.2645,3434.3009,4203.7223,4534.1561,4697.7319,4698.8508,200
+2048,3888.2022,461.6074,3151.8467,3855.8272,4721.8933,4928.5175,5007.4042,200
+4096,3750.6969,477.5664,3258.4439,3566.2007,4700.8397,5990.8177,6042.7440,200
+8192,4410.2733,458.4700,3378.9845,4318.4351,5311.1699,6133.7476,6145.7311,200
+16384,5616.9902,765.1304,4367.5448,5714.8236,6636.6762,7203.7113,7679.1094,200
+32768,6688.8729,783.1892,5537.2521,6591.7377,8027.7390,8916.0400,9852.8817,200
+65536,10639.9418,661.9735,8843.3511,10736.7436,11538.6122,12025.3283,12505.4554,200
+131072,17113.4529,1115.5588,14416.1793,17076.8632,18747.3802,21748.1025,22618.7309,200
+# OLS fit: alpha_us=2763.5348  slope_us_per_task=0.113239  R2=0.9476
+# PROFILE: T1_dispatch_sweep — PXL getStats() phase decomposition
+# Source: map->getStats() (PXL API, no XPTI session, no overhead).
+taskCount,tag,key,phase,avg_us,min_us,max_us
+GS,1,HostInit,222.0,222.0,222.0
+GS,1,DeviceInit,9.0,9.0,9.0
+GS,1,Request,54.0,54.0,54.0
+GS,1,Waiting,569.0,569.0,569.0
+GS,1,DeviceFinalize,2.0,2.0,2.0
+GS,1,HostFinalize,9.0,9.0,9.0
+GS,1,computation,623.0,623.0,623.0
+GS,1,computeUtilization_pct,72.02,72.02,72.02
+GS,16,HostInit,67.0,67.0,67.0
+GS,16,DeviceInit,9.0,9.0,9.0
+GS,16,Request,73.0,73.0,73.0
+GS,16,Waiting,570.0,570.0,570.0
+GS,16,DeviceFinalize,2.0,2.0,2.0
+GS,16,HostFinalize,9.0,9.0,9.0
+GS,16,computation,643.0,643.0,643.0
+GS,16,computeUtilization_pct,88.08,88.08,88.08
+GS,64,HostInit,105.0,105.0,105.0
+GS,64,DeviceInit,8.0,8.0,8.0
+GS,64,Request,186.0,186.0,186.0
+GS,64,Waiting,1135.0,1135.0,1135.0
+GS,64,DeviceFinalize,2.0,2.0,2.0
+GS,64,HostFinalize,10.0,10.0,10.0
+GS,64,computation,1321.0,1321.0,1321.0
+GS,64,computeUtilization_pct,91.36,91.36,91.36
+GS,128,HostInit,69.0,69.0,69.0
+GS,128,DeviceInit,9.0,9.0,9.0
+GS,128,Request,252.0,252.0,252.0
+GS,128,Waiting,1136.0,1136.0,1136.0
+GS,128,DeviceFinalize,2.0,2.0,2.0
+GS,128,HostFinalize,12.0,12.0,12.0
+GS,128,computation,1388.0,1388.0,1388.0
+GS,128,computeUtilization_pct,93.78,93.78,93.78
+GS,256,HostInit,71.0,71.0,71.0
+GS,256,DeviceInit,8.0,8.0,8.0
+GS,256,Request,360.0,360.0,360.0
+GS,256,Waiting,1697.0,1697.0,1697.0
+GS,256,DeviceFinalize,2.0,2.0,2.0
+GS,256,HostFinalize,12.0,12.0,12.0
+GS,256,computation,2057.0,2057.0,2057.0
+GS,256,computeUtilization_pct,95.67,95.67,95.67
+GS,512,HostInit,56.0,56.0,56.0
+GS,512,DeviceInit,5.0,5.0,5.0
+GS,512,Request,1546.0,1546.0,1546.0
+GS,512,Waiting,1137.0,1137.0,1137.0
+GS,512,DeviceFinalize,2.0,2.0,2.0
+GS,512,HostFinalize,21.0,21.0,21.0
+GS,512,computation,2683.0,2683.0,2683.0
+GS,512,computeUtilization_pct,96.96,96.96,96.96
+GS,1024,HostInit,54.0,54.0,54.0
+GS,1024,DeviceInit,6.0,6.0,6.0
+GS,1024,Request,2423.0,2423.0,2423.0
+GS,1024,Waiting,1136.0,1136.0,1136.0
+GS,1024,DeviceFinalize,3.0,3.0,3.0
+GS,1024,HostFinalize,24.0,24.0,24.0
+GS,1024,computation,3559.0,3559.0,3559.0
+GS,1024,computeUtilization_pct,97.61,97.61,97.61
+GS,2048,HostInit,61.0,61.0,61.0
+GS,2048,DeviceInit,7.0,7.0,7.0
+GS,2048,Request,2084.0,2084.0,2084.0
+GS,2048,Waiting,1127.0,1127.0,1127.0
+GS,2048,DeviceFinalize,1.0,1.0,1.0
+GS,2048,HostFinalize,7.0,7.0,7.0
+GS,2048,computation,3211.0,3211.0,3211.0
+GS,2048,computeUtilization_pct,97.69,97.69,97.69
+GS,4096,HostInit,69.0,69.0,69.0
+GS,4096,DeviceInit,10.0,10.0,10.0
+GS,4096,Request,2247.0,2247.0,2247.0
+GS,4096,Waiting,1702.0,1702.0,1702.0
+GS,4096,DeviceFinalize,2.0,2.0,2.0
+GS,4096,HostFinalize,10.0,10.0,10.0
+GS,4096,computation,3949.0,3949.0,3949.0
+GS,4096,computeUtilization_pct,97.75,97.75,97.75
+GS,8192,HostInit,61.0,61.0,61.0
+GS,8192,DeviceInit,6.0,6.0,6.0
+GS,8192,Request,2067.0,2067.0,2067.0
+GS,8192,Waiting,1630.0,1630.0,1630.0
+GS,8192,DeviceFinalize,1.0,1.0,1.0
+GS,8192,HostFinalize,6.0,6.0,6.0
+GS,8192,computation,3697.0,3697.0,3697.0
+GS,8192,computeUtilization_pct,98.04,98.04,98.04
+GS,16384,HostInit,58.0,58.0,58.0
+GS,16384,DeviceInit,6.0,6.0,6.0
+GS,16384,Request,4021.0,4021.0,4021.0
+GS,16384,Waiting,1704.0,1704.0,1704.0
+GS,16384,DeviceFinalize,3.0,3.0,3.0
+GS,16384,HostFinalize,24.0,24.0,24.0
+GS,16384,computation,5725.0,5725.0,5725.0
+GS,16384,computeUtilization_pct,98.44,98.44,98.44
+GS,32768,HostInit,62.0,62.0,62.0
+GS,32768,DeviceInit,7.0,7.0,7.0
+GS,32768,Request,3217.0,3217.0,3217.0
+GS,32768,Waiting,2797.0,2797.0,2797.0
+GS,32768,DeviceFinalize,1.0,1.0,1.0
+GS,32768,HostFinalize,6.0,6.0,6.0
+GS,32768,computation,6014.0,6014.0,6014.0
+GS,32768,computeUtilization_pct,98.75,98.75,98.75
+GS,65536,HostInit,62.0,62.0,62.0
+GS,65536,DeviceInit,8.0,8.0,8.0
+GS,65536,Request,4320.0,4320.0,4320.0
+GS,65536,Waiting,4425.0,4425.0,4425.0
+GS,65536,DeviceFinalize,1.0,1.0,1.0
+GS,65536,HostFinalize,6.0,6.0,6.0
+GS,65536,computation,8745.0,8745.0,8745.0
+GS,65536,computeUtilization_pct,99.13,99.13,99.13
+GS,131072,HostInit,103.0,103.0,103.0
+GS,131072,DeviceInit,8.0,8.0,8.0
+GS,131072,Request,8254.0,8254.0,8254.0
+GS,131072,Waiting,8321.0,8321.0,8321.0
+GS,131072,DeviceFinalize,1.0,1.0,1.0
+GS,131072,HostFinalize,7.0,7.0,7.0
+GS,131072,computation,16575.0,16575.0,16575.0
+GS,131072,computeUtilization_pct,99.29,99.29,99.29
+# PROFILE: T1_dispatch_sweep — device stage breakdown (us)
+taskCount,stage,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+1,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+1,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+1,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+16,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+16,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+64,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+64,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+64,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+64,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+128,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+128,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+128,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+128,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+256,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+256,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+256,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+256,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+512,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+512,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+512,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+512,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1024,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+1024,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+1024,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1024,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+2048,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+2048,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+2048,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+2048,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+4096,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+4096,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+4096,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+4096,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+8192,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+8192,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+8192,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+8192,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16384,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+16384,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+16384,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+16384,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+32768,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+32768,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+32768,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+32768,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+65536,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+65536,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+65536,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+65536,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+131072,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+131072,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+131072,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+131072,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+# PROFILE: T1_dispatch_sweep — host API breakdown (us)
+taskCount,api_function,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+# DISPATCH_CHECK T1: calls=6160 ok=6160 failed=0
+
+# Done.

@@ -1,0 +1,7 @@
+# idx label median_k min_k max_k   (lines read before written back, of 12.5 M)
+0 "flush\n+fence" 60.65 53.06 63.73
+1 "flush" 56.05 54.42 57.04
+2 "none" 76.25 75.01 79.98
+3 "all\n+fence" 0.00 0.00 0.00
+4 "all" 0.00 0.00 0.00
+5 "after\nend" 0.00 0.00 0.00

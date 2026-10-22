@@ -1,0 +1,5 @@
+# obj_bytes hot_plain_ns hot_sdbi_ns cold_plain_ns cold_sdbi_ns   (1 thread, median)
+64 12.9 589.6 82.7 617.5
+256 36.2 549.5 189.3 1010.0
+1024 113.3 749.5 671.6 2180.3
+4096 408.8 1628.0 1313.6 2469.0

@@ -1,0 +1,11 @@
+[bench] N=1000000 tasks, buffer=8.0 MB, HBATCH=4096
+
+===== THROUGHPUT (drain_bench) =====
+checksum: sink=1000000 expected=1000000 done=1  -> OK
+device drain: 23536052 cyc over 1000000 tasks
+  device pull cost : 23.54 ns/task   (42.5 M tasks/s)
+  end-to-end (wall): 24.88 ns/task   (40.2 M tasks/s, incl launch+sync over 0.025s)
+host enqueue     : cold 2.81 | warm 2.63 | incremental(flush/item) 656.64 ns/item
+end-to-end/item  : cold 27.69 (enqueue+wall) | steady 26.17 (warm enqueue+device) | incremental 680.17 ns
+====================================
+

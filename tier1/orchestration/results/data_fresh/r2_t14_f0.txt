@@ -1,0 +1,71 @@
+# fresh_handle: OFF
+# getstats: ON
+# Orchestration Tax Benchmark Suite — Profiler Edition
+# kernel: mu_kernel/mu_kernel.mubin  func: null_kernel
+# cpu_affinity: unpinned (runtime free to schedule)
+# tsc_stop: rdtscp+lfence (precise)
+# PLATFORM
+# devices: 1
+# TotalSubCount: 24
+# NumClusterPerSub: 4
+# NumMuPerCluster: 8
+# NumThreadPerMu: 4
+# Calibrating TSC frequency...
+# tsc_freq_ghz: 1.8000
+# xpti: OFF (set XPTI=1 for device stages; inflates wall clock)
+
+# TEST: T14_partial_subfree
+# taskCount=64 warmup=20 reps=200 (profiled)
+# availableSubCount=24
+release_count,phase,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+1,baseline_all_subs,2700.2540,441.8364,1599.3690,2819.8213,3160.9963,3200.2813,3220.4461,200
+1,after_release,2652.7933,244.6801,2402.2574,2528.9870,3166.2808,3276.6047,3319.2542,200
+# rc=1 delta_mean_us=-47.4607
+6,baseline_all_subs,2686.0713,540.0726,1437.4255,2910.5082,3272.0768,3328.2632,3338.4867,200
+6,after_release,3228.7461,154.3316,2596.6991,3268.4223,3396.9887,3517.6515,3518.1471,200
+# rc=6 delta_mean_us=542.6748
+12,baseline_all_subs,2722.5646,476.0345,1498.2519,2851.3773,3278.1391,3303.5328,3320.7242,200
+12,after_release,2861.2782,283.3159,1980.8779,2954.9944,3176.1310,3198.2569,3220.9927,200
+# rc=12 delta_mean_us=138.7136
+23,baseline_all_subs,2705.1072,533.5106,1507.3476,2910.7093,3271.3524,3312.9630,3317.8186,200
+23,after_release,1484.3814,66.3566,1294.1023,1486.7118,1605.1646,1668.1744,1671.3400,200
+# rc=23 delta_mean_us=-1220.7258
+# PROFILE: T14_partial_subfree — re-routing should show up as launch_to_start delta
+release_count,phase,stage,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+1,baseline_all_subs,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+1,baseline_all_subs,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+1,baseline_all_subs,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1,baseline_all_subs,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1,after_release,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+1,after_release,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+1,after_release,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+1,after_release,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+6,baseline_all_subs,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+6,baseline_all_subs,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+6,baseline_all_subs,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+6,baseline_all_subs,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+6,after_release,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+6,after_release,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+6,after_release,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+6,after_release,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+12,baseline_all_subs,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+12,baseline_all_subs,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+12,baseline_all_subs,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+12,baseline_all_subs,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+12,after_release,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+12,after_release,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+12,after_release,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+12,after_release,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+23,baseline_all_subs,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+23,baseline_all_subs,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+23,baseline_all_subs,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+23,baseline_all_subs,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+23,after_release,launch_to_start,nan,nan,nan,nan,nan,nan,nan,0
+23,after_release,start_to_end,nan,nan,nan,nan,nan,nan,nan,0
+23,after_release,end_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+23,after_release,launch_to_terminate,nan,nan,nan,nan,nan,nan,nan,0
+# PROFILE: T14_partial_subfree — host API breakdown
+release_count,phase,api_function,mean_us,std_us,min_us,p50_us,p95_us,p99_us,max_us,n
+# DISPATCH_CHECK T14: calls=3360 ok=3360 failed=0
+
+# Done.

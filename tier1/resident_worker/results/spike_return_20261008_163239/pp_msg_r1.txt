@@ -1,0 +1,1 @@
+PP mode=msg M=2000 accepted=63 early_bad=0 poison=0 final_bad=0 timeout=1 rt_p50_ns=205676 rt_p90_ns=225387 rt_p99_ns=334857 rt_mean_ns=236991 enq_mean_ns=1113
