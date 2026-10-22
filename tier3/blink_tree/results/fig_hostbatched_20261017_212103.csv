@@ -1,0 +1,4 @@
+mode,workload,threads,dtasks,rep,mops,setup_ms,batch_total_ms,launch_ms,stage_ms,readback_ms,readback_inval_ms,dedup_ms,replay_ms,write_prep_ms,split_ms,report_ms,host_locate_ms,host_write_ms
+host_cxl,a,128,128,1,20.418,,1126.65,,,,,581.486,153.359,,,57.8043,117.48,216.52
+host_cxl,a,128,128,2,21.436,,1101.11,,,,,576.333,151.579,,,57.9654,99.4773,215.753
+host_cxl,a,128,128,3,21.685,,1285.56,,,,,758.7,157.947,,,58.2056,94.3985,216.313

@@ -30,3 +30,8 @@ tier2/scan/tools/tpch_cols
 tier2/btree/main
 # column caches written by the scan driver
 **/cache/
+# Tier 3 executables
+tier3/hash_join/hashjoin_*
+tier3/blink_tree/blink_*_val
+tier3/blink_tree/blink_*_tp
+tier3/blink_tree/blink_*_lat
