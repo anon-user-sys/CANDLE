@@ -10,7 +10,9 @@
 :root {
   --fs-label: var(--fs-body);
   --fs-caption: var(--fs-body);
-  --fs-fig: 12.5px;     /* small text inside figures only */
+  --fs-fig: 12.5px;     /* figure captions */
+  --fs-fig-title: 14px; /* card titles and headers inside figures */
+  --fs-fig-label: 11.5px; /* uppercase figure labels */
   --fs-small: var(--fs-body); /* one size for every sentence inside a card */
   --fs-body: 15px;      /* prose inside cards */
   --fs-stat: 20px;      /* big numbers */
@@ -128,49 +130,48 @@ a.badge:hover { background: var(--lava); border-color: var(--lava); }
 .sec-desc strong, .card-body strong, .contribs strong { color: var(--text); font-weight: 600; }
 .card-body p + p { margin-top: .75rem; }
 .lead {
-  font-size: 17px; line-height: 1.5; color: var(--text);
-  border-left: 3px solid var(--red); padding-left: 1rem; margin-bottom: 1rem;
+  font-size: 17px; font-weight: 500; line-height: 1.5; color: #fff; background: var(--navy);
+  border-left: 4px solid var(--red); border-radius: 6px; padding: .9rem 1.1rem; margin-bottom: 1rem;
 }
 .note { font-size: var(--fs-small); color: var(--muted); margin-top: .6rem; }
 
-/* Headline tiles */
+/* Headline tiles: one solid tile per tax colour */
 .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
-.tile { border: 1px solid var(--border); border-top: 3px solid var(--navy); border-radius: 6px; padding: .8rem .9rem; }
-.tile:nth-child(2) { border-top-color: var(--steel); }
-.tile:nth-child(3) { border-top-color: var(--red); }
-.tile:nth-child(4) { border-top-color: var(--lava); }
-.tile-val { font-size: var(--fs-stat); font-weight: 600; line-height: 1.2; color: var(--navy); }
-.tile-val span { font-family: var(--sans); font-size: var(--fs-caption); font-weight: 500; color: var(--muted); margin-left: 3px; }
-.tile-val .arrow { font-size: .8em; margin: 0 2px; }
-.tile-desc { font-size: var(--fs-small); color: var(--body); margin-top: .35rem; line-height: 1.5; }
+.tile { border-radius: 6px; padding: .75rem .9rem .85rem; background: var(--navy); color: #fff; }
+.tile:nth-child(2) { background: var(--red); }
+.tile:nth-child(3) { background: var(--steel); }
+.tile:nth-child(4) { background: var(--lava); }
+.tile-tax { display: flex; align-items: center; gap: .4rem; font-size: var(--fs-fig); font-weight: 600; color: rgba(255,255,255,.85); margin-bottom: .45rem; }
+.tile-tax .g { width: 20px; height: 20px; font-size: 13px; background: rgba(255,255,255,.22); }
+.tile-val { font-size: var(--fs-stat); font-weight: 600; line-height: 1.2; color: #fff; }
+.tile-val span { font-size: var(--fs-fig); font-weight: 500; color: rgba(255,255,255,.8); margin-left: 3px; }
+.tile-val .arrow { font-size: .8em; margin: 0 2px; color: #fff; }
+.tile-desc { font-size: var(--fs-fig-title); color: rgba(255,255,255,.9); margin-top: .35rem; line-height: 1.45; }
 
 /* Numbered contributions */
-.contribs { list-style: none; counter-reset: c; display: grid; gap: .7rem; color: var(--body); }
-.contribs li { counter-increment: c; position: relative; padding-left: 2.25rem; }
+.contribs { list-style: none; counter-reset: c; display: grid; gap: .5rem; color: var(--body); }
+.contribs li { counter-increment: c; position: relative; background: #f1f5f8; border-radius: 6px; padding: .65rem .9rem .65rem 3.1rem; }
 .contribs li::before {
-  content: counter(c); position: absolute; left: 0; top: 2px;
-  width: 24px; height: 24px; border-radius: 50%;
-  background: var(--navy); color: #fff; font-size: 13px; font-weight: 600;
+  content: counter(c); position: absolute; left: .8rem; top: .7rem;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--red); color: #fff; font-size: 13px; font-weight: 600;
   display: flex; align-items: center; justify-content: center;
 }
 
-/* Tiers */
-.tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
-.tier { background: var(--surface2); border-radius: 6px; padding: .8rem .9rem; }
-.tier-label { font-size: var(--fs-small); font-weight: 600; letter-spacing: .02em; color: var(--red); margin-bottom: .3rem; }
-.tier-body { font-size: var(--fs-body); color: var(--body); line-height: 1.55; }
 
 /* Tables */
 .tbl-wrap { overflow-x: auto; margin-top: .9rem; }
 table.data { width: 100%; border-collapse: collapse; font-size: var(--fs-body); }
 table.data th {
-  text-align: left; font-weight: 600; font-size: var(--fs-label);
-  color: var(--muted); padding: 5px 12px; border-bottom: 2px solid var(--navy); white-space: nowrap;
+  text-align: left; font-weight: 600; font-size: var(--fs-label); color: #fff; background: var(--navy);
+  padding: 6px 12px; white-space: nowrap;
 }
+table.data th:first-child { border-radius: 6px 0 0 0; }
+table.data th:last-child { border-radius: 0 6px 0 0; }
 table.data td { padding: 4px 12px; font-size: var(--fs-small); line-height: 1.45; border-bottom: 1px solid var(--border); color: var(--body); white-space: nowrap; }
 table.data td:first-child { font-weight: 600; color: var(--text); }
-table.data tr.hi td { background: var(--surface2); }
-table.data tr.hi td:first-child { box-shadow: inset 3px 0 0 var(--red); }
+table.data tr.hi td { background: var(--navy); color: #fff; }
+table.data tr.hi td:first-child { box-shadow: inset 4px 0 0 var(--red); color: #fff; }
 
 /* Device card */
 .device { display: grid; grid-template-columns: 240px 1fr; gap: 1.5rem; align-items: start; }
@@ -178,8 +179,9 @@ table.data tr.hi td:first-child { box-shadow: inset 3px 0 0 var(--red); }
 .device-img img { width: 100%; max-width: 240px; height: auto; display: block; margin: 0 auto; }
 .device .card-body { font-size: var(--fs-body); line-height: 1.65; }
 .device-img figcaption { font-size: var(--fs-caption); color: var(--muted); margin-top: .4rem; }
-.callout { margin-top: 1rem; border-left: 3px solid var(--red); background: var(--surface2); border-radius: 0 6px 6px 0; padding: .7rem .9rem; font-size: var(--fs-body); }
-.callout-title { font-weight: 600; color: var(--red); font-size: var(--fs-small); letter-spacing: .03em; margin-bottom: .2rem; }
+.callout { margin-top: 1rem; background: var(--navy); color: #fff; border-left: 4px solid var(--red); border-radius: 6px; padding: .8rem 1rem; }
+.callout strong { color: #fff; }
+.callout-title { font-weight: 600; color: #f6b8be; font-size: var(--fs-small); margin-bottom: .2rem; }
 
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .two > .card { margin-bottom: 1rem; }
@@ -188,26 +190,27 @@ table.data tr.hi td:first-child { box-shadow: inset 3px 0 0 var(--red); }
 .lifecycle { display: flex; flex-wrap: wrap; gap: .4rem; margin: .9rem 0 1rem; counter-reset: lc; }
 .lifecycle span {
   counter-increment: lc; flex: 1 1 110px; position: relative;
-  background: var(--surface2); border-radius: 6px; padding: .5rem .6rem .5rem 1.9rem;
-  font-size: var(--fs-small); font-weight: 600; color: var(--navy); line-height: 1.3;
+  background: var(--navy); border-radius: 6px; padding: .5rem .6rem .5rem 2.2rem;
+  font-size: var(--fs-fig-title); font-weight: 600; color: #fff; line-height: 1.3;
 }
-.lifecycle span::before { content: counter(lc); position: absolute; left: .6rem; top: .5rem; color: var(--red); }
-.lifecycle small { display: block; font-weight: 400; font-size: var(--fs-caption); color: var(--muted); }
-.lifecycle code { background: none; padding: 0; font-size: var(--fs-small); }
+.lifecycle span::before { content: counter(lc); position: absolute; left: .55rem; top: .55rem; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--red); color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+.lifecycle small { display: block; font-weight: 400; font-size: var(--fs-fig); color: #c5d3dd; }
+.lifecycle code { background: none; padding: 0; font-size: var(--fs-fig-title); color: #fff; }
+.lifecycle small code { font-size: inherit; color: inherit; }
 .concepts { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-.concept { border: 1px solid var(--border); border-radius: 6px; padding: .75rem .9rem; }
+.concept { background: #f1f5f8; border-radius: 6px; padding: .75rem .9rem; }
 .concept-head { font-weight: 600; color: var(--navy); font-size: var(--fs-body); margin-bottom: .3rem; }
 .concept-head code { font-size: var(--fs-caption); margin-left: .3rem; }
 .concept-body { font-size: var(--fs-body); color: var(--body); line-height: 1.6; }
 
 /* At a glance */
 .glance { display: grid; grid-template-columns: repeat(6, 1fr); gap: .6rem; margin-bottom: 1rem; }
-.glance div { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--navy); border-radius: 6px; padding: .65rem .75rem; }
-.glance div:nth-child(-n+4) { border-top-color: var(--red); }
-.glance b { display: block; font-size: var(--fs-stat); color: var(--navy); line-height: 1.2; }
-.glance span { font-size: var(--fs-caption); color: var(--muted); }
-.bw-limit { background: repeating-linear-gradient(45deg, var(--muted) 0 3px, transparent 3px 7px); border: 1px solid var(--muted); }
-.sec-desc a { color: var(--navy); }
+.glance div { background: var(--navy); border-radius: 6px; padding: .65rem .75rem; }
+.glance div:nth-child(-n+4) { background: var(--red); }
+.glance b { display: block; font-size: var(--fs-stat); font-weight: 600; color: #fff; line-height: 1.2; }
+.glance span { font-size: var(--fs-fig); color: rgba(255,255,255,.85); }
+.sec-desc a, .note a { color: var(--navy); }
 
 /* Tier 1 */
 .g { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%;
@@ -238,8 +241,8 @@ table.data tr.hi td:first-child { box-shadow: inset 3px 0 0 var(--red); }
 .facts div { border-left: 2px solid var(--border2); padding: .1rem .7rem; }
 .facts b { display: block; font-size: var(--fs-stat); color: var(--navy); line-height: 1.25; }
 .facts span { font-size: var(--fs-body); color: var(--muted); line-height: 1.4; display: block; }
-.calc { border: 1px solid var(--border2); border-radius: 8px; padding: .9rem 1rem; margin: 1rem 0; background: linear-gradient(var(--surface2), var(--surface2)) top / 100% 2.4rem no-repeat; }
-.calc-title { font-size: var(--fs-small); font-weight: 600; letter-spacing: .03em; color: var(--navy); margin: -.25rem 0 1rem; }
+.calc { border: 1.5px dashed #a9b4bd; border-radius: 8px; padding: .85rem 1rem; margin: 1rem 0; }
+.calc-title { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 0 0 .8rem; }
 .calc-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; font-size: var(--fs-small); color: var(--body); margin-bottom: .8rem; }
 .calc-controls label { display: inline-flex; align-items: center; gap: .6rem; }
 .calc-controls input[type=range] { accent-color: var(--red); width: 220px; max-width: 50vw; }
@@ -249,41 +252,48 @@ table.data tr.hi td:first-child { box-shadow: inset 3px 0 0 var(--red); }
 .seg button + button { border-left: 1px solid var(--border2); }
 .seg button.on { background: var(--navy); color: #fff; }
 .calc-results { display: flex; flex-wrap: wrap; gap: .75rem; }
-.calc-results > div { flex: 1 1 140px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: .55rem .8rem; }
+.calc-results > div { flex: 1 1 140px; background: var(--navy); border-radius: 6px; padding: .55rem .8rem; }
 .calc-results > div.wide { flex-basis: 100%; }
-.calc-results b { display: block; font-size: var(--fs-stat); color: var(--red); line-height: 1.25; }
-.calc-results span { font-size: var(--fs-body); color: var(--muted); }
+.calc-results b { display: block; font-size: var(--fs-stat); font-weight: 600; color: #fff; line-height: 1.25; }
+.calc-results span { font-size: var(--fs-fig); color: rgba(255,255,255,.85); }
+/* results take the tax colour */
+[data-calc="tau"] .calc-results > div { background: var(--red); }
+[data-calc="beta"] .calc-results > div { background: var(--steel); }
+[data-calc="gamma"] .calc-results > div { background: var(--lava); }
 .calc-table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); }
 .calc-table th { text-align: left; font-size: var(--fs-label); font-weight: 600; color: var(--muted); padding: 4px 8px; border-bottom: 1px solid var(--border2); }
 .calc-table td { padding: 4px 8px; border-bottom: 1px solid var(--border); color: var(--body); }
 .calc-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .calc-table tr.best td { color: var(--navy); font-weight: 600; }
 .calc-note { font-size: var(--fs-caption); color: var(--muted); margin-top: .6rem; line-height: 1.55; }
-.rule { border-left: 3px solid var(--navy); background: #f4f7fa; border-radius: 0 6px 6px 0; padding: .65rem .9rem; font-size: var(--fs-body); color: var(--body); margin-top: .5rem; }
-.rule b { display: block; font-size: var(--fs-label); color: var(--navy); margin-bottom: .15rem; }
-table.data td.ok { color: #2f7d4f; font-weight: 600; }
-table.data td.bad { color: var(--red); font-weight: 600; }
+.rule { background: var(--navy); color: #fff; border-left: 4px solid var(--red); border-radius: 6px; padding: .75rem 1rem; font-size: var(--fs-body); margin-top: .5rem; }
+.rule b { display: block; font-size: var(--fs-small); font-weight: 600; color: #f6b8be; margin-bottom: .15rem; }
+.rule code { background: rgba(255,255,255,.15); color: #fff; }
 
 /* Related research + value / limitations */
 table.data.rel td { white-space: normal; vertical-align: top; }
 table.data.rel td:first-child { white-space: nowrap; }
 table.data.rel a { color: var(--navy); text-decoration-color: var(--steel); text-underline-offset: 2px; }
-table.data.rel tr.grp td { font-size: var(--fs-label); font-weight: 600; color: var(--red); padding-top: 10px; padding-bottom: 3px; border-bottom: 1px solid var(--border2); background: none; }
+table.data.rel tr.grp td { font-size: var(--fs-label); font-weight: 600; color: var(--red); background: #fbe9ea; padding-top: 5px; padding-bottom: 5px; border-bottom: none; }
 ul.vl { list-style: none; display: grid; gap: .6rem; }
 ul.vl li { position: relative; padding-left: 1.4rem; font-size: var(--fs-body); color: var(--body); line-height: 1.6; }
 ul.vl li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
-ul.vl-add li::before { content: "+"; color: var(--navy); }
+/* one row per point: red label column + explanation */
+ul.vl-add { gap: 0; border-top: 1px solid var(--border); }
+ul.vl-add li { display: grid; grid-template-columns: 1fr; gap: .35rem; justify-items: start; padding: .7rem 0; border-bottom: 1px solid var(--border); }
+ul.vl-add .pill { margin-bottom: 0; white-space: nowrap; }
+.pill { display: block; width: fit-content; background: var(--red); color: #fff; font-weight: 600; font-size: .9em; line-height: 1.4; padding: 1px 8px; border-radius: 4px; margin-bottom: .3rem; }
 
 /* Placement-mode matrix */
 .pm-wrap { overflow-x: auto; margin-top: -10px; }
 .pm { display: grid; grid-template-columns: 112px repeat(2, minmax(360px, 1fr));
       grid-template-rows: 0 auto auto auto auto auto; gap: 6px; min-width: 850px; }
-.pm-corner, .pm-axis { font-size: 11.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.pm-corner, .pm-axis { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
 .pm-col { position: relative; }
 .pm-axis { position: absolute; left: 2px; top: 50%; transform: translateY(-50%); }
 .pm-corner { grid-column: 1; grid-row: 2; display: flex; align-items: center; justify-content: flex-end; padding-right: .5rem; }
-.pm-col { grid-row: 2; font-size: var(--fs-small); font-weight: 600; color: var(--navy); text-align: center; padding: .3rem 0; border-bottom: 2px solid var(--navy); }
-.pm-row { grid-column: 1; font-size: var(--fs-small); font-weight: 600; color: var(--navy); display: flex; flex-direction: column; justify-content: center; padding-right: .5rem; border-right: 2px solid var(--navy); text-align: right; }
+.pm-col { grid-row: 2; font-size: var(--fs-fig-title); font-weight: 600; color: var(--navy); text-align: center; padding: .3rem 0; border-bottom: 2px solid var(--navy); }
+.pm-row { grid-column: 1; font-size: var(--fs-fig-title); font-weight: 600; color: var(--navy); display: flex; flex-direction: column; justify-content: center; padding-right: .5rem; border-right: 2px solid var(--navy); text-align: right; }
 .pm-row-gap { border-right: none; background: linear-gradient(var(--navy) 50%, var(--red) 50%) right / 2px 100% no-repeat; }
 .pm-col i, .pm-row i { font-family: var(--serif); font-weight: 400; color: var(--muted); font-size: 14px; }
 .pm-cell { background: transparent; border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 6px; min-height: 52px; }
@@ -311,26 +321,181 @@ ul.vl-add li::before { content: "+"; color: var(--navy); }
 .pm-main-label { grid-column: 2 / 4; font-size: var(--fs-fig); color: var(--red); font-weight: 500; text-align: center; margin-top: -4px; line-height: 1.3; }
 .pm-main-label::before { content: "↑ "; }
 .plan { border-radius: 5px; padding: .35rem .6rem; background: var(--surface); border: 1px solid var(--border2); line-height: 1.3; }
-.plan b { display: block; font-size: var(--fs-small); }
-.plan span { display: block; font-size: var(--fs-caption); line-height: 1.35; color: var(--muted); }
+.plan b { display: block; font-size: var(--fs-fig-title); }
+.plan span { display: block; font-size: var(--fs-fig); line-height: 1.35; color: var(--muted); }
 .plan.ref b { color: var(--muted); }
 .plan.base { background: var(--navy); border-color: var(--navy); } .plan.base b, .plan.base span { color: #fff; }
 .plan.ndp { background: var(--red); border-color: var(--red); } .plan.ndp b, .plan.ndp span { color: #fff; }
 .plan.tier { background: var(--steel); border-color: var(--steel); } .plan.tier b, .plan.tier span { color: #fff; }
 .plan.hyb { background: linear-gradient(90deg, var(--navy), var(--red)); border-color: transparent; } .plan.hyb b, .plan.hyb span { color: #fff; }
 
+/* Stacked tiers (paper Fig. 2) */
+.stack { display: grid; gap: 0; }
+.stack-tier { border-radius: 8px; overflow: hidden; background: #f1f5f8; }
+.stack-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .6rem; background: var(--navy); color: #fff;
+              font-size: var(--fs-fig-title); font-weight: 600; padding: .45rem .8rem; }
+.stack-head small { font-size: var(--fs-fig); font-weight: 400; color: #c5d3dd; }
+.stack-n { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #fff; background: var(--red); border-radius: 4px; padding: 1px 7px; }
+.stack-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; padding: .6rem .8rem .7rem; }
+.stack-items.four { grid-template-columns: repeat(4, 1fr); }
+.stack-items .plan { border: none; }
+.stack-items .plan b { display: flex; align-items: center; gap: .45rem; color: var(--navy); }
+.stack-items .plan b sup { font-size: .7em; }
+.stack-t3 .plan { border-left: 4px solid var(--lava); }
+.stack-t2 .plan { border-left: 4px solid var(--red); }
+/* Tier 1: one solid card per tax, in the tax colours used on the Tier 1 tab */
+.stack-t1 .plan b, .stack-t1 .plan span { color: #fff; }
+.stack-t1 .plan:nth-child(1) { background: var(--navy); }
+.stack-t1 .plan:nth-child(2) { background: var(--red); }
+.stack-t1 .plan:nth-child(3) { background: var(--steel); }
+.stack-t1 .plan:nth-child(4) { background: var(--lava); }
+.stack-t1 .g { background: rgba(255, 255, 255, .22); }
+.stack-items .g { width: 20px; height: 20px; font-size: 13px; }
+.stack-arrow { text-align: center; color: var(--navy); font-size: 18px; line-height: 1; padding: 5px 0; }
+
+/* Visibility figure (Tier 1, coherency) */
+.vis-wrap { overflow-x: auto; margin-top: .9rem; }
+.vis { display: grid; grid-template-columns: 112px repeat(3, minmax(150px, 1fr)); gap: 6px; min-width: 580px; }
+.vis-axis { grid-column: 2 / 5; font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.vis-row { font-size: var(--fs-fig-title); font-weight: 600; color: var(--navy); display: flex; align-items: center; justify-content: flex-end; padding-right: .5rem; border-right: 2px solid var(--navy); text-align: right; }
+.plan.ok { background: #f1f5f8; border-color: #f1f5f8; } .plan.ok b { color: var(--navy); }
+.plan.bad { background: var(--red); border-color: var(--red); } .plan.bad b, .plan.bad span { color: #fff; }
+.vis .plan code { background: none; padding: 0; font-size: .95em; color: inherit; }
+
+/* Implementation tab */
+.taxnav.plain button { padding: .3rem .9rem; }
+.impl { scroll-margin-top: 64px; }
+.impl-list { display: grid; gap: .75rem; }
+.impl-head { display: flex; align-items: center; gap: .5rem; font-weight: 600; color: var(--navy); margin-bottom: .4rem; }
+.impl-head .g { width: 24px; height: 24px; font-size: 15px; }
+
+/* Tier 2 */
+.setup-strip { display: grid; grid-template-columns: 1fr 1.2fr 1.4fr; gap: .6rem; margin-bottom: 1rem; }
+.su { background: #f1f5f8; border-radius: 6px; padding: .65rem .8rem; display: flex; flex-direction: column; gap: .35rem; }
+.su-label { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.su-big { font-size: var(--fs-stat); font-weight: 600; color: var(--navy); line-height: 1.1; }
+.su-sub { font-size: var(--fs-fig); color: var(--body); line-height: 1.45; }
+.su-code { font-family: var(--mono); font-size: var(--fs-fig); color: var(--navy); }
+.su .plan { padding: .35rem .6rem; }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.chips span { background: #fff; border: 1px solid var(--border2); border-radius: 999px; padding: 0 .55rem; font-size: var(--fs-fig); color: var(--navy); }
+.chips i { font-style: normal; font-size: var(--fs-fig); color: var(--muted); margin-left: 2px; }
+.minis { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin: .4rem 0 1rem; }
+.mini { background: #f1f5f8; border-radius: 6px; padding: .65rem .8rem; display: flex; flex-direction: column; gap: .45rem; }
+.mini .fig-label { margin-bottom: .1rem; }
+.mini-row { display: grid; grid-template-columns: 78px 1fr 64px; gap: .5rem; align-items: center; font-size: var(--fs-fig); color: var(--navy); font-weight: 500; }
+.mini-row b { text-align: right; font-weight: 600; color: var(--navy); font-variant-numeric: tabular-nums; }
+.mini .bw-track { background: #fff; height: 12px; }
+.mini .bw-track.cxl { background: #fbe9ea; }
+.mini-cap { font-size: var(--fs-fig); color: var(--muted); margin-top: auto; }
+.bw-range.navy { background: linear-gradient(90deg, rgba(0,48,73,.25) 0 var(--from), var(--navy) var(--from)); }
+.take { color: var(--red); font-weight: 500; font-size: var(--fs-fig-title); margin: .2rem 0 .4rem; }
+.take::before { content: "↓ "; }
+.subhead { font-weight: 600; color: var(--navy); margin: 1rem 0 .3rem; }
+.card-body .subhead:first-child { margin-top: 0; }
+.card-body p + .subhead { margin-top: 1rem; }
+.chart-box { margin: 1rem 0; }
+.fig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; margin-bottom: .5rem; }
+.fig-label { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+svg.chart { width: 100%; height: auto; display: block; }
+svg.chart text { font-family: var(--sans); font-size: 11px; fill: var(--muted); }
+svg.chart .ax { font-size: 10px; font-weight: 600; letter-spacing: .05em; }
+.chart-read { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .6rem; }
+.chart-read div { flex: 1 1 150px; border-radius: 6px; padding: .5rem .75rem; background: var(--navy); }
+.chart-read div:first-child { background: var(--red); }
+.chart-read b { display: block; font-size: var(--fs-stat); font-weight: 600; color: #fff; line-height: 1.2; }
+.chart-read span { font-size: var(--fs-fig); color: rgba(255,255,255,.85); }
+.mbars { display: grid; gap: .45rem; }
+.mbars .bw-row { grid-template-columns: 190px 1fr 92px; }
+.mgroup { font-size: var(--fs-fig); font-weight: 600; color: var(--muted); margin-top: .3rem; }
+.mgroup:first-child { margin-top: 0; }
+.bw-range { background: linear-gradient(90deg, rgba(102,155,188,.35) 0 var(--from), var(--steel) var(--from)); }
+.bw-stack { background: linear-gradient(90deg, var(--red) 0 var(--split), #e3868d var(--split)); }
+
+/* Tier 3: stacked phase bars */
+.best-tag { font-style: normal; font-size: var(--fs-fig); font-weight: 600; color: #fff; background: var(--red); border-radius: 4px; padding: 0 5px; margin-left: 4px; }
+.sbars { display: grid; gap: .45rem; }
+.sbar { display: grid; grid-template-columns: 96px 1fr 58px; gap: .6rem; align-items: center; font-size: var(--fs-fig-title); }
+.sbar-name { font-weight: 600; color: var(--navy); }
+.sbar b { text-align: right; color: var(--navy); font-variant-numeric: tabular-nums; }
+.sbar-track { display: flex; height: 26px; background: #fbe9ea; border-radius: 5px; overflow: hidden; }
+.sbar-track > div { height: 100%; display: flex; align-items: center; padding: 0 .45rem; font-size: var(--fs-fig); color: #fff; white-space: nowrap; overflow: hidden; border-right: 2px solid #fbe9ea; }
+.seg-h { background: var(--navy); } .seg-d { background: var(--red); } .seg-x { background: var(--lava); }
+.seg-m { background: linear-gradient(90deg, var(--navy), var(--red)); } .seg-o { background: #c9d4dc; }
+.order { display: grid; grid-template-columns: 1fr auto 1fr; gap: .5rem; align-items: stretch; margin: .45rem 0 .35rem; }
+.order .plan { padding: .55rem .75rem; }
+.order-arrow { display: flex; align-items: center; color: var(--muted); font-size: 18px; }
+.minis.two-up { grid-template-columns: repeat(2, 1fr); }
+.mini-row span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.minis .mini-row { grid-template-columns: 112px 1fr 70px; }
+
+/* Implementation blocks */
+.impl-common { background: #f1f5f8; border-radius: 6px; padding: .55rem .8rem; font-size: var(--fs-fig-title); color: var(--body); margin-bottom: .9rem; }
+.impl-item { border-top: 1px solid var(--border); padding-top: .8rem; }
+.impl-item:first-child { border-top: none; padding-top: 0; }
+.impl-dir { margin-left: auto; font-family: var(--mono); font-size: var(--fs-fig); font-weight: 500; color: var(--muted); }
+.it-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: .45rem 0 .5rem; }
+.it { background: #f1f5f8; border-radius: 6px; padding: .5rem .65rem; }
+.it-label { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--red); margin-bottom: .2rem; }
+.it-body { font-size: var(--fs-fig); color: var(--body); line-height: 1.45; }
+.it-body code, .impl-common code { font-size: .92em; background: #fff; }
+.impl-chips span { background: var(--navy); border-color: var(--navy); color: #fff; }
+.impl-chips em { font-style: normal; font-weight: 400; opacity: .75; margin-left: .4rem; }
+.impl-unused { font-size: var(--fs-fig); color: var(--muted); margin-top: .35rem; }
+.impl-files { display: flex; flex-wrap: wrap; gap: 4px; margin-top: .4rem; }
+.impl-files code { font-size: var(--fs-fig); }
+
+/* Implementation: design / code toggle */
+.impl-head .impl-dir { margin-left: auto; }
+.impl-view { margin-left: .6rem; }
+.impl-view button { padding: .15rem .65rem; font-size: var(--fs-fig); }
+.impl-code { display: none; margin: .45rem 0 .5rem; }
+.impl-item.show-code .impl-code { display: block; }
+.impl-item.show-code .it-grid, .impl-item.show-code .impl-chips, .impl-item.show-code .impl-unused { display: none; }
+.code-cap { font-family: var(--mono); font-size: var(--fs-fig); color: var(--muted); margin: .5rem 0 .25rem; }
+.code-cap:first-child { margin-top: 0; }
+pre.code-pane { background: var(--navy); color: #e6eef3; border-radius: 6px; border-left: 4px solid var(--red);
+  padding: .7rem .9rem; margin: 0; overflow-x: auto; font-family: var(--mono); font-size: 12.5px; line-height: 1.6; }
+.c-cm { color: #8fb0c4; font-style: italic; } .c-kw { color: #9cc7e2; } .c-key { color: #ffb3b9; font-weight: 600; }
+.c-num { color: #fff; font-weight: 600; } .c-st { color: #cfe3c8; }
+
+/* Resident worker swimlane */
+.impl-item.show-code .design-only { display: none; }
+.swim { display: grid; gap: 6px; margin: .3rem 0 .6rem; }
+.sw-head, .sw-row { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 22px; align-items: stretch; }
+.sw-head span { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; text-align: center; padding-bottom: 3px; border-bottom: 2px solid; }
+.sw-head .h { color: var(--navy); } .sw-head .m { color: var(--muted); border-color: #a9b4bd; } .sw-head .d { color: var(--red); }
+.sw-step { border-radius: 6px; padding: .5rem .65rem; font-size: var(--fs-fig-title); font-weight: 600; color: #fff; display: flex; align-items: center; }
+.sw-step.h { background: var(--navy); } .sw-step.d { background: var(--red); }
+.sw-mid { position: relative; background: #fbe9ea; border-radius: 6px; padding: .4rem .7rem; text-align: center; }
+.sw-mid::before { position: absolute; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--muted); }
+.sw-mid.to-mem::before, .sw-mid.from-mem-host::before { left: -17px; }
+.sw-mid.to-mem::before { content: "▶"; } .sw-mid.from-mem-host::before { content: "◀"; }
+.sw-mid.from-mem-dev::before, .sw-mid.to-mem-dev::before { right: -17px; }
+.sw-mid.from-mem-dev::before { content: "▶"; } .sw-mid.to-mem-dev::before { content: "◀"; }
+.sw-obj { font-size: var(--fs-fig); font-weight: 600; color: var(--navy); }
+.sw-act { font-size: var(--fs-fig-title); font-weight: 600; color: var(--red); }
+.sw-act code { background: #fff; color: var(--red); }
+.sw-why { font-size: var(--fs-fig); color: var(--muted); }
+.sw-cap { font-size: var(--fs-fig); color: var(--muted); margin-top: -.2rem; }
+.sw-setup { background: #f1f5f8; border-radius: 6px; padding: .45rem .7rem; font-size: var(--fs-fig); color: var(--body); }
+.sw-setup b { color: var(--navy); margin-right: .3rem; }
+
 /* Inline SVG diagrams */
 .dia-wrap { overflow-x: auto; margin: .25rem 0 .5rem; }
 svg.dia { width: 100%; min-width: 560px; height: auto; display: block; }
+/* SVG text is in viewBox units; the 760-unit-wide drawings render ~1.27x at full card width,
+   so these sizes come out at the figure scale (14 / 12.5 / 11.5 px) */
 svg.dia text { font-family: var(--sans); }
-svg.dia .t-card { font-size: 13.5px; font-weight: 600; }
-svg.dia .t-cap { font-size: 11.5px; }
-svg.dia .t-ax { font-size: 11px; font-weight: 600; letter-spacing: .06em; }
-svg.dia .t-sub { font-size: 11px; font-weight: 600; }
-svg.dia .t-tiny { font-size: 10px; }
+svg.dia .t-card { font-size: 11px; font-weight: 600; }
+svg.dia .t-cap { font-size: 9.8px; }
+svg.dia .t-ax { font-size: 9px; font-weight: 600; letter-spacing: .06em; }
+svg.dia .t-sub { font-size: 9.8px; font-weight: 600; }
+svg.dia .t-tiny { font-size: 9.8px; }
 ol.steps { list-style: none; counter-reset: s; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; margin-top: .75rem; }
-ol.steps li { counter-increment: s; background: var(--surface2); border-radius: 6px; padding: .6rem .8rem; font-size: var(--fs-body); color: var(--body); }
-ol.steps li::before { content: counter(s); display: block; font-weight: 600; font-size: var(--fs-stat); color: var(--red); line-height: 1.1; margin-bottom: .2rem; }
+ol.steps li { counter-increment: s; position: relative; background: #f1f5f8; border-radius: 6px; padding: .6rem .8rem .6rem 2.9rem; color: var(--body); }
+ol.steps li::before { content: counter(s); position: absolute; left: .8rem; top: .6rem; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--red); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
 
 /* Spec lists */
 .spec { display: grid; grid-template-columns: 96px 1fr; gap: .45rem .9rem; font-size: var(--fs-body); }
@@ -340,32 +505,48 @@ ul.plain { padding-left: 1.1rem; color: var(--body); font-size: var(--fs-body); 
 ul.plain li::marker { color: var(--red); }
 
 /* Bandwidth bars */
-.bw { display: grid; gap: .55rem; margin-top: 1rem; }
-.bw-row { display: grid; grid-template-columns: 120px 1fr 80px; gap: .75rem; align-items: center; font-size: var(--fs-small); }
+.bw { display: grid; gap: .55rem; margin-top: 1rem; padding-top: 1.3rem; position: relative; }
+.bw-track.cxl { background: #fbe9ea; }
+/* dashed link-limit line across the bar column: name 120px | track | value 80px, .75rem gaps */
+.bw-limit-line { position: absolute; top: 0; bottom: -4px; left: calc(132px + (100% - 224px) * .156); border-left: 1.5px dashed #a9b4bd; z-index: 1; pointer-events: none; }
+.bw-limit-line span { position: absolute; top: 0; left: 6px; white-space: nowrap; font-size: var(--fs-fig); color: var(--muted); }
+.bw-row { display: grid; grid-template-columns: 120px 1fr 80px; gap: .75rem; align-items: center; font-size: var(--fs-fig-title); }
 .bw-name { font-weight: 500; color: var(--navy); }
 .bw-track { height: 14px; background: var(--surface2); border-radius: 7px; overflow: hidden; }
 .bw-fill { height: 100%; border-radius: 7px; }
 .bw-val { text-align: right; color: var(--body); font-variant-numeric: tabular-nums; }
 
 /* Memory mappings */
-.maps { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: .9rem; }
-.map { border-left: 3px solid var(--navy); background: var(--surface2); border-radius: 0 6px 6px 0; padding: .7rem .9rem; }
-.map + .map { border-left-color: var(--steel); }
-.map-head { font-weight: 500; font-size: var(--fs-small); color: var(--navy); margin-bottom: .3rem; }
-.map-head span { font-size: var(--fs-caption); color: var(--muted); margin-left: .4rem; }
-.map-body { font-size: var(--fs-body); color: var(--body); line-height: 1.6; }
+.mapfig { display: grid; grid-template-columns: 2fr 1fr; gap: .75rem; margin-top: .9rem; }
+.mapcol { border-radius: 8px; padding: .75rem .85rem; display: flex; flex-direction: column; gap: .6rem; }
+.mapcol.dax { background: #fbe9ea; }
+.mapcol.kmem { background: #f1f5f8; }
+.map-label { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--red); }
+.mapcol.kmem .map-label { color: var(--navy); }
+.map-plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.map-plans.one { grid-template-columns: 1fr; }
+.map-plans .plan { padding: .45rem .6rem; text-align: center; }
+.map-desc { font-size: var(--fs-fig); color: var(--body); line-height: 1.5; }
 
 @media (max-width: 900px) {
   .tiles { grid-template-columns: repeat(2, 1fr); }
-  .tiers { grid-template-columns: 1fr; }
-  .two, .maps, .device { grid-template-columns: 1fr; }
+  .two, .mapfig, .device { grid-template-columns: 1fr; }
+  .map-plans { grid-template-columns: 1fr 1fr; }
+  .mbars .bw-row { grid-template-columns: 120px 1fr 72px; }
+  .setup-strip, .minis, .minis.two-up { grid-template-columns: 1fr; }
+  .it-grid { grid-template-columns: 1fr 1fr; }
+  .sw-head, .sw-row { grid-template-columns: 1fr 1.3fr 1fr; gap: 18px; }
+  .order { grid-template-columns: 1fr; } .order-arrow { justify-content: center; transform: rotate(90deg); }
+  .sbar { grid-template-columns: 70px 1fr 48px; }
   ol.steps { grid-template-columns: 1fr 1fr; }
   .concepts { grid-template-columns: 1fr; }
+  .stack-items.four { grid-template-columns: 1fr 1fr; }
   .facts { grid-template-columns: 1fr 1fr; }
   .glance { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 480px) {
   .bw-row { grid-template-columns: 96px 1fr 64px; font-size: 13px; }
+  .bw-limit-line { left: calc(108px + (100% - 184px) * .156); }
   .spec { grid-template-columns: 1fr; gap: 0 0; }
   .spec dd { margin-bottom: .5rem; }
 }
@@ -407,6 +588,7 @@ ul.plain li::marker { color: var(--red); }
     <button class="nav-link" data-sec="tier1">Tier 1 · Taxes</button>
     <button class="nav-link" data-sec="tier2">Tier 2 · DB operations</button>
     <button class="nav-link" data-sec="tier3">Tier 3 · Composite workloads</button>
+    <button class="nav-link" data-sec="impl">Implementation</button>
     <button class="nav-link" data-sec="repro">Reproduce</button>
   </div>
 </nav>
@@ -425,56 +607,7 @@ ul.plain li::marker { color: var(--red); }
       <div class="card-body">
         <p class="lead">When does executing a database fragment on a computational CXL expander reduce its elapsed time, including preparation and handoff?</p>
         <p>Data residency alone does not decide the plan. A device plan must also launch work, translate addresses through the device's own structures, and deliver a usable result to the next stage. On this CXL 2.0 link there is no hardware back-invalidation, so the software work that makes device updates visible is part of every measurement.</p>
-        <p>The unit of comparison is a <strong>pipeline fragment</strong>: operators placed together and finished at a defined result boundary, such as <em>scan and reduce</em>, <em>materialize and return</em>, or <em>partition and probe</em>. Plans are compared under a common <strong>execution contract</strong> that fixes the input, the result and where it must end up, and what must be visible at completion.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Headline findings</div>
-      <div class="tiles">
-        <div class="tile">
-          <div class="tile-val">1.2<span>ms</span></div>
-          <div class="tile-desc">A fresh one-shot dispatch, although the on-device interval is only 13.3 µs.</div>
-        </div>
-        <div class="tile">
-          <div class="tile-val">0.6<span>µs / miss</span></div>
-          <div class="tile-desc">Translation miss beyond an inferred reach of eight 1 GB granules.</div>
-        </div>
-        <div class="tile">
-          <div class="tile-val">3.8× <span class="arrow">→</span> 2.2×</div>
-          <div class="tile-desc">Scan speedup over Host@CXL at 50% selectivity: count-only, then with keys materialized and returned.</div>
-        </div>
-        <div class="tile">
-          <div class="tile-val">36<span>%</span></div>
-          <div class="tile-desc">Share of processing time a B-link tree spends on coherency when reads and updates run on different sites.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Contributions</div>
-      <ol class="contribs">
-        <li>A <strong>real-silicon characterization</strong> of orchestration, translation, explicit-transfer and coherency costs, including how they depend on runtime state and the handoff protocol.</li>
-        <li><strong>Operator and composite-workload experiments</strong> showing how result return, probe preparation and mutable-state handoffs change placement rankings.</li>
-        <li>An <strong>evaluation contract and placement guidance</strong> that charge preparation and visibility work and state the conditions under which an observed speedup applies.</li>
-      </ol>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Three evaluation tiers</div>
-      <div class="tiers">
-        <div class="tier">
-          <div class="tier-label">Tier 1 · Boundary isolation</div>
-          <div class="tier-body">The four placement taxes: orchestration <em>α</em>, translation <em>τ</em>, data movement <em>β</em>, coherency <em>γ</em>.</div>
-        </div>
-        <div class="tier">
-          <div class="tier-label">Tier 2 · DB operations</div>
-          <div class="tier-body">Selective scan and filter; B<sup>+</sup>-tree point lookups.</div>
-        </div>
-        <div class="tier">
-          <div class="tier-label">Tier 3 · Composite workloads</div>
-          <div class="tier-body">Partitioned hash join (phase-boundary handoff); B-link tree under YCSB-A (per-batch SDBI).</div>
-        </div>
+        <p>Plans are compared as <strong>pipeline fragments</strong>, operators finished at a defined result boundary, under a common <strong>execution contract</strong> that fixes the input, the result and what must be visible at completion.</p>
       </div>
     </div>
 
@@ -509,8 +642,74 @@ ul.plain li::marker { color: var(--red); }
     </div>
 
     <div class="card">
+      <div class="card-title">Headline findings</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="tile-tax"><i class="g g-a">α</i>Orchestration</div>
+          <div class="tile-val">1.2<span>ms</span></div>
+          <div class="tile-desc">A fresh one-shot dispatch, although the on-device interval is only 13.3 µs.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-tax"><i class="g g-t">τ</i>Translation</div>
+          <div class="tile-val">0.6<span>µs / miss</span></div>
+          <div class="tile-desc">Translation miss beyond an inferred reach of eight 1 GB granules.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-tax"><i class="g g-b">β</i>Data movement</div>
+          <div class="tile-val">3.8× <span class="arrow">→</span> 2.2×</div>
+          <div class="tile-desc">Scan speedup over Host@CXL at 50% selectivity: count-only, then with keys materialized and returned.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-tax"><i class="g g-c">γ</i>Coherency</div>
+          <div class="tile-val">36%</div>
+          <div class="tile-desc">Share of processing time a B-link tree spends on coherency when reads and updates run on different sites.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Three evaluation tiers</div>
+      <div class="stack">
+        <div class="stack-tier">
+          <div class="stack-head"><span class="stack-n">Tier 3</span>Composite workloads<small>workload subsystems and shared state</small></div>
+          <div class="stack-items stack-t3">
+            <div class="plan ref"><b>Partitioned hash join</b><span>TPC-H lineitem · phase-boundary handoff</span></div>
+            <div class="plan ref"><b>B-link tree index engine</b><span>YCSB-A · per-batch SDBI</span></div>
+          </div>
+        </div>
+        <div class="stack-arrow">⇓</div>
+        <div class="stack-tier">
+          <div class="stack-head"><span class="stack-n">Tier 2</span>DB operations<small>relational operator primitives</small></div>
+          <div class="stack-items stack-t2">
+            <div class="plan ref"><b>Selective scan and filtering</b><span>TPC-H lineitem · count vs. materialize</span></div>
+            <div class="plan ref"><b>Point lookups via B<sup>+</sup>-tree</b><span>TPC-H orders · dependent accesses</span></div>
+          </div>
+        </div>
+        <div class="stack-arrow">⇓</div>
+        <div class="stack-tier">
+          <div class="stack-head"><span class="stack-n">Tier 1</span>Boundary isolation<small>hardware primitives and cost model</small></div>
+          <div class="stack-items four stack-t1">
+            <div class="plan ref"><b><i class="g g-a">α</i>Orchestration</b><span>dispatch and completion</span></div>
+            <div class="plan ref"><b><i class="g g-t">τ</i>Translation</b><span>device address lookup</span></div>
+            <div class="plan ref"><b><i class="g g-b">β</i>Data movement</b><span>explicit copies</span></div>
+            <div class="plan ref"><b><i class="g g-c">γ</i>Coherency</b><span>write visibility · SDBI</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Contributions</div>
+      <ol class="contribs">
+        <li>A <strong>real-silicon characterization</strong> of orchestration, translation, explicit-transfer and coherency costs, including how they depend on runtime state and the handoff protocol.</li>
+        <li><strong>Operator and composite-workload experiments</strong> showing how result return, probe preparation and mutable-state handoffs change placement rankings.</li>
+        <li>An <strong>evaluation contract and placement guidance</strong> that charge preparation and visibility work and state the conditions under which an observed speedup applies.</li>
+      </ol>
+    </div>
+
+    <div class="card">
       <div class="card-title">Related research</div>
-      <div class="card-body">Prior work falls into four mostly separate lines. None of it measures in-device orchestration latency or software-directed coherency overhead on computational CXL silicon.</div>
+      <div class="card-body">Prior work falls into three mostly separate lines. None of it measures in-device orchestration latency or software-directed coherency overhead on computational CXL silicon.</div>
       <div class="tbl-wrap">
         <table class="data rel">
           <thead><tr><th>Work</th><th>What it studies</th></tr></thead>
@@ -526,8 +725,6 @@ ul.plain li::marker { color: var(--red); }
             <tr class="grp"><td colspan="2">PIM benchmarking and substrate comparisons</td></tr>
             <tr><td>PrIM</td><td>microbenchmarks and applications, including host–PIM communication</td></tr>
             <tr><td><a href="https://arxiv.org/abs/2511.14400">PIM or CXL-PIM?</a></td><td>explicit staging vs. unified-address access</td></tr>
-            <tr class="grp"><td colspan="2">Indexes under partial cache coherence</td></tr>
-            <tr><td><a href="https://arxiv.org/abs/2511.06460">Wu et al.</a></td><td>correctness and performance guidelines for indexes</td></tr>
             <tr class="hi"><td>CANDLE</td><td>where database computation should run on real computational CXL silicon, with all four taxes and contract-complete timing</td></tr>
           </tbody>
         </table>
@@ -537,11 +734,9 @@ ul.plain li::marker { color: var(--red); }
     <div class="card">
       <div class="card-title">What CANDLE adds</div>
       <ul class="vl vl-add">
-        <li><strong>Real silicon.</strong> Measurements of an implemented computational CXL device and its runtime, complementing simulation and NUMA-emulation studies.</li>
-        <li><strong>Where computation runs, not only where data lives.</strong> Passive-expander studies face only data movement; a computational expander adds orchestration, translation and coherency.</li>
-        <li><strong>Contract-complete comparisons.</strong> Plans are timed over the same input and result contract, including preparation and handoff, not as isolated kernels.</li>
-        <li><strong>Calibrations tied to decisions.</strong> Device-level costs are traced through operators and composite workloads into placement rules for database engines.</li>
-        <li><strong>Open artifact.</strong> Harness, kernels, configurations, raw measurements and plotting scripts, with the commands for each figure and table.</li>
+        <li><span class="pill">Real silicon</span> Measurements of an implemented computational CXL device and its runtime, complementing simulation and NUMA-emulation studies.</li>
+        <li><span class="pill">Computation placement</span> Passive-expander studies decide where data lives and face only data movement; a computational expander adds orchestration, translation and coherency.</li>
+        <li><span class="pill">Open artifact</span> Harness, kernels, configurations, raw measurements and plotting scripts, with the commands for each figure and table.</li>
       </ul>
     </div>
   </div>
@@ -559,7 +754,6 @@ ul.plain li::marker { color: var(--red); }
         </figure>
         <div class="card-body">
           <p>Moving data between host and devices is a growing bottleneck, and memory is one of the most expensive yet least utilized parts of a server. CXL lets a server add memory beyond its DIMM slots. XCENA's <strong>computational memory</strong> goes one step further: a CXL Type 3 memory expander (CXL.io + CXL.mem) with its own CXL controller and thousands of cores placed next to its DDR5 DRAM. The aim is to move less data and use fewer host CPUs.</p>
-          <p>The cores are <strong>MUs</strong>, XCENA's own 64-bit processors based on the RISC-V ISA. MUs are grouped into <strong>subsystems (Subs)</strong>, each divided into <strong>clusters</strong> that share an L2 cache. All MUs in a Sub run the same kernel binary in parallel.</p>
           <div class="callout">
             <div class="callout-title">Rated vs. as evaluated</div>
             XCENA specifies the device as <strong>CXL 3.0 with back-invalidation</strong>. On our host the link negotiates <strong>CXL 2.0</strong> at 32 GT/s, where back-invalidation is unavailable. Making device writes visible to the host is therefore done in software, and CANDLE measures that cost.
@@ -571,12 +765,12 @@ ul.plain li::marker { color: var(--red); }
     <div class="card">
       <div class="card-title">Architecture</div>
       <div class="dia-wrap">
-<svg class="dia" viewBox="0 0 760 362" role="img" aria-label="Host with a user application and the PXL runtime, linked over CXL to the MX1P: device DRAM above 24 Subs; one Sub enlarged into 4 clusters of 32 MU cores, each cluster sharing an L2 cache">
+<svg class="dia" viewBox="0 0 760 364" role="img" aria-label="Host with a user application and the PXL runtime, linked over CXL to the MX1P: device DRAM above 24 Subs; one Sub enlarged into 4 clusters of 32 MU cores, each cluster sharing an L2 cache">
 <defs><marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7d8b96"/></marker></defs>
 <text x="10" y="28" class="t-ax" text-anchor="start" fill="#003049">HOST</text>
 <line x1="10" y1="36" x2="230" y2="36" stroke="#003049" stroke-width="2"/>
-<rect x="10" y="50" width="220" height="52" rx="5" fill="#fff" stroke="#c9d4dc"/><text x="120.0" y="73.0" class="t-card" text-anchor="middle" fill="#003049">User application</text><text x="120.0" y="88.0" class="t-cap" text-anchor="middle" fill="#4c6a7e">offloads work through PXL</text>
-<rect x="10" y="114" width="220" height="52" rx="5" fill="#003049" stroke="#003049"/><text x="120.0" y="137.0" class="t-card" text-anchor="middle" fill="#fff">PXL runtime</text><text x="120.0" y="152.0" class="t-cap" text-anchor="middle" fill="#d6e2ea">resources · kernels · tasks</text>
+<rect x="10" y="58" width="220" height="36" rx="5" fill="#fff" stroke="#c9d4dc"/><text x="120.0" y="73.5" class="t-card" text-anchor="middle" fill="#003049">User application</text><text x="120.0" y="86.0" class="t-cap" text-anchor="middle" fill="#4c6a7e">offloads work through PXL</text>
+<rect x="10" y="122" width="220" height="36" rx="5" fill="#003049" stroke="#003049"/><text x="120.0" y="137.5" class="t-card" text-anchor="middle" fill="#fff">PXL runtime</text><text x="120.0" y="150.0" class="t-cap" text-anchor="middle" fill="#d6e2ea">resources · kernels · tasks</text>
 <line x1="232" y1="140" x2="338" y2="140" stroke="#7d8b96" stroke-width="1.5" marker-start="url(#arA)" marker-end="url(#arA)"/>
 <text x="285" y="124" class="t-ax" text-anchor="middle" fill="#4c6a7e">CXL 2.0</text>
 <text x="285" y="160" class="t-cap" text-anchor="middle" fill="#4c6a7e">PCIe 5.0 ×8</text>
@@ -584,266 +778,233 @@ ul.plain li::marker { color: var(--red); }
 <text x="340" y="28" class="t-ax" text-anchor="start" fill="#c1121f">XCENA MX1P</text>
 <text x="750" y="28" class="t-ax" text-anchor="end" fill="#4c6a7e">24 SUBS</text>
 <line x1="340" y1="36" x2="750" y2="36" stroke="#c1121f" stroke-width="2"/>
-<rect x="340" y="44" width="410" height="198" rx="6" fill="#fbe9ea"/>
-<rect x="350" y="54" width="390" height="34" rx="5" fill="#fff" stroke="#c9d4dc"/><text x="545.0" y="76.0" class="t-card" text-anchor="middle" fill="#003049">Device DRAM · 233 GiB</text>
-<rect x="350" y="98" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="380" y="116.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="416" y="98" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="446" y="116.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="482" y="98" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="512" y="116.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="548" y="98" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="578" y="116.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="614" y="98" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="644" y="116.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="680" y="98" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="710" y="116.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="350" y="132" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="380" y="150.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="416" y="132" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="446" y="150.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="482" y="132" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="512" y="150.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="548" y="132" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="578" y="150.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="614" y="132" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="644" y="150.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="680" y="132" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="710" y="150.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="350" y="166" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="380" y="184.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="416" y="166" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="446" y="184.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="482" y="166" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="512" y="184.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="548" y="166" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="578" y="184.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="614" y="166" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="644" y="184.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="680" y="166" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="710" y="184.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="350" y="200" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="380" y="218.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="416" y="200" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="446" y="218.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="482" y="200" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="512" y="218.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="548" y="200" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="578" y="218.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="614" y="200" width="60" height="28" rx="4" fill="#780000"/>
-<text x="644" y="218.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<rect x="680" y="200" width="60" height="28" rx="4" fill="#c1121f"/>
-<text x="710" y="218.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
-<path d="M614 226 L340 262 M674 226 L750 262" stroke="#a9b4bd" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
-<rect x="340" y="262" width="410" height="92" rx="6" fill="#fff" stroke="#a9b4bd" stroke-width="1.5" stroke-dasharray="4 4"/>
-<text x="352" y="280" class="t-ax" text-anchor="start" fill="#c1121f">ONE SUB</text>
-<text x="412" y="280" class="t-cap" fill="#4c6a7e">4 clusters × 32 MU cores · one kernel binary</text>
-<rect x="352" y="288" width="92" height="58" rx="4" fill="#fff" stroke="#c9d4dc"/>
-<rect x="360.9" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="370.5" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="380.1" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="389.7" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="399.3" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="408.9" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="418.5" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="428.1" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="360.9" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="370.5" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="380.1" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="389.7" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="399.3" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="408.9" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="418.5" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="428.1" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="360.9" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="370.5" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="380.1" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="389.7" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="399.3" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="408.9" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="418.5" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="428.1" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="360.9" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="370.5" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="380.1" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="389.7" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="399.3" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="408.9" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="418.5" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="428.1" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<text x="398" y="340" class="t-tiny" text-anchor="middle" fill="#4c6a7e">L2 · 256 KiB</text>
-<rect x="450" y="288" width="92" height="58" rx="4" fill="#fff" stroke="#c9d4dc"/>
-<rect x="458.9" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="468.5" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="478.1" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="487.7" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="497.3" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="506.9" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="516.5" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="526.1" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="458.9" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="468.5" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="478.1" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="487.7" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="497.3" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="506.9" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="516.5" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="526.1" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="458.9" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="468.5" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="478.1" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="487.7" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="497.3" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="506.9" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="516.5" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="526.1" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="458.9" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="468.5" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="478.1" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="487.7" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="497.3" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="506.9" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="516.5" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="526.1" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<text x="496" y="340" class="t-tiny" text-anchor="middle" fill="#4c6a7e">L2 · 256 KiB</text>
-<rect x="548" y="288" width="92" height="58" rx="4" fill="#fff" stroke="#c9d4dc"/>
-<rect x="556.9" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="566.5" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="576.1" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="585.7" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="595.3" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="604.9" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="614.5" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="624.1" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="556.9" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="566.5" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="576.1" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="585.7" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="595.3" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="604.9" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="614.5" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="624.1" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="556.9" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="566.5" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="576.1" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="585.7" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="595.3" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="604.9" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="614.5" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="624.1" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="556.9" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="566.5" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="576.1" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="585.7" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="595.3" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="604.9" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="614.5" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="624.1" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<text x="594" y="340" class="t-tiny" text-anchor="middle" fill="#4c6a7e">L2 · 256 KiB</text>
-<rect x="646" y="288" width="92" height="58" rx="4" fill="#fff" stroke="#c9d4dc"/>
-<rect x="654.9" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="664.5" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="674.1" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="683.7" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="693.3" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="702.9" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="712.5" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="722.1" y="294" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="654.9" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="664.5" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="674.1" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="683.7" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="693.3" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="702.9" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="712.5" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="722.1" y="303" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="654.9" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="664.5" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="674.1" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="683.7" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="693.3" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="702.9" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="712.5" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="722.1" y="312" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="654.9" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="664.5" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="674.1" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="683.7" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="693.3" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="702.9" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="712.5" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<rect x="722.1" y="321" width="7" height="7" rx="1" fill="#c1121f"/>
-<text x="692" y="340" class="t-tiny" text-anchor="middle" fill="#4c6a7e">L2 · 256 KiB</text>
+<rect x="340" y="44" width="410" height="200" rx="6" fill="#fbe9ea"/>
+<rect x="350" y="54" width="390" height="36" rx="5" fill="#fff" stroke="#c9d4dc"/><text x="545.0" y="76.0" class="t-card" text-anchor="middle" fill="#003049">Device DRAM · 233 GiB</text>
+<rect x="350" y="100" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="380" y="118.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="416" y="100" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="446" y="118.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="482" y="100" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="512" y="118.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="548" y="100" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="578" y="118.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="614" y="100" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="644" y="118.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="680" y="100" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="710" y="118.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="350" y="134" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="380" y="152.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="416" y="134" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="446" y="152.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="482" y="134" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="512" y="152.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="548" y="134" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="578" y="152.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="614" y="134" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="644" y="152.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="680" y="134" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="710" y="152.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="350" y="168" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="380" y="186.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="416" y="168" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="446" y="186.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="482" y="168" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="512" y="186.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="548" y="168" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="578" y="186.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="614" y="168" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="644" y="186.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="680" y="168" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="710" y="186.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="350" y="202" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="380" y="220.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="416" y="202" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="446" y="220.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="482" y="202" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="512" y="220.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="548" y="202" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="578" y="220.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="614" y="202" width="60" height="28" rx="4" fill="#780000"/>
+<text x="644" y="220.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<rect x="680" y="202" width="60" height="28" rx="4" fill="#c1121f"/>
+<text x="710" y="220.5" class="t-sub" text-anchor="middle" fill="#fff">Sub</text>
+<path d="M614 228 L340 264 M674 228 L750 264" stroke="#a9b4bd" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+<rect x="340" y="264" width="410" height="92" rx="6" fill="#fff" stroke="#a9b4bd" stroke-width="1.5" stroke-dasharray="4 4"/>
+<text x="352" y="282" class="t-ax" text-anchor="start" fill="#c1121f">ONE SUB</text>
+<text x="412" y="282" class="t-cap" fill="#4c6a7e">4 clusters × 32 MU cores · one kernel binary</text>
+<rect x="352" y="290" width="92" height="58" rx="4" fill="#fff" stroke="#c9d4dc"/>
+<rect x="360.9" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="370.5" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="380.1" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="389.7" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="399.3" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="408.9" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="418.5" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="428.1" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="360.9" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="370.5" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="380.1" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="389.7" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="399.3" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="408.9" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="418.5" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="428.1" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="360.9" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="370.5" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="380.1" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="389.7" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="399.3" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="408.9" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="418.5" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="428.1" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="360.9" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="370.5" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="380.1" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="389.7" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="399.3" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="408.9" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="418.5" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="428.1" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<text x="398" y="342" class="t-tiny" text-anchor="middle" fill="#4c6a7e">L2 · 256 KiB</text>
+<rect x="450" y="290" width="92" height="58" rx="4" fill="#fff" stroke="#c9d4dc"/>
+<rect x="458.9" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="468.5" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="478.1" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="487.7" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="497.3" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="506.9" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="516.5" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="526.1" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="458.9" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="468.5" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="478.1" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="487.7" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="497.3" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="506.9" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="516.5" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="526.1" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="458.9" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="468.5" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="478.1" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="487.7" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="497.3" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="506.9" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="516.5" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="526.1" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="458.9" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="468.5" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="478.1" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="487.7" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="497.3" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="506.9" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="516.5" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="526.1" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<text x="496" y="342" class="t-tiny" text-anchor="middle" fill="#4c6a7e">L2 · 256 KiB</text>
+<rect x="548" y="290" width="92" height="58" rx="4" fill="#fff" stroke="#c9d4dc"/>
+<rect x="556.9" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="566.5" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="576.1" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="585.7" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="595.3" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="604.9" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="614.5" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="624.1" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="556.9" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="566.5" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="576.1" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="585.7" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="595.3" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="604.9" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="614.5" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="624.1" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="556.9" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="566.5" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="576.1" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="585.7" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="595.3" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="604.9" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="614.5" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="624.1" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="556.9" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="566.5" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="576.1" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="585.7" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="595.3" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="604.9" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="614.5" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="624.1" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<text x="594" y="342" class="t-tiny" text-anchor="middle" fill="#4c6a7e">L2 · 256 KiB</text>
+<rect x="646" y="290" width="92" height="58" rx="4" fill="#fff" stroke="#c9d4dc"/>
+<rect x="654.9" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="664.5" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="674.1" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="683.7" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="693.3" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="702.9" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="712.5" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="722.1" y="296" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="654.9" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="664.5" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="674.1" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="683.7" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="693.3" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="702.9" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="712.5" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="722.1" y="305" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="654.9" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="664.5" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="674.1" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="683.7" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="693.3" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="702.9" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="712.5" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="722.1" y="314" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="654.9" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="664.5" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="674.1" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="683.7" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="693.3" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="702.9" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="712.5" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<rect x="722.1" y="323" width="7" height="7" rx="1" fill="#c1121f"/>
+<text x="692" y="342" class="t-tiny" text-anchor="middle" fill="#4c6a7e">L2 · 256 KiB</text>
 <text x="10" y="300" class="t-cap" fill="#4c6a7e">MU: 64-bit RISC-V core, 1.4 GHz</text>
 <text x="10" y="318" class="t-cap" fill="#4c6a7e">Cluster: 32 MUs sharing an L2</text>
 <text x="10" y="336" class="t-cap" fill="#4c6a7e">Sub: 4 clusters running one binary</text>
 </svg>
       </div>
-      <div class="note">The host reaches device DRAM with loads and stores over CXL and submits work through PXL. A launch prepares a descriptor, rings the device's doorbell and waits for completion; a resident worker is launched once and then serves descriptors from a queue.</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Programming model</div>
-      <div class="card-body">PXL is the XCENA SDK's runtime library: it manages device resources, loads compute kernels and runs them in parallel on the MUs. A one-shot offload goes through these steps:</div>
-      <div class="lifecycle">
-        <span><code>memAlloc</code><small>map device memory</small></span>
-        <span>load kernel<small>MU binary</small></span>
-        <span>dispatch handle<small>PXL <code>Map</code></small></span>
-        <span><code>execute()</code><small>descriptor + doorbell</small></span>
-        <span><code>synchronize()</code><small>completion</small></span>
-        <span>visibility<small>flush / invalidate</small></span>
-      </div>
-      <div class="concepts">
-        <div class="concept">
-          <div class="concept-head">Dispatch handle <code>Map</code></div>
-          <div class="concept-body">Binds a kernel to a task count and a placement policy. A <em>fresh</em> handle has served no dispatch yet; a <em>reused</em> one accumulates runtime state, so launches get slower (+3.3 µs per dispatch) until the handle is rebuilt.</div>
-        </div>
-        <div class="concept">
-          <div class="concept-head">Tasks and MU threads</div>
-          <div class="concept-body">A task is the runtime's unit of work, not a thread. By default 16 tasks share one MU thread, so 64 tasks engage four threads and 1,024 tasks engage 64. Launch cost depends on how many threads a dispatch engages.</div>
-        </div>
-        <div class="concept">
-          <div class="concept-head">One-shot launch vs. resident worker</div>
-          <div class="concept-body">A one-shot launch pays about 1.2 ms each time. A <em>resident worker</em> is launched once and polls a queue in device memory; the host publishes descriptors to it (0.74 µs each, under 10 ns per task in bulk) and the device dequeues them in 22–25 ns.</div>
-        </div>
-        <div class="concept">
-          <div class="concept-head">Visibility primitives</div>
-          <div class="concept-body"><code>pxl::flushHostCache</code> writes back or invalidates host lines; <code>mu::flushCache</code> and <code>mu::flushCacheAll</code> are the device-side calls. Host non-temporal stores followed by <code>sfence</code> need no flush. Explicit copies use <code>copyToDevice</code> / <code>copyFromDevice</code> (DMA).</div>
-        </div>
-      </div>
-      <div class="note">Measured costs from the paper's Tier 1 (§4.1, §4.4).</div>
+      <div class="note">The host reaches device DRAM with loads and stores over CXL and submits work through PXL.</div>
     </div>
 
     <div class="card">
       <div class="card-title">Development workflow</div>
-      <div class="card-body">With the XCENA SDK, a kernel written for the MU cores is built separately from the host program. The host program loads it and drives it through the PXL runtime.</div>
       <div class="dia-wrap">
 <svg class="dia" viewBox="0 0 760 252" role="img" aria-label="Development workflow: the offloading application is built into a compute kernel and loaded by the host application; the host calls the PXL runtime, which allocates CXL memory and controls the device processor; the processor runs the kernel on CXL memory, which the host can also access directly">
 <defs><marker id="arB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7d8b96"/></marker></defs>
 <rect x="10" y="10" width="200" height="232" rx="6" fill="none" stroke="#a9b4bd" stroke-width="1.5" stroke-dasharray="4 4"/>
 <text x="110" y="32" class="t-ax" text-anchor="middle" fill="#4c6a7e">PREPARE OFFLOADING</text>
-<rect x="30" y="48" width="160" height="52" rx="5" fill="#fff" stroke="#c9d4dc"/><text x="110.0" y="71.0" class="t-card" text-anchor="middle" fill="#003049">Offloading app</text><text x="110.0" y="86.0" class="t-cap" text-anchor="middle" fill="#4c6a7e">host + MU source</text>
-<rect x="30" y="172" width="160" height="52" rx="5" fill="#c1121f" stroke="#c1121f"/><text x="110.0" y="195.0" class="t-card" text-anchor="middle" fill="#fff">Compute kernel</text><text x="110.0" y="210.0" class="t-cap" text-anchor="middle" fill="#fbd9dc">MU binary</text>
-<line x1="110" y1="102" x2="110" y2="170" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-end="url(#arB)"/>
+<rect x="30" y="56" width="160" height="36" rx="5" fill="#fff" stroke="#c9d4dc"/><text x="110.0" y="71.5" class="t-card" text-anchor="middle" fill="#003049">Offloading app</text><text x="110.0" y="84.0" class="t-cap" text-anchor="middle" fill="#4c6a7e">host + MU source</text>
+<rect x="30" y="180" width="160" height="36" rx="5" fill="#c1121f" stroke="#c1121f"/><text x="110.0" y="195.5" class="t-card" text-anchor="middle" fill="#fff">Compute kernel</text><text x="110.0" y="208.0" class="t-cap" text-anchor="middle" fill="#fbd9dc">MU binary</text>
+<line x1="110" y1="94" x2="110" y2="178" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-end="url(#arB)"/>
 <text x="118" y="140" class="t-cap" fill="#4c6a7e">build</text>
 <text x="350" y="32" class="t-ax" text-anchor="middle" fill="#003049">HOST</text>
-<rect x="270" y="48" width="160" height="52" rx="5" fill="#003049" stroke="#003049"/><text x="350.0" y="79.0" class="t-card" text-anchor="middle" fill="#fff">Host application</text>
-<rect x="270" y="172" width="160" height="52" rx="5" fill="#003049" stroke="#003049"/><text x="350.0" y="195.0" class="t-card" text-anchor="middle" fill="#fff">Runtime library</text><text x="350.0" y="210.0" class="t-cap" text-anchor="middle" fill="#d6e2ea">PXL</text>
+<rect x="270" y="56" width="160" height="36" rx="5" fill="#003049" stroke="#003049"/><text x="350.0" y="78.0" class="t-card" text-anchor="middle" fill="#fff">Host application</text>
+<rect x="270" y="180" width="160" height="36" rx="5" fill="#003049" stroke="#003049"/><text x="350.0" y="195.5" class="t-card" text-anchor="middle" fill="#fff">Runtime library</text><text x="350.0" y="208.0" class="t-cap" text-anchor="middle" fill="#d6e2ea">PXL</text>
 <path d="M190 198 H232 V74 H268" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-end="url(#arB)"/>
 <text x="240" y="140" class="t-cap" fill="#4c6a7e">load</text>
-<line x1="350" y1="102" x2="350" y2="170" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-start="url(#arB)" marker-end="url(#arB)"/>
+<line x1="350" y1="94" x2="350" y2="178" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-start="url(#arB)" marker-end="url(#arB)"/>
 <text x="358" y="140" class="t-cap" fill="#4c6a7e">API call</text>
 <rect x="520" y="10" width="230" height="232" rx="6" fill="#fbe9ea"/>
 <text x="635" y="32" class="t-ax" text-anchor="middle" fill="#c1121f">ACCELERATOR · MX1P</text>
-<rect x="545" y="48" width="180" height="52" rx="5" fill="#fff" stroke="#c9d4dc"/><text x="635.0" y="71.0" class="t-card" text-anchor="middle" fill="#003049">CXL memory</text><text x="635.0" y="86.0" class="t-cap" text-anchor="middle" fill="#4c6a7e">device DRAM</text>
-<rect x="545" y="172" width="180" height="52" rx="5" fill="#c1121f" stroke="#c1121f"/><text x="635.0" y="195.0" class="t-card" text-anchor="middle" fill="#fff">Processor</text><text x="635.0" y="210.0" class="t-cap" text-anchor="middle" fill="#fbd9dc">MU cores</text>
-<line x1="635" y1="102" x2="635" y2="170" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-start="url(#arB)" marker-end="url(#arB)"/>
+<rect x="545" y="56" width="180" height="36" rx="5" fill="#fff" stroke="#c9d4dc"/><text x="635.0" y="71.5" class="t-card" text-anchor="middle" fill="#003049">CXL memory</text><text x="635.0" y="84.0" class="t-cap" text-anchor="middle" fill="#4c6a7e">device DRAM</text>
+<rect x="545" y="180" width="180" height="36" rx="5" fill="#c1121f" stroke="#c1121f"/><text x="635.0" y="195.5" class="t-card" text-anchor="middle" fill="#fff">Processor</text><text x="635.0" y="208.0" class="t-cap" text-anchor="middle" fill="#fbd9dc">MU cores</text>
+<line x1="635" y1="94" x2="635" y2="178" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-start="url(#arB)" marker-end="url(#arB)"/>
 <text x="643" y="140" class="t-cap" fill="#4c6a7e">process kernel</text>
-<line x1="432" y1="66" x2="543" y2="66" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-start="url(#arB)" marker-end="url(#arB)"/>
-<text x="487" y="58" class="t-cap" text-anchor="middle" fill="#4c6a7e">data access</text>
-<path d="M430 186 H480 V88 H543" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-end="url(#arB)"/>
+<line x1="432" y1="74" x2="543" y2="74" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-start="url(#arB)" marker-end="url(#arB)"/>
+<text x="487" y="66" class="t-cap" text-anchor="middle" fill="#4c6a7e">data access</text>
+<path d="M430 188 H480 V84 H543" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-end="url(#arB)"/>
 <text x="474" y="140" class="t-cap" text-anchor="end" fill="#4c6a7e">allocate</text>
-<line x1="430" y1="210" x2="543" y2="210" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-start="url(#arB)" marker-end="url(#arB)"/>
+<line x1="430" y1="208" x2="543" y2="208" stroke="#7d8b96" stroke-width="1.5" fill="none" marker-start="url(#arB)" marker-end="url(#arB)"/>
 <text x="487" y="228" class="t-cap" text-anchor="middle" fill="#4c6a7e">control</text>
 </svg>
       </div>
@@ -853,6 +1014,39 @@ ul.plain li::marker { color: var(--red); }
         <li><strong>Build</strong> both components.</li>
         <li><strong>Run</strong> on the hardware or the emulator.</li>
       </ol>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Programming model</div>
+      <div class="card-body">PXL is the XCENA SDK's runtime library: it manages device resources, loads compute kernels and runs them in parallel on the MUs. A one-shot offload goes through these steps:</div>
+      <div class="lifecycle">
+        <span><code>memAlloc</code><small>map device memory</small></span>
+        <span>load kernel<small>MU binary</small></span>
+        <span>dispatch handle<small>PXL <code>Map</code></small></span>
+        <span>stage inputs<small>write + flush, or NT + <code>sfence</code></small></span>
+        <span><code>execute()</code><small>descriptor + doorbell</small></span>
+        <span><code>synchronize()</code><small>completion</small></span>
+        <span>read results<small>invalidate, then read</small></span>
+      </div>
+      <div class="concepts">
+        <div class="concept">
+          <div class="concept-head">Dispatch handle <code>Map</code></div>
+          <div class="concept-body">Binds a kernel to a task count and a placement policy. A <em>fresh</em> handle has served no dispatch yet; a <em>reused</em> one accumulates runtime state and gets slower until it is rebuilt.</div>
+        </div>
+        <div class="concept">
+          <div class="concept-head">Tasks and MU threads</div>
+          <div class="concept-body">A task is the runtime's unit of work, not a thread. By default 16 tasks share one MU thread, so 64 tasks engage four threads. Launch cost depends on how many threads a dispatch engages.</div>
+        </div>
+        <div class="concept">
+          <div class="concept-head">One-shot launch vs. resident worker</div>
+          <div class="concept-body">A one-shot launch pays the full launch path every time. A <em>resident worker</em> is launched once and polls a queue in device memory; the host publishes descriptors to it and the device dequeues them.</div>
+        </div>
+        <div class="concept">
+          <div class="concept-head">Visibility primitives</div>
+          <div class="concept-body"><code>pxl::flushHostCache</code> writes back or invalidates host lines; <code>mu::flushCache</code> and <code>mu::flushCacheAll</code> are the device-side calls. Explicit copies use <code>copyToDevice</code> / <code>copyFromDevice</code> (DMA).</div>
+        </div>
+      </div>
+      <div class="note">What each of these costs is measured on the <a href="#tier1" data-goto="tier1">Tier 1</a> tab (§4.1, §4.4).</div>
     </div>
 
   </div>
@@ -897,25 +1091,34 @@ ul.plain li::marker { color: var(--red); }
       <div class="card-title">The CXL link</div>
       <div class="card-body">The connection negotiates <strong>CXL 2.0 over PCIe 5.0 ×8 at 32 GT/s</strong>, although the device supports a faster link, so the physical limit is just under <strong>32 GB/s per direction</strong> before protocol overhead. In this mode there is no hardware back-invalidation: cross-site visibility is handled in software.</div>
       <div class="bw">
+        <div class="bw-limit-line"><span>link limit ~32 GB/s</span></div>
         <div class="bw-row"><span class="bw-name">Host DRAM</span><div class="bw-track"><div class="bw-fill" style="width:86.9%; background:var(--navy)"></div></div><span class="bw-val">178 GB/s</span></div>
-        <div class="bw-row"><span class="bw-name">Device cores</span><div class="bw-track"><div class="bw-fill" style="width:48.3%; background:var(--red)"></div></div><span class="bw-val">99 GB/s</span></div>
-        <div class="bw-row"><span class="bw-name">CXL link</span><div class="bw-track"><div class="bw-fill bw-limit" style="width:15.6%"></div></div><span class="bw-val">~32 GB/s</span></div>
-        <div class="bw-row"><span class="bw-name">Host over CXL</span><div class="bw-track"><div class="bw-fill" style="width:12.7%; background:var(--steel)"></div></div><span class="bw-val">26 GB/s</span></div>
+        <div class="bw-row"><span class="bw-name">Device cores</span><div class="bw-track cxl"><div class="bw-fill" style="width:48.3%; background:var(--red)"></div></div><span class="bw-val">99 GB/s</span></div>
+        <div class="bw-row"><span class="bw-name">Host over CXL</span><div class="bw-track cxl"><div class="bw-fill" style="width:12.7%; background:var(--navy)"></div></div><span class="bw-val">26 GB/s</span></div>
       </div>
-      <div class="note">Host DRAM is measured; device cores and host over CXL are effective rates from the SF 1500 selective scan (§5.1); the striped bar is the link's physical limit. Host@CXL stops scaling at about 32 cores, close to that limit, while device cores read their own DRAM without crossing it. Bars are scaled to 204.8 GB/s, the host's theoretical DRAM bandwidth per socket.</div>
+      <div class="note">Host DRAM is measured; device cores and host over CXL are effective rates from the SF 1500 selective scan (§5.1). Pink tracks read data held in CXL memory; the dashed line is the link's physical limit. Host@CXL stops scaling at about 32 cores, close to that limit, while device cores read their own DRAM without crossing it. Bars are scaled to 204.8 GB/s, the host's theoretical DRAM bandwidth per socket.</div>
     </div>
 
     <div class="card">
       <div class="card-title">Memory mappings</div>
       <div class="card-body">The device DRAM is exposed in one of two ways. The mapping is separate from where the work runs, and it is kept in mind when reading residency-reference results.</div>
-      <div class="maps">
-        <div class="map">
-          <div class="map-head">device_dax <span>/dev/dax0.0</span></div>
-          <div class="map-body">Allocated through the runtime's <code>memAlloc</code>. Used for direct host/device comparisons: <strong>Host@CXL</strong>, <strong>NDP-sync</strong>, <strong>NDP@CXL</strong> and <strong>Hybrid</strong> all access the same input allocation.</div>
+      <div class="mapfig">
+        <div class="mapcol dax">
+          <div class="map-label">device_dax · /dev/dax0.0</div>
+          <div class="map-plans">
+            <div class="plan base"><b>Host@CXL</b></div>
+            <div class="plan ndp"><b>NDP-sync</b></div>
+            <div class="plan ndp"><b>NDP@CXL</b></div>
+            <div class="plan hyb"><b>Hybrid</b></div>
+          </div>
+          <div class="map-desc">Allocated through the runtime's <code>memAlloc</code>; host and device plans access the same input allocation.</div>
         </div>
-        <div class="map">
-          <div class="map-head">kmem <span>CPU-less NUMA node 2</span></div>
-          <div class="map-body">Used for <strong>Tiered</strong> runs. Before first touch, <code>mbind</code> assigns each 2 MB input chunk to host node 0 or device node 2 at the requested ratio.</div>
+        <div class="mapcol kmem">
+          <div class="map-label">kmem · CPU-less NUMA node 2</div>
+          <div class="map-plans one">
+            <div class="plan tier"><b>Tiered</b></div>
+          </div>
+          <div class="map-desc">Before first touch, <code>mbind</code> assigns each 2 MB input chunk to host node 0 or device node 2 at the requested ratio.</div>
         </div>
       </div>
       <div class="note">Host-DRAM places the input in local host memory.</div>
@@ -946,7 +1149,7 @@ ul.plain li::marker { color: var(--red); }
 
   <div id="tier1" class="section">
     <div class="sec-title">Tier 1 · Boundary isolation</div>
-    <div class="sec-desc">Four costs decide whether device execution pays off: <strong>orchestration</strong>, <strong>translation</strong>, <strong>data movement</strong> and <strong>coherency</strong>. Each is isolated with its own microbenchmark and fitted to a simple model. They are cost categories, not four constants added to every device plan: translation is part of stage execution, and the others arise at control, transfer or visibility boundaries.</div>
+    <div class="sec-desc">Four costs decide whether device execution pays off: <strong>orchestration</strong>, <strong>translation</strong>, <strong>data movement</strong> and <strong>coherency</strong>. Each is isolated with its own microbenchmark and fitted to a simple model. They are cost categories, not four constants added to every device plan: translation is part of stage execution, and the others arise at control, transfer or visibility boundaries. <a href="#impl" data-goto="impl">Implementation details →</a></div>
 
     <div class="taxnav">
       <button data-jump="tax-alpha"><i class="g g-a">α</i> Orchestration</button>
@@ -1073,19 +1276,20 @@ ul.plain li::marker { color: var(--red); }
         <p>Range size, not the dirty fraction, dominates: a 16 MiB flush with 1% dirty lines costs 1.06 ms, almost as much as with every line dirty. Per-object invalidation pays the fixed cost on every handoff; bulk maintenance amortizes it but visits lines no one will read. Which is cheaper depends on how many handoffs there are and what they cover.</p>
         <p>At one-shot kernel boundaries the host's actions are enough; omitting them leaves 10–100% stale words. Inside a running kernel there is no completion boundary: <code>mu::flushCache</code> returns before its writebacks finish, so a published counter can overtake its data (0.5% of 12.5 M lines still poisoned). Publishing after <code>mu::flushCacheAll</code> fixes it.</p>
       </div>
-      <div class="tbl-wrap">
-        <table class="data">
-          <thead><tr><th>Direction</th><th>Host</th><th>Device</th><th>Stale words</th></tr></thead>
-          <tbody>
-            <tr><td>H → D</td><td>flush</td><td>none</td><td class="ok">0</td></tr>
-            <tr><td>H → D</td><td>NT stores + <code>sfence</code></td><td>none</td><td class="ok">0</td></tr>
-            <tr><td>H → D</td><td>none</td><td>either</td><td class="bad">10–100%</td></tr>
-            <tr><td>D → H</td><td>invalidate</td><td>none</td><td class="ok">0</td></tr>
-            <tr><td>D → H</td><td>none</td><td>either</td><td class="bad">10–100%</td></tr>
-          </tbody>
-        </table>
+      <div class="vis-wrap">
+        <div class="vis">
+          <div class="vis-axis">Host action at a one-shot kernel boundary → stale words</div>
+          <div class="vis-row">Host → device</div>
+          <div class="plan ok"><b>flush</b><span>0 stale</span></div>
+          <div class="plan ok"><b>NT stores + <code>sfence</code></b><span>0 stale</span></div>
+          <div class="plan bad"><b>none</b><span>10–100% stale</span></div>
+          <div class="vis-row">Device → host</div>
+          <div class="plan ok"><b>invalidate</b><span>0 stale</span></div>
+          <div class="plan bad"><b>none</b><span>10–100% stale</span></div>
+          <div></div>
+        </div>
       </div>
-      <div class="note">Visibility across one-shot kernel boundaries (subset of the paper's Table 4). Device-side cache calls at entry or exit were not needed.</div>
+      <div class="note">From the paper's Table 4. Device-side cache calls at kernel entry or exit were not needed in any case.</div>
       <div class="calc" data-calc="gamma">
         <div class="calc-title">Host flush time for a range</div>
         <div class="calc-controls">
@@ -1104,16 +1308,392 @@ ul.plain li::marker { color: var(--red); }
 
   <div id="tier2" class="section">
     <div class="sec-title">Tier 2 · DB operations</div>
-    <div class="sec-desc">How the Tier 1 costs combine in single relational operators over CXL-resident data: a selective scan, where input bandwidth meets result return, and B<sup>+</sup>-tree point lookups, which add dependent accesses and translation locality.</div>
-    <div class="card"><div class="card-title">Selective scan</div><div class="todo">workload, placement plans, count vs. materialize, rule</div></div>
-    <div class="card"><div class="card-title">B<sup>+</sup>-tree point lookups</div><div class="todo">workload, prepared probes, level-aware placement, node and tree size, rule</div></div>
+    <div class="sec-desc">How the Tier 1 costs combine in single relational operators over CXL-resident data: a selective scan, where input bandwidth meets result return, and B<sup>+</sup>-tree point lookups, which add dependent accesses and translation locality. <a href="#impl" data-goto="impl">Implementation details →</a></div>
+    <div class="card" id="t2-scan">
+      <div class="card-title">Selective scan</div>
+      <div class="facts">
+        <div><b>3.8×</b><span>count-only speedup over Host@CXL at 50% selectivity</span></div>
+        <div><b>2.2×</b><span>once keys are materialized and returned, pipelined</span></div>
+        <div><b>~25–30%</b><span>CXL share of the input where NDP-sync breaks even</span></div>
+        <div><b>99 GB/s</b><span>device scan rate, ~80% of its sequential read rate</span></div>
+      </div>
+      <div class="setup-strip">
+        <div class="su"><div class="su-label">Data</div><div class="su-big">81 GB</div><div class="su-sub">TPC-H SF 1500 <code>lineitem</code> · 9.0 B rows · 2 columns</div></div>
+        <div class="su"><div class="su-label">Query</div><div class="su-code">WHERE l_quantity &lt;= t</div>
+          <div class="chips"><span>0%</span><span>50%</span><span>100%</span><i>selected</i></div>
+          <div class="chips"><span>count</span><span>materialize keys</span></div></div>
+        <div class="su"><div class="su-label">Plans</div>
+          <div class="plan base"><b>Host</b><span>8–128 cores · input 0–100% on CXL</span></div>
+          <div class="plan ndp"><b>NDP-sync</b><span>256–3,048 tasks · all on CXL</span></div></div>
+      </div>
+      <p class="take">Counting: Host@CXL is link-bound at 3.1 s; NDP-sync is 3.8× faster and breaks even with a host that holds only ~25–30% of its input on CXL.</p>
+      <div class="chart-box">
+        <div class="fig-head">
+          <span class="fig-label">Count · 128 host cores vs. 3,048 device tasks</span>
+          <span class="seg" data-chart="scan"><button data-v="50" class="on">50% selected</button><button data-v="100">100% selected</button></span>
+        </div>
+        <svg class="chart" id="scanChart" viewBox="0 0 640 250" role="img" aria-label="Scan time against the share of input on CXL: the host slows in proportion to its CXL share while NDP-sync stays flat"></svg>
+        <div class="chart-read" id="scanRead"></div>
+      </div>
+      <p class="take">Materializing: results must be written and returned, so the gain drops to 2.2× even with return pipelined over 32 launches.</p>
+      <div class="chart-box">
+        <div class="fig-head"><span class="fig-label">Materialize and return · seconds to host DRAM</span></div>
+        <div class="mbars">
+          <div class="mgroup">50% selected · 18 GB result</div>
+          <div class="bw-row"><span class="bw-name">Host@CXL</span><div class="bw-track cxl"><div class="bw-fill" style="width:88.6%; background:var(--navy)"></div></div><span class="bw-val">~3.1 s</span></div>
+          <div class="bw-row"><span class="bw-name">NDP, serial</span><div class="bw-track cxl"><div class="bw-fill" style="width:55.7%; background:#e3868d"></div></div><span class="bw-val">1.95 s</span></div>
+          <div class="bw-row"><span class="bw-name">NDP, pipelined</span><div class="bw-track cxl"><div class="bw-fill" style="width:41.0%; background:var(--red)"></div></div><span class="bw-val">1.43 s</span></div>
+          <div class="mgroup">100% selected · 36 GB result</div>
+          <div class="bw-row"><span class="bw-name">Host@CXL</span><div class="bw-track cxl"><div class="bw-fill" style="width:88.6%; background:var(--navy)"></div></div><span class="bw-val">~3.1 s</span></div>
+          <div class="bw-row"><span class="bw-name">NDP, serial</span><div class="bw-track cxl"><div class="bw-fill" style="width:93.5%; background:#e3868d"></div></div><span class="bw-val">3.27 s</span></div>
+          <div class="bw-row"><span class="bw-name">NDP, pipelined</span><div class="bw-track cxl"><div class="bw-fill" style="width:57.1%; background:var(--red)"></div></div><span class="bw-val">2.00 s</span></div>
+        </div>
+        <div class="note">NDP on 3,048 tasks; serial returns after the scan, pipelined during it (paper's Table 5).</div>
+      </div>
+      <div class="rule"><b>Rule · scan placement</b> Small results favor near-data scans over CXL-resident input; large results must also pay output writes and host visibility, so pipeline their return.</div>
+    </div>
+
+    <div class="card" id="t2-btree">
+      <div class="card-title">B<sup>+</sup>-tree point lookups</div>
+      <div class="facts">
+        <div><b>2.3×</b><span>NDP-sync over Host@CXL with prepared, partitioned probes</span></div>
+        <div><b>0.54 s</b><span>to partition the probes, about as long as the lookups</span></div>
+        <div><b>1.47×</b><span>host gain from keeping inner nodes in DRAM</span></div>
+        <div><b>4.4×</b><span>device gain from one key range per task</span></div>
+      </div>
+      <div class="setup-strip">
+        <div class="su"><div class="su-label">Data</div><div class="su-big">41 GB</div><div class="su-sub">B<sup>+</sup>-tree on <code>orders.o_orderkey</code> · 2.25 B keys · 64 B nodes · 11 levels</div></div>
+        <div class="su"><div class="su-label">Query</div><div class="su-big">100 M</div><div class="su-sub">point lookups, returning count and sum</div>
+          <div class="chips"><span>uniform</span><span>Zipfian θ 0.99</span></div></div>
+        <div class="su"><div class="su-label">Plans</div>
+          <div class="plan base"><b>Host</b><span>8–128 threads · index in DRAM, mixed or on CXL</span></div>
+          <div class="plan ndp"><b>NDP-sync</b><span>256–3,048 tasks · probes partitioned by key range</span></div></div>
+      </div>
+      <p class="take">With probes already partitioned, NDP-sync is 2.3× faster than Host@CXL. Charging the partitioning step reverses that against a host that keeps the inner levels in DRAM.</p>
+      <div class="chart-box">
+        <div class="fig-head"><span class="fig-label">Uniform lookups · 128 host cores vs. 3,048 device tasks</span></div>
+        <div class="mbars">
+          <div class="bw-row"><span class="bw-name">Host-DRAM</span><div class="bw-track"><div class="bw-fill" style="width:37.3%; background:var(--navy)"></div></div><span class="bw-val">0.56 s</span></div>
+          <div class="bw-row"><span class="bw-name">Tiered, inner in DRAM</span><div class="bw-track"><div class="bw-fill bw-range" style="width:56.7%; --from:83.5%"></div></div><span class="bw-val">0.71–0.85 s</span></div>
+          <div class="bw-row"><span class="bw-name">Host@CXL</span><div class="bw-track cxl"><div class="bw-fill" style="width:93.3%; background:var(--navy)"></div></div><span class="bw-val">1.40 s</span></div>
+          <div class="bw-row"><span class="bw-name">NDP-sync</span><div class="bw-track cxl"><div class="bw-fill" style="width:40.7%; background:var(--red)"></div></div><span class="bw-val">0.61 s</span></div>
+          <div class="bw-row"><span class="bw-name">NDP-sync + partitioning</span><div class="bw-track cxl"><div class="bw-fill bw-stack" style="width:76.0%; --split:53.5%"></div></div><span class="bw-val">1.14 s</span></div>
+        </div>
+        <div class="note">Tiered: inner levels in DRAM, 25–75% of the tree on CXL. Light red: the 0.54 s partitioning step.</div>
+      </div>
+      <div class="minis">
+        <div class="mini">
+          <div class="fig-label">Node size 64 B → 4 KB · slowdown</div>
+          <div class="mini-row"><span>Device</span><div class="bw-track cxl"><div class="bw-fill" style="width:68%; background:var(--red)"></div></div><b>6.8×</b></div>
+          <div class="mini-row"><span>Host</span><div class="bw-track"><div class="bw-fill bw-range navy" style="width:49%; --from:67.3%"></div></div><b>3.3–4.9×</b></div>
+          <div class="mini-cap">64 B nodes are fastest for every plan</div>
+        </div>
+        <div class="mini">
+          <div class="fig-label">Tree size 0.27 → 82 GB · slowdown</div>
+          <div class="mini-row"><span>Host</span><div class="bw-track"><div class="bw-fill bw-range navy" style="width:91%; --from:76.9%"></div></div><b>7.0–9.1×</b></div>
+          <div class="mini-row"><span>Device</span><div class="bw-track cxl"><div class="bw-fill" style="width:25%; background:var(--red)"></div></div><b>2.5×</b></div>
+          <div class="mini-cap">device partitioned; it overtakes Host@CXL from 2.7 GB</div>
+        </div>
+        <div class="mini">
+          <div class="fig-label">Device gain from key-range partitioning</div>
+          <div class="mini-row"><span>3 × 13.7 GB</span><div class="bw-track cxl"><div class="bw-fill" style="width:28.8%; background:#e3868d"></div></div><b>1.44×</b></div>
+          <div class="mini-row"><span>6 × 6.9 GB</span><div class="bw-track cxl"><div class="bw-fill" style="width:45.8%; background:var(--red)"></div></div><b>2.29×</b></div>
+          <div class="mini-row"><span>1 per task</span><div class="bw-track cxl"><div class="bw-fill" style="width:88%; background:var(--red)"></div></div><b>4.4×</b></div>
+          <div class="mini-cap">light: ranges beyond the 8 GB translation reach</div>
+        </div>
+      </div>
+      <div class="rule"><b>Rule · index placement</b> Count probe preparation in the comparison, keep each task's probes within translation reach, and compare against a host that keeps the upper levels in DRAM.</div>
+    </div>
   </div>
 
   <div id="tier3" class="section">
     <div class="sec-title">Tier 3 · Composite workloads</div>
-    <div class="sec-desc">Workloads that combine several phases and share mutable state between host and device, so placement is decided per phase and handoffs enter the cost.</div>
-    <div class="card"><div class="card-title">Partitioned hash join</div><div class="todo">phase-boundary handoff, phase costs, parallelism and selectivity, rule</div></div>
-    <div class="card"><div class="card-title">B-link tree under updates</div><div class="todo">per-batch SDBI, coherency cost by placement, dispatch, rule</div></div>
+    <div class="sec-desc">Workloads that combine several phases and share mutable state between host and device, so placement is decided per phase and handoffs enter the cost. <a href="#impl" data-goto="impl">Implementation details →</a></div>
+    <div class="card" id="t3-join">
+      <div class="card-title">Partitioned hash join</div>
+      <div class="facts">
+        <div><b>947 ms</b><span>Hybrid, the fastest plan at SF 100, 50% selected</span></div>
+        <div><b>13%</b><span>of Hybrid's time spent in its two handoffs</span></div>
+        <div><b>+287 ms</b><span>build cost of moving the build to the device</span></div>
+        <div><b>~110 ms</b><span>extra copy if the consumer needs the result in DRAM</span></div>
+      </div>
+      <div class="setup-strip">
+        <div class="su"><div class="su-label">Data</div><div class="su-big">SF 100</div><div class="su-sub">150 M <code>orders</code> ⋈ 600 M <code>lineitem</code> · 4 GiB hash table, 43× the LLC</div></div>
+        <div class="su"><div class="su-label">Query</div><div class="su-code">o_orderkey = l_orderkey AND l_quantity &lt;= t</div>
+          <div class="chips"><span>0%</span><span>50%</span><span>100%</span><i>selected</i></div>
+          <div class="chips"><span>materialize (l_orderkey, o_rownum)</span></div></div>
+        <div class="su"><div class="su-label">Plans · all inputs on CXL</div>
+          <div class="plan base"><b>Host@CXL</b><span>build + probe on 128 threads · P = 8,192</span></div>
+          <div class="plan hyb"><b>Hybrid</b><span>host build → device probe on 3,048 tasks</span></div>
+          <div class="plan ndp"><b>NDP@CXL</b><span>build + probe on the device · P = 1,024</span></div></div>
+      </div>
+
+      <p class="take">Build favors the host, probe favors the device; Hybrid combines them, but its handoffs eat most of the probe saving.</p>
+      <div class="chart-box">
+        <div class="fig-head"><span class="fig-label">Phases · SF 100, 50% selected · ms</span></div>
+        <div class="sbars">
+          <div class="sbar"><span class="sbar-name">Host@CXL</span><div class="sbar-track">
+            <div class="seg-h" style="width:32.5%">build 390</div><div class="seg-h" style="width:49.3%">probe 592</div></div><b>981</b></div>
+          <div class="sbar"><span class="sbar-name">Hybrid</span><div class="sbar-track">
+            <div class="seg-h" style="width:32.8%">build 394</div><div class="seg-x" style="width:6.5%" title="build handoff: write back the 4 GiB table, 78 ms"></div><div class="seg-d" style="width:36%">probe 432</div><div class="seg-x" style="width:3.8%" title="probe handoff: invalidate the 2.4 GB result, 45 ms"></div></div><b>947</b></div>
+          <div class="sbar"><span class="sbar-name">NDP@CXL</span><div class="sbar-track">
+            <div class="seg-d" style="width:56.4%">build 677</div><div class="seg-d" style="width:36.4%">probe 437</div><div class="seg-x" style="width:3.9%"></div></div><b>1,161</b></div>
+        </div>
+        <div class="note">Lava segments are handoffs: Hybrid writes back the 4 GiB table (78 ms) and invalidates the 2.4 GB result (45 ms); NDP@CXL only invalidates the result. Scale: 1.2 s.</div>
+      </div>
+
+      <div class="chart-box">
+        <div class="fig-head"><span class="fig-label">Total time by selectivity · ms</span>
+          <span class="seg" data-chart="join"><button data-v="0">0%</button><button data-v="1" class="on">50%</button><button data-v="2">100%</button></span></div>
+        <div class="mbars" id="joinBars"></div>
+        <div class="mini-cap" id="joinCap"></div>
+      </div>
+
+      <div class="minis">
+        <div class="mini">
+          <div class="fig-label">With fewer resources · ms</div>
+          <div class="mini-row"><span>Host@CXL</span><div class="bw-track cxl"><div class="bw-fill" style="width:87.7%; background:var(--navy)"></div></div><b>4,386</b></div>
+          <div class="mini-row"><span>Hybrid</span><div class="bw-track cxl"><div class="bw-fill" style="width:62.7%; background:linear-gradient(90deg,var(--navy),var(--red))"></div></div><b>3,136</b></div>
+          <div class="mini-row"><span>NDP@CXL</span><div class="bw-track cxl"><div class="bw-fill" style="width:99.8%; background:var(--red)"></div></div><b>4,990</b></div>
+          <div class="mini-cap">16 host threads / 381 device tasks: Hybrid's lead grows</div>
+        </div>
+        <div class="mini">
+          <div class="fig-label">Build cost per key · ns</div>
+          <div class="mini-row"><span>Host</span><div class="bw-track cxl"><div class="bw-fill bw-range navy" style="width:5.9%; --from:69%"></div></div><b>1.8–2.6</b></div>
+          <div class="mini-row"><span>Device SF 1</span><div class="bw-track cxl"><div class="bw-fill" style="width:100%; background:#e3868d"></div></div><b>44</b></div>
+          <div class="mini-row"><span>Device SF 100</span><div class="bw-track cxl"><div class="bw-fill" style="width:10.2%; background:var(--red)"></div></div><b>4.5</b></div>
+          <div class="mini-cap">the device amortizes per-task bookkeeping with scale but never reaches the host</div>
+        </div>
+        <div class="mini">
+          <div class="fig-label">Handoffs vs. the phase they follow</div>
+          <div class="mini-row"><span>Table write-back</span><div class="bw-track"><div class="bw-fill" style="width:20%; background:var(--lava)"></div></div><b>~⅕ build</b></div>
+          <div class="mini-row"><span>Result inval.</span><div class="bw-track"><div class="bw-fill" style="width:10%; background:var(--lava)"></div></div><b>~⅒ probe</b></div>
+          <div class="mini-cap">0.4–0.5 ns per key and &lt; 0.1 ns per row at SF 10–100</div>
+        </div>
+      </div>
+
+      <div class="rule"><b>Rule · hash-join placement</b> Tune partitioning for each build implementation, choose build and probe sites together, and offload the probe only when its saving exceeds both handoffs and any result copy the consumer needs.</div>
+    </div>
+
+    <div class="card" id="t3-blink">
+      <div class="card-title">B-link tree under updates</div>
+      <div class="facts">
+        <div><b>36%</b><span>of Hybrid's time spent on coherency</span></div>
+        <div><b>1.5×</b><span>NDP@CXL over Host@CXL per prepared batch</span></div>
+        <div><b>~12 ms</b><span>saved per batch by the resident worker</span></div>
+        <div><b>3.9×</b><span>slower lookups with atomic version checks on the device</span></div>
+      </div>
+      <div class="setup-strip">
+        <div class="su"><div class="su-label">Data</div><div class="su-big">10 M keys</div><div class="su-sub">4 KiB nodes · 318 MiB, 3.3× the LLC · all on CXL</div></div>
+        <div class="su"><div class="su-label">Query</div><div class="su-big">8 M</div><div class="su-sub">YCSB-A requests in batches of 1 M</div>
+          <div class="chips"><span>50% reads</span><span>50% updates</span><span>Zipfian θ 0.99</span></div></div>
+        <div class="su"><div class="su-label">Plans</div>
+          <div class="plan base"><b>Host@CXL</b><span>reads + updates on 1–128 threads</span></div>
+          <div class="plan hyb"><b>Hybrid</b><span>reads on the host, updates on the device</span></div>
+          <div class="plan ndp"><b>NDP-sync · NDP@CXL</b><span>launch per batch · resident worker</span></div></div>
+      </div>
+
+      <p class="take">Splitting reads and updates across sites costs more in coherency than it saves; keeping both on one site wins.</p>
+      <div class="chart-box">
+        <div class="fig-head"><span class="fig-label">Per 1 M-request batch · ms</span></div>
+        <div class="sbars">
+          <div class="sbar"><span class="sbar-name">Host@CXL</span><div class="sbar-track">
+            <div class="seg-h" style="width:60%">index 39</div><div class="seg-o" style="width:11.8%"></div></div><b>46.7</b></div>
+          <div class="sbar"><span class="sbar-name">Hybrid</span><div class="sbar-track">
+            <div class="seg-m" style="width:40%">index 26</div><div class="seg-x" style="width:33.8%">22</div><div class="seg-o" style="width:16.9%"></div></div><b>59</b></div>
+          <div class="sbar"><span class="sbar-name">NDP-sync</span><div class="sbar-track">
+            <div class="seg-d" style="width:41.5%">index 27</div><div class="seg-o" style="width:24.6%"></div></div><b>43</b></div>
+          <div class="sbar"><span class="sbar-name">NDP@CXL</span><div class="sbar-track">
+            <div class="seg-d" style="width:23.1%">15</div><div class="seg-x" style="width:10.8%">7</div><div class="seg-o" style="width:13.8%"></div></div><b>31</b></div>
+        </div>
+        <div class="note">Lava segments are coherency work: Hybrid's leaf and result invalidation, NDP@CXL's request and result buffer handoff. Grey is everything else, including dispatch; NDP-sync pays two launches per batch. Scale: 65 ms.</div>
+      </div>
+
+      <div class="fig-label" style="margin-top:.4rem">When Hybrid invalidates its host copies</div>
+      <div class="order">
+        <div class="plan bad"><b>Before each read</b><span>lost 2–22 k device updates in 10 of 24 runs · locate 2.3–2.6 s</span></div>
+        <div class="order-arrow">→</div>
+        <div class="plan ok"><b>Once, after reads and before device updates</b><span>no losses in 16 runs · locate 0.42 s, ~6× faster</span></div>
+      </div>
+      <div class="mini-cap" style="margin-bottom:1rem">Stale host copies were written back over device updates. Cache maintenance has to follow the ownership transfer.</div>
+
+      <div class="minis two-up">
+        <div class="mini">
+          <div class="fig-label">Concurrency control on the device · ms per 1 M lookups</div>
+          <div class="mini-row"><span>Atomic versions</span><div class="bw-track cxl"><div class="bw-fill" style="width:100%; background:#e3868d"></div></div><b>84</b></div>
+          <div class="mini-row"><span>One writer / leaf</span><div class="bw-track cxl"><div class="bw-fill" style="width:25.6%; background:var(--red)"></div></div><b>21.5</b></div>
+          <div class="mini-cap">memory-side atomics serialize the device at 1,024 and 3,048 tasks alike</div>
+        </div>
+        <div class="mini">
+          <div class="fig-label">Preparation vs. advantage · ms per batch</div>
+          <div class="mini-row"><span>NDP@CXL lead</span><div class="bw-track"><div class="bw-fill" style="width:38.3%; background:var(--red)"></div></div><b>15.7</b></div>
+          <div class="mini-row"><span>Host write grouping</span><div class="bw-track"><div class="bw-fill" style="width:100%; background:var(--navy)"></div></div><b>~41</b></div>
+          <div class="mini-cap">if grouping is extra and serial, it outweighs the prepared-batch lead</div>
+        </div>
+      </div>
+
+      <div class="rule"><b>Rule · shared-index ownership</b> Split reads and updates only when the saving over the best single-site plan exceeds the extra preparation and handoffs, and coordinate cache maintenance with each ownership transfer.</div>
+    </div>
+  </div>
+
+  <div id="impl" class="section">
+    <div class="sec-title">Implementation</div>
+    <div class="sec-desc">How each CANDLE benchmark is built: the shared harness, then every tier's benchmarks in the same pattern. The commands to run them are on the <a href="#repro" data-goto="repro">Reproduce</a> tab.</div>
+
+    <div class="taxnav plain">
+      <button data-jump="impl-harness">Shared harness</button>
+      <button data-jump="impl-t1">Tier 1 · Taxes</button>
+      <button data-jump="impl-resident">Resident worker</button>
+      <button data-jump="impl-t2">Tier 2 · DB operations</button>
+      <button data-jump="impl-t3">Tier 3 · Composite workloads</button>
+    </div>
+
+    <div class="card impl" id="impl-harness">
+      <div class="card-title">Shared harness</div>
+      <div class="todo">allocation · task submission · synchronization · timing (rdtsc / rdtscp) · warm-up and repetitions · validation</div>
+    </div>
+
+    <div class="card impl" id="impl-t1">
+      <div class="card-title">Tier 1 · Taxes</div>
+      <div class="impl-common">Common to all four: lfence-serialized <code>rdtsc</code>/<code>rdtscp</code> timing · warm-up before every timed pass · bit-exact checks on every result · device canary and state capture on any mismatch · one benchmark on the device at a time</div>
+      <div class="impl-list">
+        <div class="impl-item">
+          <div class="impl-head"><i class="g g-a">α</i>Orchestration · null-control kernel<span class="impl-dir">orchestration_tax/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="it-grid"><div class="it"><div class="it-label">Kernel</div><div class="it-body"><code>null_kernel</code>: an empty body between profiler probes. Variants take 3 scalars, 1–6 pointers or an NDArray.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body"><code>execute()</code> → <code>synchronize()</code> returns. 20 warm-up and 200 timed dispatches per point.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">Each test in a fresh process; fresh and aged handles interleaved per test, three runs each.</div></div><div class="it"><div class="it-label">Device view</div><div class="it-body">XPTI profiler spans launch → start → end → terminate split each dispatch (Table 2).</div></div></div>
+          <div class="chips impl-chips"><span>T1 tasks 1–131,072<em>Fig. 3a</em></span><span>T2 handle aging, rebuilt every 220<em>Fig. 3b</em></span><span>T6 Subs 1–24<em>Fig. 3c</em></span><span>T15 iterations per dispatch<em>Fig. 3d</em></span><span>T3 execute vs. sync<em>§4.1.2</em></span><span>T4 reuse vs. rebuild<em>§4.1.3</em></span><span>T7 batch size<em>§4.1.2</em></span><span>T10 streams<em>§4.1.4</em></span><span>T13 host threads<em>§4.1.4</em></span><span>T5 · T9 · T12 locality, args, descriptor<em>no effect</em></span><span>resident worker · persistent_spike/<em>§4.1.4</em></span></div>
+          <div class="impl-unused">Not used in the paper: T8 cluster bitmap, T11 setup costs, T14 partial subFree</div>
+          <div class="impl-code"><div class="code-cap">orchestration_tax/main_profiler.cpp · lines 191–199</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">int</span> i = <span class="c-num">0</span>; i &lt; reps; i++) {
+    <span class="c-kw">if</span> (g_fresh &amp;&amp; <span class="c-key">renew</span>) <span class="c-key">renew</span>(map);      <span class="c-cm">// FRESH=1: new handle, outside the timed region</span>
+    <span class="c-kw">uint64_t</span> t0 = <span class="c-key">timing::start</span>();         <span class="c-cm">// lfence; rdtsc</span>
+    sink = chk(map-&gt;<span class="c-key">execute</span>(dummy));
+    chk(map-&gt;<span class="c-key">synchronize</span>());
+    <span class="c-kw">uint64_t</span> t1 = <span class="c-key">stop_fn</span>();               <span class="c-cm">// rdtscp; lfence</span>
+    r.wall_us.push_back(timing::to_us(t1 - t0, ghz));
+}</pre><div class="code-cap">orchestration_tax/mu_kernel/mu_null.cpp · lines 11–16</div><pre class="code-pane"><span class="c-kw">void</span> null_kernel(<span class="c-kw">int</span> dummy) {              <span class="c-cm">// no arithmetic, no memory access</span>
+    <span class="c-key">mu::profilerStart</span>(<span class="c-st">&quot;null_kernel&quot;</span>);
+    (<span class="c-kw">void</span>)dummy;
+    <span class="c-key">mu::profilerEnd</span>(<span class="c-st">&quot;null_kernel&quot;</span>);
+}</pre></div>
+          <div class="impl-files"><code>main.cpp</code><code>main_profiler.cpp</code><code>mu_kernel/mu_null.cpp</code><code>notes/fresh_sweep.sh</code></div>
+        </div>
+        <div class="impl-item">
+          <div class="impl-head"><i class="g g-t">τ</i>Translation · pointer-chase kernel<span class="impl-dir">translation_tax/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="it-grid"><div class="it"><div class="it-label">Kernel</div><div class="it-body"><code>tt_access</code>: random dependent reads over K target lines in R regions S bytes apart. One MU task, no index arrays.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Device cycle counter around a timed pass that follows an identical warm-up pass; cycles → ns from a calibration spin.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">K held fixed so cache demand stays constant; lines clumped so the granules touched track R.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Every pass checksummed against a host replay. The same generator on the host recovers its STLB: 3,072 entries, 21.5 ns.</div></div></div>
+          <div class="chips impl-chips"><span>A granules G 1–128, random<em>Fig. 5a</em></span><span>C round-robin<em>Fig. 5a</em></span><span>B spacing S 16 MB–2 GB<em>Fig. 5b</em></span><span>D target lines K<em>Fig. 5c</em></span><span>host 4 KB pages<em>control</em></span></div>
+          <div class="impl-unused">Not used in the paper: the THP host run and the v1 stride sweep (<code>run.sh</code>)</div>
+          <div class="impl-code"><div class="code-cap">translation_tax/mu_kernel/tt_kernel.cpp · lines 45–85, random order (casts trimmed)</div><pre class="code-pane"><span class="c-kw">std::uint64_t</span> s = cfg-&gt;seed, warm = <span class="c-num">0</span>;     <span class="c-cm">// warm-up: the identical access sequence</span>
+<span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> a = <span class="c-num">0</span>; a &lt; n; ++a)
+    warm += load(buf + tt::offset_of(p, tt::pick_random(p, s)));
+
+s = cfg-&gt;seed;                             <span class="c-cm">// timed pass: same sequence again</span>
+<span class="c-kw">std::uint64_t</span> sum = <span class="c-num">0</span>, cycles = <span class="c-num">0</span>;
+<span class="c-kw">std::uint32_t</span> last = <span class="c-key">mu::getClockCycle</span>();
+<span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> a = <span class="c-num">0</span>; a &lt; n; ++a) {
+    sum += load(buf + tt::offset_of(p, tt::pick_random(p, s)));
+    <span class="c-kw">if</span> ((a &amp; (kClockChunk - <span class="c-num">1</span>)) == kClockChunk - <span class="c-num">1</span>) {   <span class="c-cm">// every 4,096 accesses</span>
+        <span class="c-kw">std::uint32_t</span> now = <span class="c-key">mu::getClockCycle</span>();         <span class="c-cm">// 32-bit, wrap-safe deltas</span>
+        cycles += now - last; last = now;
+    }
+}
+cfg-&gt;cycles = cycles;
+cfg-&gt;sum = sum;                            <span class="c-cm">// checked against a host replay</span>
+<span class="c-key">mu::flushCacheAll</span>();                       <span class="c-cm">// publish the results</span></pre></div>
+          <div class="impl-files"><code>main.cpp</code><code>tt_common.hpp</code><code>mu_kernel/tt_kernel.cpp</code><code>run_tlb.sh</code></div>
+        </div>
+        <div class="impl-item">
+          <div class="impl-head"><i class="g g-b">β</i>Data movement · transfer sweep<span class="impl-dir">data_movement_tax/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="it-grid"><div class="it"><div class="it-label">Paths</div><div class="it-body">DMA <code>copyToDevice</code> / <code>copyFromDevice</code>; direct <code>memcpy</code>, 8-byte loop or AVX2 NT stores, with and without flush.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Each call, 64 B–256 MiB plus fine points at 128 KiB, 512 KiB and 2 MiB; median of three runs.</div></div><div class="it"><div class="it-label">Host state</div><div class="it-body">mx_dma kthreads pinned to CPUs 8 and 9, process on node 0, default C-states.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Every transfer bit-exact; an <em>invalid</em> run captures device state. Direct paths need root.</div></div></div>
+          <div class="chips impl-chips"><span>D1 transfer sweep<em>Fig. 6a, 6b · Table 3</em></span><span>D10 access pattern, 256 MiB–1 GiB<em>Fig. 6c</em></span><span>D12 read/write mix<em>Fig. 6d</em></span><span>DMA floor diagnosis<em>§4.3.2</em></span><span>NT without flush · coherence_tax k7, k13<em>Fig. 6a</em></span></div>
+          <div class="impl-unused">Not used in the paper: D2–D9 and D11</div>
+          <div class="impl-code"><div class="code-cap">data_movement_tax/main.cpp · lines 353–387, host to device</div><pre class="code-pane">run(<span class="c-st">&quot;copyToDevice&quot;</span>, <span class="c-st">&quot;H2D&quot;</span>, n, samples, <span class="c-kw">true</span>, [&amp;] {          <span class="c-cm">// DMA</span>
+    sink = chkr(ctx-&gt;<span class="c-key">copyToDevice</span>(devCxl, host, n));
+});
+run(<span class="c-st">&quot;direct_memcpy&quot;</span>, <span class="c-st">&quot;H2D&quot;</span>, n, samples, <span class="c-kw">false</span>, [&amp;] {        <span class="c-cm">// copy + required flush</span>
+    <span class="c-key">std::memcpy</span>(devCxl, host, n);
+    <span class="c-key">pxl::flushHostCache</span>(devCxl, n);
+});
+run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c-st">&quot;H2D&quot;</span>, n, samples, <span class="c-kw">false</span>, [&amp;] {
+    <span class="c-key">nt_store_copy</span>(devCxl, host, n);                         <span class="c-cm">// NT stores + sfence, no flush</span>
+});</pre><div class="code-cap">data_movement_tax/main.cpp · lines 96–101, inside nt_store_copy</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">size_t</span> i = <span class="c-num">0</span>; i &lt; body; i += <span class="c-num">32</span>) {
+    <span class="c-kw">__m256i</span> v = _mm256_loadu_si256((<span class="c-kw">const</span> <span class="c-kw">__m256i</span>*)(s + i));
+    <span class="c-key">_mm256_stream_si256</span>((<span class="c-kw">__m256i</span>*)(d + i), v);               <span class="c-cm">// bypasses the host cache</span>
+}
+<span class="c-key">_mm_sfence</span>();                                               <span class="c-cm">// orders the NT stores</span></pre></div>
+          <div class="impl-files"><code>main.cpp</code><code>run_pinned_sweep.sh</code><code>diag_dma_floor.sh</code><code>figures/make_fig_data.py</code></div>
+        </div>
+        <div class="impl-item">
+          <div class="impl-head"><i class="g g-c">γ</i>Coherency · visibility suite<span class="impl-dir">coherence_tax/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+          <div class="it-grid"><div class="it"><div class="it-label">Kernels</div><div class="it-body"><code>k_fill</code>, <code>k_check</code>, <code>k_publish</code>; no DMA anywhere.</div></div><div class="it"><div class="it-label">Timed</div><div class="it-body">Host flush and read loops with <code>rdtsc</code>; host cache prepared dirty, clean or absent.</div></div><div class="it"><div class="it-label">Runs</div><div class="it-body">Same pinned host configuration as β; device canary before and after every test.</div></div><div class="it"><div class="it-label">Correctness</div><div class="it-body">Every word classed correct, stale, poison or corrupt. An action counts as needed only if omitting it shows stale words.</div></div></div>
+          <div class="chips impl-chips"><span>k1 flush vs. range size<em>Fig. 7a</em></span><span>k2 dirty fraction<em>Fig. 7b</em></span><span>k5 per-object invalidation<em>Fig. 7c</em></span><span>k10 in-kernel publish<em>Fig. 7d</em></span><span>k6 · k7 · k8 visibility<em>Table 4</em></span><span>k4 return bandwidth<em>§4.4.5</em></span><span>k13 NT steady state<em>§4.3.3</em></span></div>
+          <div class="impl-unused">Not used in the paper: k3 flush threads, k9 device flush cost, k11 ping-pong, k12</div>
+          <div class="impl-code"><div class="code-cap">coherence_tax/mu_kernel/coh_kernel.cpp · lines 161–176, k10 in-kernel publish (timing trimmed)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">uint64_t</span> c = <span class="c-num">0</span>; c &lt; C; ++c) {
+    <span class="c-kw">const</span> <span class="c-kw">uint64_t</span> base = pub_data(P, C, L, t, c);
+    <span class="c-kw">for</span> (<span class="c-kw">uint64_t</span> i = <span class="c-num">0</span>; i &lt; L * <span class="c-num">8</span>; ++i) buf[base + i] = pat(base + i, salt);
+    <span class="c-kw">if</span> (mode != PUB_NOFLUSH) <span class="c-key">mu::flushCache</span>(&amp;buf[base], L * <span class="c-num">64</span>);  <span class="c-cm">// posted: may not finish first</span>
+    <span class="c-kw">if</span> (mode == PUB_FLUSHALL || mode == PUB_FLUSHALL_NOFENCE)
+        <span class="c-key">mu::flushCacheAll</span>();                                     <span class="c-cm">// the fix: 0 poisoned lines</span>
+    <span class="c-kw">if</span> (mode == PUB_FLUSH_FENCE || mode == PUB_FLUSHALL) <span class="c-kw">asm</span> <span class="c-kw">volatile</span>(<span class="c-st">&quot;fence rw, rw&quot;</span> ::: <span class="c-st">&quot;memory&quot;</span>);
+    *ctr = c + <span class="c-num">1</span>;                                                <span class="c-cm">// publish this chunk</span>
+    <span class="c-key">mu::flushCache</span>((<span class="c-kw">const</span> <span class="c-kw">void</span>*)ctr, <span class="c-num">64</span>);
+}</pre></div>
+          <div class="impl-files"><code>main.cpp</code><code>coh_common.hpp</code><code>mu_kernel/coh_kernel.cpp</code><code>run_suite.sh</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card impl" id="impl-resident">
+      <div class="card-title">Resident worker</div>
+      <div class="impl-item">
+        <div class="impl-head">Launched once, fed through a control line in CXL memory<span class="impl-dir">blinktree/ · hash-join resident probe · persistent_spike/</span><span class="seg impl-view"><button class="on" data-v="design">Design</button><button data-v="code">Code</button></span></div>
+        <div class="facts design-only">
+          <div><b>1 launch</b><span>for the whole run instead of one per batch</span></div>
+          <div><b>22–25 ns</b><span>device dequeue per task</span></div>
+          <div><b>&lt; 10 ns</b><span>host publish per task in bulk; 0.74 µs one at a time</span></div>
+          <div><b>~12 ms</b><span>saved per B-link batch over two launches</span></div>
+        </div>
+        <div class="design-only"><div class="swim"><div class="sw-head"><span class="h">Host</span><span class="m">CXL memory</span><span class="d">MU tasks · one per thread</span></div><div class="sw-row"><div class="sw-step h">1 · Post a job</div><div class="sw-mid to-mem"><div class="sw-obj">requests → job fields → <code>seq</code></div><div class="sw-act">NT stores, <code>sfence</code> between</div><div class="sw-why">bypass the host cache; <code>seq</code> lands last</div></div><div></div></div><div class="sw-row"><div></div><div class="sw-mid from-mem-dev"><div class="sw-obj">control line, then request lines</div><div class="sw-act"><code>flushCache</code> → read</div><div class="sw-why">drop stale copies; buffers are reused across jobs</div></div><div class="sw-step d">2 · Pick it up</div></div><div class="sw-row"><div></div><div class="sw-mid to-mem-dev"><div class="sw-obj">results, then done counter</div><div class="sw-act"><code>flushCacheAll</code> → <code>atomicAdd</code></div><div class="sw-why">a range flush is posted; the atomic lives in memory</div></div><div class="sw-step d">3 · Finish</div></div><div class="sw-row"><div class="sw-step h">4 · Collect</div><div class="sw-mid from-mem-host"><div class="sw-obj">done counter, then results</div><div class="sw-act"><code>clflushopt</code> + <code>mfence</code> → read</div><div class="sw-why">no back-invalidation: drop the host copy first</div></div><div></div></div></div><div class="sw-cap">Launched once with <code>setBatchSize(1)</code> and <code>execute(ctrl, tasks)</code>; a host NT store of <code>stop = 1</code> ends it.</div></div>
+        <div class="impl-code"><div class="code-cap">blinktree/mu_kernel/cxl_kernel.cpp · lines 368–391, device side</div><pre class="code-pane"><span class="c-kw">void</span> cxl_resident_worker(<span class="c-kw">std::uint64_t</span>* ctrl, <span class="c-kw">int</span> numTasks) {
+    <span class="c-kw">volatile</span> <span class="c-kw">std::uint64_t</span>* c = ctrl;
+    <span class="c-kw">std::uint64_t</span> last = <span class="c-num">0</span>;
+    <span class="c-kw">for</span> (;;) {
+        <span class="c-key">mu::flushCache</span>(ctrl, <span class="c-num">64</span>);                <span class="c-cm">// drop the cached ctrl line, re-read memory</span>
+        <span class="c-kw">if</span> (c[<span class="c-num">4</span>]) <span class="c-kw">break</span>;                          <span class="c-cm">// stop flag</span>
+        <span class="c-kw">const</span> <span class="c-kw">std::uint64_t</span> seq = c[<span class="c-num">0</span>];
+        <span class="c-kw">if</span> (seq == last) { /* back off */ <span class="c-kw">continue</span>; }
+        last = seq;
+        <span class="c-kw">if</span> (c[<span class="c-num">1</span>] == <span class="c-num">1</span>) lookup_batch_impl(root, reqs, bytes, <span class="c-kw">true</span>);   <span class="c-cm">// true: flushCache</span>
+        <span class="c-kw">else</span>           write_batch_impl(root, reqs, bytes, <span class="c-kw">true</span>);    <span class="c-cm">//   each request line read</span>
+        <span class="c-key">mu::flushCacheAll</span>();                      <span class="c-cm">// results in memory before the done signal</span>
+        <span class="c-key">mu::atomicAdd</span>(reinterpret_cast&lt;<span class="c-kw">std::int32_t</span>*&gt;(ctrl + <span class="c-num">8</span>), <span class="c-num">1</span>);
+    }
+    <span class="c-key">mu::flushCacheAll</span>();
+}</pre><div class="code-cap">blinktree/blink_tree_cxl_batch.h · lines 124–137, host side</div><pre class="code-pane"><span class="c-kw">void</span> run(<span class="c-kw">std::uint64_t</span> kind, CXLNode* root, <span class="c-kw">void</span>* reqs, <span class="c-kw">std::size_t</span> n) {
+    <span class="c-key">nt</span>(c + <span class="c-num">1</span>, kind); <span class="c-key">nt</span>(c + <span class="c-num">2</span>, (<span class="c-kw">std::uint64_t</span>)reqs); <span class="c-key">nt</span>(c + <span class="c-num">3</span>, n); <span class="c-key">nt</span>(c + <span class="c-num">5</span>, (<span class="c-kw">std::uint64_t</span>)root);
+    <span class="c-key">_mm_sfence</span>();                                 <span class="c-cm">// job fields first ...</span>
+    <span class="c-key">nt</span>(c + <span class="c-num">0</span>, ++seq);                             <span class="c-cm">// ... then the sequence number</span>
+    <span class="c-key">_mm_sfence</span>();
+    <span class="c-kw">const</span> <span class="c-kw">std::int64_t</span> target = tasks * seq;      <span class="c-cm">// every task adds 1 per job</span>
+    while (<span class="c-key">done</span>() &lt; target) _mm_pause();          <span class="c-cm">// done(): _mm_clflushopt + _mm_mfence + read</span>
+}</pre></div>
+        <div class="impl-unused">Used by NDP@CXL in the hash join and the B-link tree; Tier 1 costs measured with <code>persistent_spike/</code>. Every flush follows the rules of Tier 1 · coherency.</div>
+      </div>
+    </div>
+
+    <div class="card impl" id="impl-t2">
+      <div class="card-title">Tier 2 · DB operations</div>
+      <div class="impl-list">
+        <div class="impl-item"><div class="impl-head">Selective scan</div><div class="todo">Selective scan: what it isolates · how the kernel / host loop works · timed interval · parameters swept · validation · code location</div></div>
+        <div class="impl-item"><div class="impl-head">B<sup>+</sup>-tree point lookups</div><div class="todo">B+-tree lookups: what it isolates · how the kernel / host loop works · timed interval · parameters swept · validation · code location</div></div>
+      </div>
+    </div>
+
+    <div class="card impl" id="impl-t3">
+      <div class="card-title">Tier 3 · Composite workloads</div>
+      <div class="impl-list">
+        <div class="impl-item"><div class="impl-head">Partitioned hash join</div><div class="todo">Hash join: what it isolates · how the kernel / host loop works · timed interval · parameters swept · validation · code location</div></div>
+        <div class="impl-item"><div class="impl-head">B-link tree under updates</div><div class="todo">B-link tree: what it isolates · how the kernel / host loop works · timed interval · parameters swept · validation · code location</div></div>
+      </div>
+    </div>
   </div>
 
   <div id="repro" class="section">
@@ -1228,6 +1808,85 @@ calc('gamma', (v, out) => {
   out('lines').textContent = lines.toLocaleString();
   out('us').textContent = (lines * +v.state / 1000).toFixed(lines * +v.state < 1e4 ? 1 : 0);
 });
+
+// Tier 2: scan break-even chart (SF 1500 count, 128 host cores vs. 3,048 device tasks, ms)
+const SCAN = {
+  50:  { host: [495, 807, 1557, 2432, 3097], ndp: 814 },
+  100: { host: [463, 778, 1549, 2319, 3089], ndp: 926 },
+};
+function scanChart(sel) {
+  const d = SCAN[sel], svg = document.getElementById('scanChart');
+  const W = 640, H = 250, L = 46, R = 14, T = 14, B = 40, XS = [0, 25, 50, 75, 100], ymax = 3500;
+  const x = v => L + v / 100 * (W - L - R), y = v => T + (1 - v / ymax) * (H - T - B);
+  let cross = null;
+  for (let i = 0; i < 4; i++) {
+    const a = d.host[i], b = d.host[i + 1];
+    if (a <= d.ndp && b > d.ndp) { cross = XS[i] + (d.ndp - a) / (b - a) * 25; break; }
+  }
+  let s = '';
+  if (cross !== null) s += `<rect x="${x(cross)}" y="${T}" width="${x(100) - x(cross)}" height="${H - T - B}" fill="#fbe9ea"/>`;
+  for (let v = 0; v <= ymax; v += 500) {
+    s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#e3e8ec"/>`;
+    if (v % 1000 === 0) s += `<text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v / 1000} s</text>`;
+  }
+  XS.forEach(v => s += `<text x="${x(v)}" y="${H - B + 17}" text-anchor="middle">${v}%</text>`);
+  s += `<text class="ax" x="${(L + W - R) / 2}" y="${H - 4}" text-anchor="middle">SHARE OF INPUT ON CXL (HOST PLANS)</text>`;
+  if (cross !== null) {
+    s += `<line x1="${x(cross)}" x2="${x(cross)}" y1="${T}" y2="${H - B}" stroke="#a9b4bd" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+    s += `<text x="${x(cross) + 8}" y="${T + 16}" style="fill:#c1121f;font-weight:600">NDP-sync wins →</text>`;
+  }
+  s += `<line x1="${L}" x2="${W - R}" y1="${y(d.ndp)}" y2="${y(d.ndp)}" stroke="#c1121f" stroke-width="2.5"/>`;
+  s += `<text x="${W - R - 4}" y="${y(d.ndp) - 7}" text-anchor="end" style="fill:#c1121f;font-weight:600">NDP-sync, all on CXL · ${(d.ndp / 1000).toFixed(2)} s</text>`;
+  s += `<polyline fill="none" stroke="#003049" stroke-width="2.5" points="${XS.map((v, i) => x(v) + ',' + y(d.host[i])).join(' ')}"/>`;
+  const names = ['Host-DRAM', 'Tiered 25%', 'Tiered 50%', 'Tiered 75%', 'Host@CXL'];
+  XS.forEach((v, i) => s += `<circle cx="${x(v)}" cy="${y(d.host[i])}" r="4.5" fill="#003049" stroke="#fff" stroke-width="1.5"><title>${names[i]}: ${(d.host[i] / 1000).toFixed(2)} s</title></circle>`);
+  s += `<text x="${x(100) - 10}" y="${y(d.host[4]) - 10}" text-anchor="end" style="fill:#003049;font-weight:600">Host@CXL ${(d.host[4] / 1000).toFixed(1)} s</text>`;
+  s += `<text x="${x(0) + 8}" y="${y(d.host[0]) + 20}" style="fill:#003049;font-weight:600">Host-DRAM ${(d.host[0] / 1000).toFixed(2)} s</text>`;
+  svg.innerHTML = s;
+  document.getElementById('scanRead').innerHTML =
+    `<div><b>~${cross.toFixed(0)}%</b><span>CXL share where NDP-sync breaks even</span></div>` +
+    `<div><b>${(d.host[4] / d.ndp).toFixed(1)}×</b><span>NDP-sync vs. Host@CXL, same CXL input</span></div>` +
+    `<div><b>${(d.ndp / d.host[0]).toFixed(2)}×</b><span>NDP-sync time vs. the all-DRAM host</span></div>`;
+}
+document.querySelector('.seg[data-chart="scan"]').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  scanChart(+b.dataset.v);
+});
+scanChart(50);
+
+// Tier 3: hash-join total time by selectivity (SF 100, ms)
+const JOIN = [
+  ['Host@CXL', [485, 981, 1099], 'var(--navy)'],
+  ['Hybrid', [549, 947, 1265], 'linear-gradient(90deg,var(--navy),var(--red))'],
+  ['NDP@CXL', [757, 1161, 1473], 'var(--red)'],
+];
+const JOIN_CAP = [
+  'No probes run: Host@CXL wins, while Hybrid still pays the table handoff.',
+  'Hybrid leads by only 34 ms; a 110 ms result copy to DRAM would erase it.',
+  'Probes tie (707 vs. 710 ms), and Hybrid pays 88 ms to make its results visible.',
+];
+function joinChart(i) {
+  const best = Math.min(...JOIN.map(r => r[1][i]));
+  document.getElementById('joinBars').innerHTML = JOIN.map(([n, v, c]) =>
+    `<div class="bw-row"><span class="bw-name">${n}${v[i] === best ? ' <em class="best-tag">fastest</em>' : ''}</span>` +
+    `<div class="bw-track cxl"><div class="bw-fill" style="width:${(v[i] / 1500 * 100).toFixed(1)}%; background:${c}"></div></div>` +
+    `<span class="bw-val">${v[i].toLocaleString()}</span></div>`).join('');
+  document.getElementById('joinCap').textContent = JOIN_CAP[i];
+}
+document.querySelector('.seg[data-chart="join"]').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  joinChart(+b.dataset.v);
+});
+joinChart(1);
+
+// Implementation blocks: Design / Code toggle
+document.querySelectorAll('.impl-view').forEach(seg => seg.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  seg.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  seg.closest('.impl-item').classList.toggle('show-code', b.dataset.v === 'code');
+}));
 
 </script>
 </body>
