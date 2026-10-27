@@ -57,8 +57,7 @@ A component is named by its path (`tier1/coherence`) or its last part (`coherenc
 ## Without an MX1P
 
 - **Figures:** `./candle.sh figures all` needs only Python 3, gnuplot and Ghostscript. Every paper figure is rebuilt from the
-  shipped raw measurements, except Fig. 3b, whose raw run has to be repeated
-  (`tier1/orchestration/scripts/aging_run.sh`).
+  shipped raw measurements.
 - **Code:** the XCENA SDK emulator runs the same binaries for a functional check (timings are not meaningful
   there). See the Reproduce tab of the [documentation](https://anon-user-sys.github.io/CANDLE/#repro).
 

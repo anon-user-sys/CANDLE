@@ -288,6 +288,17 @@ ul.vl li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
 ul.vl-add { gap: 0; border-top: 1px solid var(--border); }
 ul.vl-add li { display: grid; grid-template-columns: 1fr; gap: .35rem; justify-items: start; padding: .7rem 0; border-bottom: 1px solid var(--border); }
 ul.vl-add .pill { margin-bottom: 0; white-space: nowrap; }
+.scope-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+.st { background: #f1f5f8; border-radius: 6px; border-top: 3px solid var(--navy); padding: .7rem .85rem .8rem; display: flex; flex-direction: column; gap: .3rem; }
+.st.nm { border-top-color: var(--red); }
+.st.next { border-top-color: var(--steel); }
+.st-tag { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--navy); }
+.st.nm .st-tag { color: var(--red); }
+.st.next .st-tag { color: var(--steel); }
+.st b { font-size: var(--fs-body); color: var(--navy); }
+.st p { font-size: var(--fs-fig); color: var(--body); line-height: 1.5; margin: 0; }
+@media (max-width: 900px) { .scope-tiles { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .scope-tiles { grid-template-columns: 1fr; } }
 .pill { display: block; width: fit-content; background: var(--red); color: #fff; font-weight: 600; font-size: .9em; line-height: 1.4; padding: 1px 8px; border-radius: 4px; margin-bottom: .3rem; }
 
 /* Placement-mode matrix */
@@ -667,7 +678,7 @@ ul.plain li::marker { color: var(--red); }
     <div class="card">
       <div class="card-title">The question</div>
       <div class="card-body">
-        <p class="lead">When does executing a database fragment on a computational CXL expander reduce its elapsed time, including preparation and handoff?</p>
+        <p class="lead">Should database work move into CXL memory? When does it pay off, how much does it gain, and at what cost once preparation, launch and handoff are counted?</p>
         <p>Data residency alone does not decide the plan. A device plan must also launch work, translate addresses through the device's own structures, and deliver a usable result to the next stage. On this CXL 2.0 link there is no hardware back-invalidation, so the software work that makes device updates visible is part of every measurement.</p>
         <p>Plans are compared as <strong>pipeline fragments</strong>, operators finished at a defined result boundary, under a common <strong>execution contract</strong> that fixes the input, the result and what must be visible at completion.</p>
       </div>
@@ -800,6 +811,18 @@ ul.plain li::marker { color: var(--red); }
         <li><span class="pill">Computation placement</span> Passive-expander studies decide where data lives and face only data movement; a computational expander adds orchestration, translation and coherency.</li>
         <li><span class="pill">Open artifact</span> Harness, kernels, configurations, raw measurements and plotting scripts, with the commands for each figure and table.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Scope and future work</div>
+      <div class="scope-tiles">
+        <div class="st plat"><span class="st-tag">Platform</span><b>One device, one stack</b><p>One MX1P (PXL SDK 2.0.0, firmware 1.0.4) on one host. Several expanders, CXL switches and memory shared across hosts are not covered; the rules carry over, the crossover points are this platform&rsquo;s.</p></div>
+        <div class="st plat"><span class="st-tag">Platform</span><b>Capped link</b><p>CXL 2.0 over PCIe 5.0 &times;8 at 32&nbsp;GT/s, below the device&rsquo;s supported rate. Bandwidth-bound results would shift with a faster link.</p></div>
+        <div class="st plat"><span class="st-tag">Platform</span><b>Software coherency</b><p>No hardware back-invalidation in this configuration, so the coherency costs describe the software handoff path.</p></div>
+        <div class="st nm"><span class="st-tag">Not measured</span><b>Arithmetic intensity</b><p>The workloads are memory-bound database operators. Compute per byte was not varied, so compute-heavy kernels on the MU cores are not characterized.</p></div>
+        <div class="st nm"><span class="st-tag">Not measured</span><b>Host access to CXL memory</b><p>Covered in depth by prior work (Melody, SupMario, CXL-Bench). CANDLE uses Host@CXL as its baseline rather than profiling it.</p></div>
+        <div class="st next"><span class="st-tag">Next step</span><b>Whole queries in a DBMS</b><p>CANDLE compares pipeline fragments. Next: an optimizer that picks execution site, batch size and handoffs together.</p></div>
+      </div>
     </div>
   </div>
 
@@ -1687,30 +1710,31 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
           <div><b>~12 ms</b><span>saved per B-link batch over two launches</span></div>
         </div>
         <div class="design-only"><div class="swim"><div class="sw-head"><span class="h">Host</span><span class="m">CXL memory</span><span class="d">MU tasks · one per thread</span></div><div class="sw-row"><div class="sw-step h">1 · Post a job</div><div class="sw-mid to-mem"><div class="sw-obj">requests → job fields → <code>seq</code></div><div class="sw-act">NT stores, <code>sfence</code> between</div><div class="sw-why">bypass the host cache; <code>seq</code> lands last</div></div><div></div></div><div class="sw-row"><div></div><div class="sw-mid from-mem-dev"><div class="sw-obj">control line, then request lines</div><div class="sw-act"><code>flushCache</code> → read</div><div class="sw-why">drop stale copies; buffers are reused across jobs</div></div><div class="sw-step d">2 · Pick it up</div></div><div class="sw-row"><div></div><div class="sw-mid to-mem-dev"><div class="sw-obj">results, then done counter</div><div class="sw-act"><code>flushCacheAll</code> → <code>atomicAdd</code></div><div class="sw-why">a range flush is posted; the atomic lives in memory</div></div><div class="sw-step d">3 · Finish</div></div><div class="sw-row"><div class="sw-step h">4 · Collect</div><div class="sw-mid from-mem-host"><div class="sw-obj">done counter, then results</div><div class="sw-act"><code>clflushopt</code> + <code>mfence</code> → read</div><div class="sw-why">no back-invalidation: drop the host copy first</div></div><div></div></div></div><div class="sw-cap">Launched once with <code>setBatchSize(1)</code> and <code>execute(ctrl, tasks)</code>; a host NT store of <code>stop = 1</code> ends it.</div></div>
-        <div class="impl-code"><div class="code-cap">tier3/blink_tree/mu_kernel/cxl_kernel.cpp · lines 368–391, device side</div><pre class="code-pane"><span class="c-kw">void</span> cxl_resident_worker(<span class="c-kw">std::uint64_t</span>* ctrl, <span class="c-kw">int</span> numTasks) {
-    <span class="c-kw">volatile</span> <span class="c-kw">std::uint64_t</span>* c = ctrl;
-    <span class="c-kw">std::uint64_t</span> last = <span class="c-num">0</span>;
-    <span class="c-kw">for</span> (;;) {
-        <span class="c-key">mu::flushCache</span>(ctrl, <span class="c-num">64</span>);                <span class="c-cm">// drop the cached ctrl line, re-read memory</span>
-        <span class="c-kw">if</span> (c[<span class="c-num">4</span>]) <span class="c-kw">break</span>;                          <span class="c-cm">// stop flag</span>
-        <span class="c-kw">const</span> <span class="c-kw">std::uint64_t</span> seq = c[<span class="c-num">0</span>];
-        <span class="c-kw">if</span> (seq == last) { /* back off */ <span class="c-kw">continue</span>; }
-        last = seq;
-        <span class="c-kw">if</span> (c[<span class="c-num">1</span>] == <span class="c-num">1</span>) lookup_batch_impl(root, reqs, bytes, <span class="c-kw">true</span>);   <span class="c-cm">// true: flushCache</span>
-        <span class="c-kw">else</span>           write_batch_impl(root, reqs, bytes, <span class="c-kw">true</span>);    <span class="c-cm">//   each request line read</span>
-        <span class="c-key">mu::flushCacheAll</span>();                      <span class="c-cm">// results in memory before the done signal</span>
-        <span class="c-key">mu::atomicAdd</span>(reinterpret_cast&lt;<span class="c-kw">std::int32_t</span>*&gt;(ctrl + <span class="c-num">8</span>), <span class="c-num">1</span>);
+        <div class="impl-code"><div class="code-cap">tier1/resident_worker/mu_kernel/persistent_puller.cpp · lines 105–143, device side (timing elided)</div><pre class="code-pane"><span class="c-kw">void</span> drain_bench(<span class="c-kw">long</span>* q) {
+    <span class="c-kw">if</span> (mu::getTaskIdx() != <span class="c-num">0</span>) <span class="c-kw">return</span>;               <span class="c-cm">// one MU thread drains the queue</span>
+    <span class="c-kw">long</span> target = ld(q, TARGET), hbatch = ld(q, HBATCH);
+    <span class="c-kw">for</span> (;;) { <span class="c-key">flushCache</span>(&amp;q[T], <span class="c-num">8</span>); <span class="c-kw">if</span> (ld(q, T) &gt; <span class="c-num">0</span>) <span class="c-kw">break</span>; }  <span class="c-cm">// wait for the host's tail</span>
+    <span class="c-kw">long</span> head = <span class="c-num">0</span>, sink = <span class="c-num">0</span>;
+    <span class="c-kw">while</span> (head &lt; target) {
+        sink += ld(q, TASKS + head);               <span class="c-cm">// dequeue one descriptor, read fresh</span>
+        head++;
+        <span class="c-kw">if</span> ((head % hbatch) == <span class="c-num">0</span>) { st(q, H, head); st(q, PROC, head); }  <span class="c-cm">// progress, amortized</span>
     }
+    st(q, SINKF, sink);                            <span class="c-cm">// checksum: every task was read</span>
+    st(q, DONE, <span class="c-num">1</span>);                               <span class="c-cm">// st(): store + flushCache</span>
     <span class="c-key">mu::flushCacheAll</span>();
-}</pre><div class="code-cap">tier3/blink_tree/blink_tree_cxl_batch.h · lines 124–137, host side</div><pre class="code-pane"><span class="c-kw">void</span> run(<span class="c-kw">std::uint64_t</span> kind, CXLNode* root, <span class="c-kw">void</span>* reqs, <span class="c-kw">std::size_t</span> n) {
-    <span class="c-key">nt</span>(c + <span class="c-num">1</span>, kind); <span class="c-key">nt</span>(c + <span class="c-num">2</span>, (<span class="c-kw">std::uint64_t</span>)reqs); <span class="c-key">nt</span>(c + <span class="c-num">3</span>, n); <span class="c-key">nt</span>(c + <span class="c-num">5</span>, (<span class="c-kw">std::uint64_t</span>)root);
-    <span class="c-key">_mm_sfence</span>();                                 <span class="c-cm">// job fields first ...</span>
-    <span class="c-key">nt</span>(c + <span class="c-num">0</span>, ++seq);                             <span class="c-cm">// ... then the sequence number</span>
-    <span class="c-key">_mm_sfence</span>();
-    <span class="c-kw">const</span> <span class="c-kw">std::int64_t</span> target = tasks * seq;      <span class="c-cm">// every task adds 1 per job</span>
-    while (<span class="c-key">done</span>() &lt; target) _mm_pause();          <span class="c-cm">// done(): _mm_clflushopt + _mm_mfence + read</span>
-}</pre></div>
-        <div class="impl-unused">Used by NDP@CXL in the B-link tree (shown) and in the hash join, whose <code>cxl_resident_probe_kernel</code> uses the same protocol with a row range and a result block in the control line. Tier 1 costs measured with <code>tier1/resident_worker/</code>.</div>
+}</pre><div class="code-cap">tier1/resident_worker/main_spike.cpp · lines 187–215, host side (excerpt)</div><pre class="code-pane"><span class="c-cm">// bulk: N stores, one flush for the whole range</span>
+<span class="c-kw">for</span> (<span class="c-kw">long</span> i = <span class="c-num">0</span>; i &lt; N; i++) vst(TASKS + i, <span class="c-num">1</span>);   <span class="c-cm">// payload 1: checksum == N</span>
+vst(T, N);
+<span class="c-key">pxl::flushHostCache</span>(q, <span class="c-kw">sizeof</span>(<span class="c-kw">long</span>) * slots);
+
+<span class="c-cm">// one at a time: store + flush per item</span>
+<span class="c-kw">for</span> (<span class="c-kw">long</span> i = <span class="c-num">0</span>; i &lt; M; i++) { hwrite(TASKS + i, <span class="c-num">2</span>); hwrite(TASKS + i, <span class="c-num">1</span>); }
+
+<span class="c-kw">auto</span>* map = job-&gt;buildMap(func, <span class="c-num">1</span>);
+map-&gt;<span class="c-key">execute</span>(q);                               <span class="c-cm">// launched once</span>
+map-&gt;synchronize();                            <span class="c-cm">// returns when all N are drained</span></pre></div>
+        <div class="impl-unused">Design shows the protocol as deployed by NDP@CXL in the B-link tree (<code>cxl_resident_worker</code>, code under Tier 3 below); the hash join's <code>cxl_resident_probe_kernel</code> uses the same protocol with a row range and a result block in the control line. Code shows the Tier 1 benchmark behind the dequeue and publish costs.</div>
       </div>
     </div>
 
@@ -1731,7 +1755,7 @@ run(<span class="c-st">&quot;direct_ntstore_noflush&quot;</span>, <span class="c
         ++r.n; r.sum_idx += i; r.sum_key += key;
     }
     <span class="c-kw">return</span> r;
-}</pre><div class="code-cap">tier2/scan/main.cpp · lines 817–826, pipelined return (32 launches)</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> st = <span class="c-num">0</span>; st &lt; o.ret_steps &amp;&amp; kok; ++st) {
+}</pre><div class="code-cap">tier2/scan/main.cpp · lines 817–826, pipelined return: <code>--return chunked</code>, 32 launches</div><pre class="code-pane"><span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> st = <span class="c-num">0</span>; st &lt; o.ret_steps &amp;&amp; kok; ++st) {
     kok = map_step-&gt;<span class="c-key">execute</span>(/* ... */, (st &lt;&lt; <span class="c-num">32</span>) | o.ret_steps) == pxl::PxlResult::Success &amp;&amp;
           map_step-&gt;<span class="c-key">synchronize</span>() == pxl::PxlResult::Success;   <span class="c-cm">// kernel ends with flushCacheAll</span>
     <span class="c-key">pxl::flushHostCache</span>(d_prog, stat_bytes);       <span class="c-cm">// invalidate, then read the task cursors</span>
@@ -1800,7 +1824,29 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
     <span class="c-kw">for</span> (<span class="c-kw">std::size_t</span> w = b; w &lt; e; ++w)
         <span class="c-kw">for</span> (<span class="c-kw">std::uint64_t</span> m = bits[w]; m; m &amp;= m - <span class="c-num">1</span>)           <span class="c-cm">// then flush each marked leaf</span>
             <span class="c-key">cxl_inval_cache_range</span>(leaf_at(w, __builtin_ctzll(m)), kNode);
-});</pre></div>
+});</pre><div class="code-cap">tier3/blink_tree/mu_kernel/cxl_kernel.cpp · lines 368–391, NDP@CXL resident worker, device side (trimmed)</div><pre class="code-pane"><span class="c-kw">void</span> cxl_resident_worker(<span class="c-kw">std::uint64_t</span>* ctrl, <span class="c-kw">int</span> numTasks) {
+    <span class="c-kw">volatile</span> <span class="c-kw">std::uint64_t</span>* c = ctrl;
+    <span class="c-kw">std::uint64_t</span> last = <span class="c-num">0</span>;
+    <span class="c-kw">for</span> (;;) {
+        <span class="c-key">mu::flushCache</span>(ctrl, <span class="c-num">64</span>);                <span class="c-cm">// drop the cached ctrl line, re-read memory</span>
+        <span class="c-kw">if</span> (c[<span class="c-num">4</span>]) <span class="c-kw">break</span>;                          <span class="c-cm">// stop flag</span>
+        <span class="c-kw">const</span> <span class="c-kw">std::uint64_t</span> seq = c[<span class="c-num">0</span>];
+        <span class="c-kw">if</span> (seq == last) { /* back off */ <span class="c-kw">continue</span>; }
+        last = seq;
+        <span class="c-kw">if</span> (c[<span class="c-num">1</span>] == <span class="c-num">1</span>) lookup_batch_impl(root, reqs, bytes, <span class="c-kw">true</span>);   <span class="c-cm">// true: flushCache</span>
+        <span class="c-kw">else</span>           write_batch_impl(root, reqs, bytes, <span class="c-kw">true</span>);    <span class="c-cm">//   each request line read</span>
+        <span class="c-key">mu::flushCacheAll</span>();                      <span class="c-cm">// results in memory before the done signal</span>
+        <span class="c-key">mu::atomicAdd</span>(reinterpret_cast&lt;<span class="c-kw">std::int32_t</span>*&gt;(ctrl + <span class="c-num">8</span>), <span class="c-num">1</span>);
+    }
+    <span class="c-key">mu::flushCacheAll</span>();
+}</pre><div class="code-cap">tier3/blink_tree/blink_tree_cxl_batch.h · lines 124–138, posting one batch, host side (timeout checks trimmed)</div><pre class="code-pane"><span class="c-kw">void</span> run(<span class="c-kw">std::uint64_t</span> kind, CXLNode* root, <span class="c-kw">void</span>* reqs, <span class="c-kw">std::size_t</span> n) {
+    <span class="c-key">nt</span>(c + <span class="c-num">1</span>, kind); <span class="c-key">nt</span>(c + <span class="c-num">2</span>, (<span class="c-kw">std::uint64_t</span>)reqs); <span class="c-key">nt</span>(c + <span class="c-num">3</span>, n); <span class="c-key">nt</span>(c + <span class="c-num">5</span>, (<span class="c-kw">std::uint64_t</span>)root);
+    <span class="c-key">_mm_sfence</span>();                                 <span class="c-cm">// job fields first ...</span>
+    <span class="c-key">nt</span>(c + <span class="c-num">0</span>, ++seq);                             <span class="c-cm">// ... then the sequence number</span>
+    <span class="c-key">_mm_sfence</span>();
+    <span class="c-kw">const</span> <span class="c-kw">std::int64_t</span> target = tasks * seq;      <span class="c-cm">// every task adds 1 per job</span>
+    while (<span class="c-key">done</span>() &lt; target) _mm_pause();          <span class="c-cm">// done(): _mm_clflushopt + _mm_mfence + read</span>
+}</pre></div>
           <div class="impl-files"><code>main.cpp</code><code>blink_tree_cxl_batch.h</code><code>blink_tree_scheduler_task.h</code><code>mu_kernel/cxl_kernel.cpp</code><code>scripts/bench_fig_row.sh</code><code>scripts/soak_hybrid.sh</code></div>
         </div>
       </div>
@@ -1871,7 +1917,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
           <div class="map-desc">The Tiered placement runs.</div>
         </div>
       </div>
-      <div class="rule"><b>Before every run</b> Flip the mode first, then restart <code>pxl_resourced</code> · never <code>modprobe -r mx_dma</code>, which decommits the CXL regions until a reboot · run as root wherever the host loads or stores device memory · keep one PXL process on the device · check the device with the canary <code>tier1/data_movement/main d1 --verify-only</code> before and after.</div>
+      <div class="rule"><b>Before every run</b> Flip the mode first, then restart <code>pxl_resourced</code> · run as root wherever the host loads or stores device memory · keep one PXL process on the device · check the device with the canary <code>tier1/data_movement/main d1 --verify-only</code> before and after.</div>
     </div>
 
     <div class="card">
