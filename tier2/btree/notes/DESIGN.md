@@ -102,19 +102,3 @@ On a mismatch the diagnosis in `run_device` re-reads the output. Facts from thos
 
 Count mode (the default) writes one stats line per task and was correct in every run. The tree
 is never written on the device. Bad-line offsets of the failures: `diag/badlines_20261011.txt`.
-
-## TODO
-
-1. **System-ram session:** M1_split (DRAM_FRACS e.g. `"1 0.75 0.5 0.33 0"`, PLACEMENTS
-   `"interleave block"`) and M5, then compare with M4 per CXL share, as in the scan's
-   placement sweep. `block` vs `interleave` is the B+tree-specific question: how much does
-   keeping the upper levels in DRAM buy?
-2. **Above the device TLB reach:** sf 1500 at 256 B nodes is a ~41 GB tree, beyond the 8 × 1 GB
-   MX1P TLB coverage. Random lookups should pay the ~590 ns miss (the Tier 1 translation tax),
-   which the sequential scan never did.
-3. **Fewer bytes per lookup on the device:** the search touches the header, key lines and a
-   separate value line. Putting the count in the key line or interleaving keys/children cuts
-   lines per level (24 → ~10 with implicit-child 64 B nodes), on host and device alike.
-4. **Updates/inserts:** this version is read-only (YCSB-C-like). In-place value updates are easy.
-   Splits need latching on the device; given the lost-write behavior above, validate them
-   against a poisoned buffer.

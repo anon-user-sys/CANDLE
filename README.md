@@ -22,7 +22,7 @@ benchmark, the raw measurements behind the paper's figures, and the scripts that
 | | [`tier1/translation`](tier1/translation) | device address translation (τ) | §4.2 · Fig. 5 |
 | | [`tier1/data_movement`](tier1/data_movement) | explicit copies, DMA vs. direct (β) | §4.3 · Fig. 6 · Table 3 |
 | | [`tier1/coherence`](tier1/coherence) | software visibility handoffs (γ) | §4.4 · Fig. 7 · Table 4 |
-| | [`tier1/resident_worker`](tier1/resident_worker) | a kernel launched once, fed through a queue | §4.1.4 |
+| | [`tier1/resident_worker`](tier1/resident_worker) | a kernel launched once, fed through a queue | §4.1.4 · Fig. 4 |
 | 2 · DB operations | [`tier2/scan`](tier2/scan) | selective scan, count vs. materialize | §5.1 · Fig. 8 · Table 5 |
 | | [`tier2/btree`](tier2/btree) | B+-tree point lookups | §5.2 · Fig. 9 · Fig. 10 |
 | 3 · Composite workloads | [`tier3/hash_join`](tier3/hash_join) | partitioned hash join | §6.1 · Fig. 11 · Fig. 12 |
@@ -66,8 +66,9 @@ A component is named by its path (`tier1/coherence`) or its last part (`coherenc
 - An XCENA MX1P on an x86-64 Linux host, with PXL SDK 2.0.0, the MU LLVM 21.1.2 toolchain, device firmware 1.0.4
   and the `mx_dma` driver. The paper's host: 2 × Intel Xeon 6756E, Ubuntu 24.04, Linux 6.8.
 - TPC-H `dbgen` tables for the scan and the hash join, in `$DATA_ROOT/sf_<SF>/`.
-- Two machine sessions: **devdax** (device memory for PXL: NDP, Host@CXL and Hybrid runs) and **system-ram**
-  (device memory as a NUMA node: the Tiered runs). Root wherever the host loads or stores device memory.
+- Two machine sessions: **devdax** (device memory for PXL: Tier 1, every NDP plan, and the Tier 3 Host@CXL and Hybrid
+  runs) and **system-ram** (device memory as NUMA node 2: the Tier 2 Host@CXL and Tiered runs). Root wherever the host
+  loads or stores device memory.
 
 The [documentation](https://anon-user-sys.github.io/CANDLE/) explains the device, the cost models, every result
 and the session setup, and lists which run produces each figure.

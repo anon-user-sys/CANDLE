@@ -65,8 +65,7 @@ file's size and mtime. The parser takes the same fields and truncation as the jo
 ## Things to keep in mind
 
 - The loop branches on purpose. The join skips the key read for filtered rows, so the scan keeps
-  that access pattern, including branch mispredicts at 50%. That differs from the branchless
-  count is future work.
+  that access pattern, including branch mispredicts at 50%.
 - Device kernel time includes `flushCacheAll` at the start and end (the resident-worker
   coherence protocol).
 - Host thread creation is inside `scan_ms`. This only matters at small
@@ -105,16 +104,3 @@ runs dbgen into FIFOs drained by `tools/tpch_cols`, so only the column file
 
 DRAM budget: `dram_budget.sh apply 64 | restore | status` reserves node-0 memory as hugetlb
 pages so runs bound to node 0 see about 64 GB (box-wide; tell other users, always restore).
-
-## TODO
-
-1. **Dense 4-byte keys.** `l_orderkey` is uint64 because sf_1500 keys reach 9e9, but there are
-   only 1.5e9 distinct orders. Renumbering orders densely fits uint32 and halves key traffic
-   (72 -> 36 GB of the 81 GB read at 50-100%). Helps host and device alike (the link-bound
-   restricted host ~1.8x), so the CXL-share break-even should move little; it also matches the
-   hash join's 4-byte keys. Needs a new column file from `tools/gen_cols.sh` + validation.
-2. **SWAR predicate on the device (8 quantities per instruction).** At 0% selectivity the MU
-   scan is per-row-compute bound (~170 ns/row/task, 19 GB/s); prefetch gives only 1.06x there.
-   Load 8 `l_quantity` bytes as one uint64, test all 8 against the threshold with bit tricks,
-   skip the word when none pass -> up to ~8x less per-row work at low selectivity. Host loop
-   is already auto-vectorized, so this closes a gap rather than tilting the comparison.

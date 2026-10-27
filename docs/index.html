@@ -288,16 +288,15 @@ ul.vl li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
 ul.vl-add { gap: 0; border-top: 1px solid var(--border); }
 ul.vl-add li { display: grid; grid-template-columns: 1fr; gap: .35rem; justify-items: start; padding: .7rem 0; border-bottom: 1px solid var(--border); }
 ul.vl-add .pill { margin-bottom: 0; white-space: nowrap; }
-.scope-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+.scope-tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: .6rem; }
+.scope-tiles .st { grid-column: span 2; }
 .st { background: #f1f5f8; border-radius: 6px; border-top: 3px solid var(--navy); padding: .7rem .85rem .8rem; display: flex; flex-direction: column; gap: .3rem; }
 .st.nm { border-top-color: var(--red); }
-.st.next { border-top-color: var(--steel); }
 .st-tag { font-size: var(--fs-fig-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--navy); }
 .st.nm .st-tag { color: var(--red); }
-.st.next .st-tag { color: var(--steel); }
 .st b { font-size: var(--fs-body); color: var(--navy); }
 .st p { font-size: var(--fs-fig); color: var(--body); line-height: 1.5; margin: 0; }
-@media (max-width: 900px) { .scope-tiles { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 900px) { .scope-tiles { grid-template-columns: 1fr 1fr; } .scope-tiles .st { grid-column: auto; } }
 @media (max-width: 560px) { .scope-tiles { grid-template-columns: 1fr; } }
 .pill { display: block; width: fit-content; background: var(--red); color: #fff; font-weight: 600; font-size: .9em; line-height: 1.4; padding: 1px 8px; border-radius: 4px; margin-bottom: .3rem; }
 
@@ -595,6 +594,7 @@ ul.plain li::marker { color: var(--red); }
 .mapcol.kmem .map-label { color: var(--navy); }
 .map-plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .map-plans.one { grid-template-columns: 1fr; }
+.map-plans.two { grid-template-columns: 1fr 1fr; }
 .map-plans .plan { padding: .45rem .6rem; text-align: center; }
 .map-desc { font-size: var(--fs-fig); color: var(--body); line-height: 1.5; }
 
@@ -814,14 +814,14 @@ ul.plain li::marker { color: var(--red); }
     </div>
 
     <div class="card">
-      <div class="card-title">Scope and future work</div>
+      <div class="card-title">Scope</div>
       <div class="scope-tiles">
         <div class="st plat"><span class="st-tag">Platform</span><b>One device, one stack</b><p>One MX1P (PXL SDK 2.0.0, firmware 1.0.4) on one host. Several expanders, CXL switches and memory shared across hosts are not covered; the rules carry over, the crossover points are this platform&rsquo;s.</p></div>
         <div class="st plat"><span class="st-tag">Platform</span><b>Capped link</b><p>CXL 2.0 over PCIe 5.0 &times;8 at 32&nbsp;GT/s, below the device&rsquo;s supported rate. Bandwidth-bound results would shift with a faster link.</p></div>
         <div class="st plat"><span class="st-tag">Platform</span><b>Software coherency</b><p>No hardware back-invalidation in this configuration, so the coherency costs describe the software handoff path.</p></div>
         <div class="st nm"><span class="st-tag">Not measured</span><b>Arithmetic intensity</b><p>The workloads are memory-bound database operators. Compute per byte was not varied, so compute-heavy kernels on the MU cores are not characterized.</p></div>
         <div class="st nm"><span class="st-tag">Not measured</span><b>Host access to CXL memory</b><p>Covered in depth by prior work (Melody, SupMario, CXL-Bench). CANDLE uses Host@CXL as its baseline rather than profiling it.</p></div>
-        <div class="st next"><span class="st-tag">Next step</span><b>Whole queries in a DBMS</b><p>CANDLE compares pipeline fragments. Next: an optimizer that picks execution site, batch size and handoffs together.</p></div>
+        <div class="st nm"><span class="st-tag">Not measured</span><b>Whole queries</b><p>CANDLE compares pipeline fragments, operators finished at a defined result boundary, not complete query plans.</p></div>
       </div>
     </div>
   </div>
@@ -1138,7 +1138,7 @@ ul.plain li::marker { color: var(--red); }
 
   <div id="testbed" class="section">
     <div class="sec-title">Testbed</div>
-    <div class="sec-desc">One dual-socket Xeon server with one XCENA MX1P attached over CXL. Host and device plans run over the same CXL allocation. The MX1P is attached to NUMA node 0, and host threads run on that device-local socket unless placement is varied.</div>
+    <div class="sec-desc">One dual-socket Xeon server with one XCENA MX1P attached over CXL. Device plans and the Tier 1 and Tier 3 host plans run over the same CXL allocation; the Tier 2 host plans reach device memory as a NUMA node. The MX1P is attached to NUMA node 0, and host threads run on that device-local socket unless placement is varied.</div>
 
     <div class="glance">
       <div><b>3,072</b><span>MU cores · 1.4 GHz</span></div>
@@ -1191,7 +1191,7 @@ ul.plain li::marker { color: var(--red); }
         <div class="mapcol dax">
           <div class="map-label">device_dax · /dev/dax0.0</div>
           <div class="map-plans">
-            <div class="plan base"><b>Host@CXL</b></div>
+            <div class="plan base"><b>Host@CXL</b><span>Tiers 1, 3</span></div>
             <div class="plan ndp"><b>NDP-sync</b></div>
             <div class="plan ndp"><b>NDP@CXL</b></div>
             <div class="plan hyb"><b>Hybrid</b></div>
@@ -1200,7 +1200,8 @@ ul.plain li::marker { color: var(--red); }
         </div>
         <div class="mapcol kmem">
           <div class="map-label">kmem · CPU-less NUMA node 2</div>
-          <div class="map-plans one">
+          <div class="map-plans two">
+            <div class="plan base"><b>Host@CXL</b><span>Tier 2 · all on node 2</span></div>
             <div class="plan tier"><b>Tiered</b></div>
           </div>
           <div class="map-desc">Before first touch, <code>mbind</code> assigns each 2 MB input chunk to host node 0 or device node 2 at the requested ratio.</div>
@@ -1607,7 +1608,7 @@ ul.plain li::marker { color: var(--red); }
     <div class="card impl" id="impl-harness">
       <div class="card-title">Shared harness</div>
       <div class="it-grid harness">
-        <div class="it"><div class="it-label">Device sessions</div><div class="it-body">devdax for every Host@CXL, NDP and Hybrid run; system-ram (CXL as NUMA node 2) for Tiered.</div></div>
+        <div class="it"><div class="it-label">Device sessions</div><div class="it-body">devdax for Tier 1, every NDP plan, and the Tier 3 Host@CXL and Hybrid runs; system-ram (CXL as NUMA node 2) for the Tier 2 Host@CXL and Tiered runs.</div></div>
         <div class="it"><div class="it-label">Placement</div><div class="it-body">Exact 2 MB <code>mbind</code> per chunk, checked with <code>move_pages</code>; host threads pinned to the device-local socket.</div></div>
         <div class="it"><div class="it-label">Dispatch</div><div class="it-body">A fresh dispatch handle per launch, never an aged one.</div></div>
         <div class="it"><div class="it-label">Health</div><div class="it-body">Every result validated; a bit-exact device canary before and after each run.</div></div>
@@ -1906,7 +1907,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
             <li><code>sudo systemctl restart pxl_resourced</code></li>
             <li><code>sudo xcena_cli num-device</code> <span>→ 1</span></li>
           </ol>
-          <div class="map-desc">Tier 1, every NDP plan, Host@CXL and Hybrid.</div>
+          <div class="map-desc">Tier 1, every NDP plan, and the Tier 3 Host@CXL and Hybrid runs.</div>
         </div>
         <div class="mapcol kmem">
           <div class="map-label">Tiered session · system-ram</div>
@@ -1914,7 +1915,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
             <li><code>sudo daxctl reconfigure-device --mode=system-ram dax0.0</code></li>
             <li><span>device memory appears as NUMA node 2</span></li>
           </ol>
-          <div class="map-desc">The Tiered placement runs.</div>
+          <div class="map-desc">The Tier 2 Host@CXL and Tiered runs.</div>
         </div>
       </div>
       <div class="rule"><b>Before every run</b> Flip the mode first, then restart <code>pxl_resourced</code> · run as root wherever the host loads or stores device memory · keep one PXL process on the device · check the device with the canary <code>tier1/data_movement/main d1 --verify-only</code> before and after.</div>
@@ -1960,7 +1961,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
           <tbody>
             <tr class="grp"><td colspan="4">Tier 1 · Taxes</td></tr>
             <tr><td>Fig. 3 · Table 2</td><td>tier1/orchestration/</td><td><code>./run.sh</code></td><td>devdax</td></tr>
-            <tr><td>§4.1.4</td><td>tier1/resident_worker/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
+            <tr><td>Fig. 4 · §4.1.4</td><td>tier1/resident_worker/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
             <tr><td>Fig. 5</td><td>tier1/translation/</td><td><code>./run.sh</code></td><td>devdax</td></tr>
             <tr><td>Fig. 6 · Table 3</td><td>tier1/data_movement/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
             <tr><td>Fig. 7 · Table 4</td><td>tier1/coherence/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
@@ -1969,7 +1970,7 @@ parallel_for_workers(nwords, thread_id, [&amp;](<span class="c-kw">std::size_t</
             <tr><td>Fig. 9 · Fig. 10</td><td>tier2/btree/</td><td><code>./run.sh</code></td><td>both</td></tr>
             <tr class="grp"><td colspan="4">Tier 3 · Composite workloads</td></tr>
             <tr><td>Fig. 11 · Fig. 12</td><td>tier3/hash_join/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
-            <tr><td>Fig. 13 · §6.2</td><td>tier3/blink_tree/</td><td><code>./run.sh</code></td><td>devdax</td></tr>
+            <tr><td>Fig. 13 · §6.2</td><td>tier3/blink_tree/</td><td><code>sudo ./run.sh</code></td><td>devdax, root</td></tr>
           </tbody>
         </table>
       </div>

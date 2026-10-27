@@ -19,7 +19,7 @@ invalidate + read.
 | Test | Question | Paper use | Retest of |
 |---|---|---|---|
 | k1 flush_size | host flush cost vs range size (64 B-1 GiB), cache state dirty/clean/absent, clflushopt vs clflush, library vs raw loop | "Cost of one handoff": gamma(n) = gamma_call + lines * gamma_line | bw --path flush (Oct 2; states not real, 17 GB >> L3) |
-| k2 dirty_frac | flush cost of a 16 MiB range with 0-100% of lines dirty, uniform vs clustered, rest clean or absent | write sparsity, dirty-bit-map future work | never run |
+| k2 dirty_frac | flush cost of a 16 MiB range with 0-100% of lines dirty, uniform vs clustered, rest clean or absent | write sparsity: flushing only dirty lines | never run |
 | k3 flush_threads | bulk flush throughput, 1-32 threads, in-L3 dirty and 16 GiB absent | phase-boundary flush of a large table | bw --path flush |
 | k4 read_inval | host read of device memory: cold vs invalidate-then-read vs cached; 1-16 threads | invalidation cost apart from read-back; return-path tax | Tier 2's 26.2 -> 22 GB/s (16%) |
 | k5 fine_grained | per-object invalidate+read (64 B-4 KiB objects) vs plain read vs one bulk flush, hot and cold objects | "Granularity": B-Link SDBI vs phase boundary | never run |

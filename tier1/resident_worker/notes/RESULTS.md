@@ -306,20 +306,6 @@ Two findings:
 
 ---
 
-## Open items
-
-1. **Non-blocking launch API** — get the correct way to start a
-   `__mu_kernel_type__=1` kernel from XCENA; removes the parked-thread
-   workaround.
-2. ~~Unbounded residency~~ — **DONE**: held 60 s at a steady ~806k iters/s with
-   the wrap-safe 64-bit cycle accumulator (`--idle N`); indefinite residency
-   near-certain. Could push to minutes if a reviewer wants it in writing.
-3. ~~Pull throughput~~ — **DONE**: ~24 ns/task, ~42 M tasks/s single-poller
-   (see Throughput above). Optional follow-up: multi-poller aggregate rate and
-   queue-contention behavior.
-
----
-
 ## Reproduce
 
 ```bash
